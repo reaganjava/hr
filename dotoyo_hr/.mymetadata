@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="dotoyo_hr"
+  id="myeclipse.1322460811240"
+  context-root="/dotoyo_hr"
+  j2ee-spec="5.0"
+  archive="dotoyo_hr.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebContent" />
+  </attributes>
+</project-module>
+
