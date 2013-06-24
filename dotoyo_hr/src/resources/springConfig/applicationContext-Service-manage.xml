@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/tx
+                    http://www.springframework.org/schema/tx/spring-tx.xsd
+                    http://www.springframework.org/schema/aop
+                    http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="sysIncrementServiceNameMaintainanceService" class="com.dotoyo.buildjob.sys.service.impl.SysIncrementServiceNameMaintainanceServiceImpl">
+		<property name="sysIncrementServiceNameMaintainanceDao" ref="sysIncrementServiceNameMaintainanceDao"/>
+	</bean>
+	<bean id="sysIncrementTalentsFoundSettingService" class="com.dotoyo.buildjob.sys.service.impl.SysIncrementTalentsFoundSettingServiceImpl">
+		<property name="sysIncrementTalentsFoundSettingDao" ref="sysIncrementTalentsFoundSettingDao"/>
+	</bean>
+	<bean id="sysIncrementTalentsFoundOfflineSettingService" class="com.dotoyo.buildjob.sys.service.impl.SysIncrementTalentsFoundOfflineSettingServiceImpl">
+		<property name="sysIncrementTalentsFoundOfflineSettingDao" ref="sysIncrementTalentsFoundOfflineSettingDao"/>
+	</bean>
+	<bean id="sysIncrementHangCardSettingService" class="com.dotoyo.buildjob.sys.service.impl.SysIncrementHangCardSettingServiceImpl">
+		<property name="sysIncrementHangCardSettingDao" ref="sysIncrementHangCardSettingDao"/>
+	</bean>
+	<bean id="sysIncrementHuntCardSettingService" class="com.dotoyo.buildjob.sys.service.impl.SysIncrementHuntCardSettingServiceImpl">
+		<property name="sysIncrementHuntCardSettingDao" ref="sysIncrementHuntCardSettingDao"/>
+	</bean>
+	<bean id="sysIncrementRecruitSettingService" class="com.dotoyo.buildjob.sys.service.impl.SysIncrementRecruitSettingServiceImpl">
+		<property name="sysIncrementRecruitSettingDao" ref="sysIncrementRecruitSettingDao"/>
+	</bean>
+	<bean id="sysIncrementAdvertSettingService" class="com.dotoyo.buildjob.sys.service.impl.SysIncrementAdvertSettingServiceImpl">
+		<property name="sysIncrementAdvertSettingDao" ref="sysIncrementAdvertSettingDao"/>
+	</bean>
+	<bean id="sysOrderService" class="com.dotoyo.buildjob.sys.service.impl.SysOrderServiceImpl">
+		<property name="sysIncrementTalentsFoundSettingService" ref="sysIncrementTalentsFoundSettingService"/>
+		<property name="sysIncrementHangCardSettingService" ref="sysIncrementHangCardSettingService"/>
+		<property name="sysIncrementHuntCardSettingService" ref="sysIncrementHuntCardSettingService"/>
+		<property name="sysIncrementRecruitSettingService" ref="sysIncrementRecruitSettingService"/>
+		<property name="sysIncrementAdvertSettingService" ref="sysIncrementAdvertSettingService"/>
+		<property name="sysOrderDao" ref="sysOrderDao"/>
+		<property name="sysIncrementTalentsFoundOfflineSettingService" ref="sysIncrementTalentsFoundOfflineSettingService"/>
+	</bean>
+	<bean id="sysFunctionService" class="com.dotoyo.buildjob.sys.service.impl.SysFunctionServiceImpl">
+		<property name="sysFunctionDao" ref="sysFunctionDao"/>
+	</bean>
+	<bean id="sysRoleService" class="com.dotoyo.buildjob.sys.service.impl.SysRoleServiceImpl">
+		<property name="sysRoleDao" ref="sysRoleDao"/>
+	</bean>
+	<bean id="sysUserRoleService" class="com.dotoyo.buildjob.sys.service.impl.SysUserRoleServiceImpl">
+		<property name="sysUserRoleDao" ref="sysUserRoleDao"/>
+	</bean>
+	<bean id="sysFunctionRoleService" class="com.dotoyo.buildjob.sys.service.impl.SysFunctionRoleServiceImpl">
+		<property name="sysFunctionRoleDao" ref="sysFunctionRoleDao"/>
+	</bean>
+	<bean id="sysFilterWordService" class="com.dotoyo.buildjob.sys.service.impl.SysFilterWordServiceImpl">
+		<property name="sysFilterWordDao" ref="sysFilterWordDao"/>
+	</bean>
+	<bean id="sysPointService" class="com.dotoyo.buildjob.sys.service.impl.SysPointServiceImpl">
+		<property name="sysPointDao" ref="sysPointDao"/>
+	</bean>
+	<bean id="sysAdService" class="com.dotoyo.buildjob.sys.service.impl.SysAdServiceImpl">
+		<property name="sysAdDao" ref="sysAdDao"/>
+	</bean>
+	<bean id="sysRoleAdminService" class="com.dotoyo.buildjob.sys.service.impl.SysRoleAdminServiceImpl">
+		<property name="sysRoleAdminDao" ref="sysRoleAdminDao"/>
+	</bean>
+	<bean id="sysUserRoleAdminService" class="com.dotoyo.buildjob.sys.service.impl.SysUserRoleAdminServiceImpl">
+		<property name="sysUserRoleAdminDao" ref="sysUserRoleAdminDao"/>
+	</bean>
+	<bean id="sysFunctionRoleAdminService" class="com.dotoyo.buildjob.sys.service.impl.SysFunctionRoleAdminServiceImpl">
+		<property name="sysFunctionRoleAdminDao" ref="sysFunctionRoleAdminDao"/>
+	</bean>
+	<!--salon module  -->
+	<bean id="salonAdminService" class="com.dotoyo.buildjob.sys.service.impl.SalonAdminServiceImpl">
+		<property name="salonAdminDao" ref="salonAdminDao"/>
+	</bean>
+	<bean id="certificateAdminService" class="com.dotoyo.buildjob.sys.service.impl.CertificateAdminServiceImpl">
+		<property name="certificateAdminDao" ref="certificateAdminDao"/>
+	</bean>
+	<bean id="applyJobAdminService" class="com.dotoyo.buildjob.sys.service.impl.ApplyJobAdminServiceImpl">
+		<property name="applyJobAdminDao" ref="applyJobAdminDao"/>
+	</bean>
+</beans>

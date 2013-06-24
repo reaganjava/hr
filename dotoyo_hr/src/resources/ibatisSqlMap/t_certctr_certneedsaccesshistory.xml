@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+
+	<typeAlias alias="certNeedsAccessHistory" type="com.dotoyo.buildjob.certificateCenter.dto.CertNeedsAccessHistoryDto"/>
+	
+<!-- ********************************************************************************** 
+        模块:    证书需求浏览记录管理
+        功能:    增加浏览记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveCertNeedsAccessHistory" parameterClass="certNeedsAccessHistory">
+		INSERT INTO
+		t_certctr_certneedsaccesshistory
+			(certNeedsId,accessUserId,accessDate)
+		VALUES
+			(#certNeedsId#,#accessUserId#,#accessDate#)
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:    证书需求浏览记录管理
+        功能:    删除浏览记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteCertNeedsAccessHistory" parameterClass="java.lang.Long">
+		DELETE FROM
+		t_certctr_certneedsaccesshistory
+		WHERE
+			id = #id#
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:    证书需求浏览记录管理
+        功能:    根据证书需求ID查找浏览记录条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCertNeedsAccessHistoryCountByCertNeedsId" parameterClass="java.lang.Long" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM t_certctr_certneedsaccesshistory WHERE certNeedsId = #certNeedsId#
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    证书需求浏览记录管理
+        功能:    根据证书需求ID查找浏览记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCertNeedsAccessHistoryListByCertNeedsId" parameterClass="java.lang.Long" resultClass="certNeedsAccessHistory">
+		SELECT
+			id,certNeedsId,accessUserId,accessDate
+		FROM
+		t_certctr_certneedsaccesshistory
+		WHERE
+			certNeedsId = #certNeedsId#
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    证书需求浏览记录管理
+        功能:    根据证书需求ID批量删除浏览记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-9    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteCertNeedsAccessHistoryByCertNeedsId" parameterClass="java.lang.String">
+		DELETE FROM
+		t_certctr_certneedsaccesshistory
+		WHERE
+			certNeedsId in ($ids$)
+	</delete>
+</sqlMap>

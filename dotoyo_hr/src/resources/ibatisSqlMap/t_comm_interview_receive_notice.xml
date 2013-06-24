@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="interviewNoticeDto" type="com.dotoyo.buildjob.common.dto.InterviewNoticeDto"/>
+
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    添加接收面试通知信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-5    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveInterviewReceiveNotice" parameterClass="interviewNoticeDto">
+		INSERT INTO
+		T_COMM_INTERVIEW_RECEIVE_NOTICE
+			(senderId,receiverId,title,message,noticeDate,status,jobName)
+		VALUES
+			(#senderId#,#receiverId#,#title#,#message#,#noticeDate#,#status#,#jobName#)
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    批量删除接收面试通知信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-5    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteInterviewReceiveNotice" parameterClass="java.lang.String">
+		DELETE FROM
+		T_COMM_INTERVIEW_RECEIVE_NOTICE
+		WHERE id in ($ids$)
+	</delete>
+
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    根据接收者ID查找接收面试通知列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-5    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryInterviewReceiveNoticeListByReceiverId" parameterClass="interviewNoticeDto" resultClass="interviewNoticeDto">
+		SELECT 
+			notice.id,notice.senderId,notice.receiverId,notice.title,notice.message,notice.noticeDate,notice.status,
+			userInfo.userName AS senderUserName,userInfo.companyName AS senderRealName,notice.jobName
+		FROM
+			T_COMM_INTERVIEW_RECEIVE_NOTICE notice,t_login_user loginUser,t_user_info userInfo
+		WHERE
+			notice.receiverId = #receiverId#
+			AND
+				loginUser.userName = userInfo.userName
+			AND loginUser.id = notice.senderId
+			<dynamic prepend="and">
+				<isNotEmpty prepend="and" property="status">
+					notice.status = #status#
+				</isNotEmpty>
+			</dynamic>
+		ORDER BY
+			notice.noticeDate DESC
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    根据接收者ID查找面试通知条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-11    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryInterviewReceiveNoticeCountByReceiverId" parameterClass="interviewNoticeDto" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			T_COMM_INTERVIEW_RECEIVE_NOTICE notice,t_login_user loginUser,t_user_info userInfo
+		WHERE
+			notice.receiverId = #receiverId#
+			AND
+				loginUser.userName = userInfo.userName
+			AND loginUser.id = notice.senderId
+			<dynamic prepend="and">
+				<isNotEmpty prepend="and" property="status">
+					notice.status = #status#
+				</isNotEmpty>
+			</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    查询接收面试通知详细信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-5    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	 <select id="getInterviewReceiveNoticeById" parameterClass="java.lang.Long" resultClass="interviewNoticeDto">
+	 	SELECT 
+			notice.id,notice.senderId,notice.receiverId,notice.title,notice.message,notice.noticeDate,notice.status,
+			userInfo.userName AS senderUserName,userInfo.companyName AS senderRealName,notice.jobName
+		FROM
+			T_COMM_INTERVIEW_RECEIVE_NOTICE notice,t_login_user loginUser,t_user_info userInfo
+		WHERE
+			notice.id = #id#
+		AND
+			loginUser.userName = userInfo.userName
+		AND loginUser.id = notice.senderId
+	 </select>
+	 
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    更新接收面试通知状态
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-11    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateInterviewReceiveNoticeStatus" parameterClass="interviewNoticeDto">
+		UPDATE
+			T_COMM_INTERVIEW_RECEIVE_NOTICE
+		SET
+			status = #status#
+		WHERE
+			id = #id#
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    未查看面试通知数统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-14    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getCountOfNotSeeInvite" parameterClass="java.lang.Long" resultClass="java.lang.Integer">
+		SELECT COUNT(id)
+  		  FROM 
+			t_comm_interview_receive_notice t 
+		 WHERE t.receiverId=#userId#
+     	   AND t.status=0
+	</select>
+
+	
+</sqlMap>

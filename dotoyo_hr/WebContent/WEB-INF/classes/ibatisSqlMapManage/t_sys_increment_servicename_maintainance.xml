@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysIncrementServiceNameMaintainanceDto" type="com.dotoyo.buildjob.sys.dto.SysIncrementServiceNameMaintainanceDto"/>
+	<resultMap class="sysIncrementServiceNameMaintainanceDto" id="result_dto">
+		<result property="serviceCode" column="service_code"/>
+		<result property="serviceType" column="serviceType"/>
+		<result property="serviceName" column="service_name"/>
+		<result property="usableDays" column="usable_days"/>
+		<result property="price" column="price"/>
+		<result property="priceStatus" column="priceStatus"/>
+		<result property="serviceIntro" column="service_intro"/>
+		<result property="operatorName" column="userName"/>
+		<result property="operator" column="operator"/>
+		<result property="submitDate" column="submit_date"/>
+		<result property="lastEditDate" column="last_edit_date"/>
+	</resultMap>
+	<typeAlias alias="incrementServiceDto" type="com.dotoyo.buildjob.sys.dto.IncrementServiceDto"/>
+	<resultMap class="incrementServiceDto" id="result_dto1">
+		<result property="serviceCode" column="serviceCode"/>
+		<result property="serviceName" column="serviceName"/>
+		<result property="intro" column="intro"/>
+		<result property="price" column="price"/>
+		<result property="priceStatus" column="priceStatus"/>
+	</resultMap>
+ <!-- **********************************************************************************
+   Module:  System manager,service name maintainance
+   Function: add service name
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addIncrementServiceName" parameterClass="sysIncrementServiceNameMaintainanceDto">
+ 		     insert into T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE(
+   			 service_code,
+   			 serviceType,
+             service_name,
+   			 usable_days,
+   			 price,
+   			 priceStatus
+  			 service_intro,
+   			 operator,
+   			 submit_date,
+             last_edit_date) values(
+             #serviceCode#,
+             #serviceType#,
+ 		     #serviceName#,
+             #usableDays#,
+             #price#,
+             #priceStatus#,
+             #serviceIntro#,
+             #operator#,
+             #submitDate#,
+ 			 #lastEditDate#)
+ 	</insert>
+
+ <!-- **********************************************************************************
+   Module:  System manager,service name maintainance
+   Function: get service name list
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="queryIncrementSerivceNameList" resultMap="result_dto" parameterClass="sysIncrementServiceNameMaintainanceDto">
+ 		select
+   			 service.service_code,
+   			 service.serviceType,
+             service.service_name,
+   			 service.usable_days,
+   			 service.price,
+   			 service.priceStatus,
+  			 service.service_intro,
+   			 service.operator,
+   			 user.userName,
+   			 service.submit_date,
+             service.last_edit_date
+ 		  from T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service,T_LOGIN_USER_ADMIN user where service.operator=user.id
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="serviceName">
+				(service.service_name like concat("%",#serviceName#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by service.last_edit_date
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,service name maintainance
+   Function: get service name DTO
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="queryIncrementSerivceName" resultMap="result_dto" parameterClass="sysIncrementServiceNameMaintainanceDto">
+ 		select
+   			 service.service_code,
+   			 service.serviceType,
+             service.service_name,
+   			 service.usable_days,
+   			 service.price,
+   			 service.priceStatus,
+  			 service.service_intro,
+   			 service.operator,
+   			 user.userName,
+   			 service.submit_date,
+             service.last_edit_date
+ 		  from T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service,T_LOGIN_USER_ADMIN user where service.operator=user.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="serviceCode">
+				(service.service_code = #serviceCode#)
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by service.service_code asc
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,service name maintainance
+   Function: update service name DTO
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateIncrementSerivceName" parameterClass="sysIncrementServiceNameMaintainanceDto">
+ 		update T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE
+ 		set
+   		     service_code   = #serviceCode#,
+   		     serviceType   = #serviceType#,
+             service_name   = #serviceName#,
+   			 usable_days    = #usableDays#,
+   			 price    = #price#,
+   			 priceStatus    = #priceStatus#,
+  			 service_intro  = #serviceIntro#,
+   			 operator       = #operator#,
+             last_edit_date = #lastEditDate#
+ 		where service_code = #serviceCode#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager,service name maintainance
+   Function: remove service name from DB
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeIncrementSerivceNameByCode" parameterClass="sysIncrementServiceNameMaintainanceDto">
+ 		delete from T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE
+ 		where service_code = #serviceCode#
+ 	</statement>
+
+
+ <!-- **********************************************************************************
+   Module:  System manager,service name maintainance
+   Function: get service name count
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+	<select id="queryIncrementSerivceNameCount" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+ 		select
+			count(*)
+ 		  from T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="serviceName">
+				(service.service_name like concat("%",#serviceName#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by service.last_edit_date
+	</select>
+<!-- **********************************************************************************
+   Module:  System manager,service name maintainance
+   Function: get service name list
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="queryIncrementSerivceNameListByMap" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+   			 service.service_code,
+   			 service.serviceType,
+             service.service_name,
+   			 service.usable_days,
+   			 service.price,
+   			 service.priceStatus,
+  			 service.service_intro,
+   			 service.operator,
+   			 user.userName,
+   			 service.submit_date,
+             service.last_edit_date
+ 		  from T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service,T_LOGIN_USER_ADMIN user where service.operator=user.id
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="serviceName">
+				(service.service_name like concat("%",#serviceName#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by service.last_edit_date
+ 	</select>
+
+<!-- **********************************************************************************
+   Module:  System manager,service name maintainance
+   Function: get service name count
+   Date：2011-02-21
+   Author wisdy.xiao
+  ********************************************************************************** -->
+	<select id="queryHeadHunterServiceCount" parameterClass="incrementServiceDto" resultClass="java.lang.Integer">
+ 				SELECT
+ 					COUNT(*)
+ 				FROM
+ 					T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE a
+ 					LEFT JOIN t_sys_increment_advert_setting b ON a.service_code = b.service_code
+					LEFT JOIN t_sys_increment_hangcard_setting c ON c.service_code=a.service_code
+					LEFT JOIN t_sys_increment_huntcard_setting d ON d.service_code=a.service_code
+					LEFT JOIN t_sys_increment_recruit_setting  e ON e.service_code=a.service_code
+					LEFT JOIN t_sys_increment_talents_setting f ON f.service_code=a.service_code
+					LEFT JOIN t_sys_increment_talents_offline_setting of ON of.service_code=a.service_code
+ 				WHERE
+ 					a.serviceType = #userType#
+ 				AND
+ 					a.service_name like concat("%",#serviceName#,"%")
+ 					<dynamic prepend="and">
+					<isNotEmpty prepend="and" property="advertising">
+						(b.id IS NOT NULL OR c.id IS NOT NULL OR d.id IS NOT NULL OR e.id IS NOT NULL OR f.id IS NOT NULL)
+					</isNotEmpty>
+				   </dynamic>
+	</select>
+<!-- **********************************************************************************
+   Module:  System manager,service name maintainance
+   Function: get service name list
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	 	<select id="queryHeadHunterServiceList" resultMap="result_dto1" parameterClass="incrementServiceDto">
+ 				SELECT
+ 					a.service_code AS serviceCode,
+ 					a.service_name AS serviceName,
+ 					a.service_intro AS intro,
+ 					a.price,
+ 					a.priceStatus
+ 				FROM
+ 					T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE a
+ 					LEFT JOIN t_sys_increment_advert_setting b ON a.service_code = b.service_code
+					LEFT JOIN t_sys_increment_hangcard_setting c ON c.service_code=a.service_code
+					LEFT JOIN t_sys_increment_huntcard_setting d ON d.service_code=a.service_code
+					LEFT JOIN t_sys_increment_recruit_setting  e ON e.service_code=a.service_code
+					LEFT JOIN t_sys_increment_talents_setting f ON f.service_code=a.service_code
+					LEFT JOIN t_sys_increment_talents_offline_setting of ON of.service_code=a.service_code
+ 				WHERE
+ 					a.serviceType = #userType#
+ 				AND
+ 					a.service_name like concat("%",#serviceName#,"%")
+ 					<dynamic prepend="and">
+					<isNotEmpty prepend="and" property="advertising">
+						(b.id IS NOT NULL OR c.id IS NOT NULL OR d.id IS NOT NULL OR e.id IS NOT NULL OR f.id IS NOT NULL)
+					</isNotEmpty>
+				   </dynamic>
+ 				order by a.service_name
+ 	</select>
+ </sqlMap>

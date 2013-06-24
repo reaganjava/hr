@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysPointDto" type="com.dotoyo.buildjob.sys.dto.SysPointDto"/>
+	<resultMap class="sysPointDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="code" column="code"/>
+		<result property="action" column="action"/>
+		<result property="point" column="point"/>
+	</resultMap>
+ <!-- **********************************************************************************
+   Module:  System manager,point setting maintain
+   Function: get point setting list
+   Date：2011-01-27
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysPointList" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+			id,
+			code,
+			action,
+			point
+			from T_SYS_POINT
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="action">
+				(action like concat("%",#action#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by code
+ 	</select>
+ 	<select id="querySysPointCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(*)
+			from T_SYS_POINT
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="action">
+				(action like concat("%",#action#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,point setting maintain
+   Function: get point setting
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysPoint" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+			id,
+			code,
+			action,
+			point
+			from T_SYS_POINT
+			where 1=1
+ 		   <dynamic prepend="and">
+				code = #code#
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,point setting maintain
+   Function: update point setting
+   Date：2011-01-27
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateSysPoint" parameterClass="sysPointDto">
+ 		update T_SYS_POINT
+ 		set
+			 point = #point#
+ 		where code = #code#
+ 	</statement>
+ 	<statement id="updateSysUserPoint" parameterClass="java.util.Map">
+ 		update t_login_user
+ 		set
+			 point = point+#point#
+ 		where id = #id#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager,point adjustment
+   Function: select user list
+   Date：2011-01-27
+   Author wisdy.xiao
+  ********************************************************************************** -->
+	<select id="sysQueryMemberForList" resultClass="loginUserInfoDto" parameterClass="java.util.Map">
+		SELECT t.id,t.userName,t.password,t.point,t.status,t.registerDate,t.lastLoginDate
+          FROM t_login_user t where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="userName">
+				(t.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(t.status = #status#)
+			</isNotEmpty>
+		   </dynamic>
+		   <dynamic>
+		   	<isNotEmpty property="point">
+				order by t.point desc
+			</isNotEmpty>
+			<isEmpty property="point">
+				 order by t.registerDate desc
+			</isEmpty>
+		   </dynamic>
+	</select>
+	<select id="sysQueryMemberForListAccount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT count(*)
+          FROM t_login_user t where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="userName">
+				(t.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(t.status = #status#)
+			</isNotEmpty>
+		   </dynamic>
+	</select>
+
+<!-- **********************************************************************************
+   Module:  salon
+   Function: get point value by code
+   Date：2011-03-3
+   Author bill.xu
+  ********************************************************************************** -->
+   <select id="getPointValueByCode" resultClass="java.lang.Long" parameterClass="java.lang.String">
+		SELECT point FROM T_SYS_POINT t where code = #code#	
+   </select>
+  
+ </sqlMap>

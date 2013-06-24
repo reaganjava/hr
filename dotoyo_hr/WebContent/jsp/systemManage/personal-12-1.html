@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大太阳建筑猎头--系统管理--我发起的沙龙</title>
+<link href="../../css/system-manage.css" rel="stylesheet" type="text/css" />
+<script src="../../javascripts/common/jquery.js"></script>
+<script src="../../javascripts/common/jquery-ui-1.7.2.custom.min.js"></script>
+<script src="../../javascripts/common/accordion.js"></script>
+<script src="../../javascripts/common/jquery.cookie.js"></script>
+<script type="text/javascript">
+
+$(function(){
+			//Main menu
+			$(".nav li").mouseover(function(){
+				$(".nav li").attr("class","nav-on");
+				$(this).addClass("nav-out");
+			});
+		
+			// Accordion
+            $("#leftNav").accordion({
+                header: "h3",
+                collapsible: true,
+				autoHeight: false,
+                active: false,
+				multipleMode: true
+            });
+			
+			//Init active array
+			var activeArr;
+			if($.cookie("active_left_nav")!=null){
+				activeArr = $.cookie("active_left_nav").replace(/(^\,*)|(\,*$)/g, "").split(",");
+			}
+			else{
+				activeArr = new Array();
+			}
+			//Init left nav
+			var activeA = $.cookie("active_left_nav_a");
+			if(activeA != null){
+				$("#leftNav a").removeClass("active");
+				$("#leftNav a").eq(activeA).addClass("active");
+			}
+			if(activeArr.length>0)
+			{
+				$.each(activeArr,function(key,val){
+					if(val!=""){
+						$("#leftNav h3").eq(val).addClass("ui-state-active").next().addClass("ui-accordion-content-active").show();
+					}
+				});
+			}
+			//Set active array when click
+			$("#leftNav h3").click(function(){
+				var index = $("#leftNav h3").index($(this)[0]);
+				if($(this).hasClass("ui-state-active")){
+					//Add to array
+					if($.inArray(index, activeArr)){
+						activeArr.push(index);
+					}
+				}
+				else{
+					//Remove from array
+					$.grep(activeArr,function(val,key){
+						if(val==index){
+							activeArr.splice(key, 1);
+						}
+					});
+				}
+				$.cookie("active_left_nav", activeArr.join(","));
+			});
+			
+			$("#leftNav a").click(function(){
+				$("#leftNav a").removeClass("active");
+				var index = $("#leftNav a").index($(this)[0]);
+				$(this).addClass("active");
+				$.cookie("active_left_nav_a", index);
+			});
+        });
+</script>
+</head>
+<body>
+<div class="top">
+	<div class="top-left"><img src="../../images/logo.png" width="152" height="88" alt="中国建筑平台"/></div>
+    <div class="top-right">arthas&nbsp;&nbsp;中国建筑猎头平台欢迎您！</div>
+</div>
+<div class="nav">
+	<ul>
+    	<li class="nav-on" id="menu01" onmouseover="changeMenu(this)"><a href="../../index.html">首页</a></li>
+        <li class="nav-on" id="menu02" onmouseover="changeMenu(this)"><a href="../headhunterCenter/head.html">猎头中心</a></li>
+        <li class="nav-on" id="menu03" onmouseover="changeMenu(this)"><a href="../applyJobCenter/people.html">人才中心</a></li>
+        <li class="nav-on" id="menu04" onmouseover="changeMenu(this)"><a href="../peopleExcavate/excavate.html">人才挖掘</a></li>
+        <li class="nav-out" id="menu05" onmouseover="changeMenu(this)"><a href="../certificateCenter/certificate.html">猎证中心</a></li>
+        <li class="nav-on" id="menu06" onmouseover="changeMenu(this)"><a href="../innovationPark/park.html">创业园</a></li>
+        <li class="nav-on" id="menu07" onmouseover="changeMenu(this)"><a href="../wisdomChina/china.html">智慧中国</a></li>
+        <li class="nav-on" id="menu08" onmouseover="changeMenu(this)"><a href="../innovationSalon/salon.html">创业沙龙</a></li>
+    </ul>
+</div>
+<!--以上为头部分-->
+<!--中间部分-->
+<div class="content">
+<div class="administrator-title4"><strong>我发起的沙龙</strong></div>
+<div class="inside-search5">
+        	<ul>
+            	<li>沙龙主题：
+            	  <input name="" type="text" size="17"/></li>
+                <li>开始日期：
+                  <input name="" type="text" size="11"/></li>
+                <li>截止日期：
+              <input name="" type="text" size="11"/></li>
+                <li><a href="#"><img src="../../images/results-list-botton.png" width="101" height="25" /></a></li>
+            </ul>
+        </div>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-size:14px;">
+              <tr>
+                <td width="24%" height="40" align="left"><strong>观点标题</strong></td>
+                <td width="23%" align="left"><strong>沙龙主题</strong></td>
+                <td width="11%" align="left"><strong>发表时间</strong></td>
+                <td width="32%" align="left"><strong>地点</strong></td>
+                <td width="5%" align="left"><strong>操作</strong></td>
+                <td width="5%" align="left">&nbsp;</td>
+              </tr>
+              <tr>
+                <td width="24%" height="40" align="left">好还是不好</td>
+                <td width="23%" align="left">激情燃烧的岁月</td>
+                <td width="11%" align="left">2010-12-30</td>
+                <td width="32%" align="left">深圳市清华信息港研发楼B座11楼</td>
+                <td width="5%" align="left" class="inside-links"><a href="#">查看</a></td>
+                <td width="5%" align="left"><a href="#">删除</a></td>
+              </tr>
+            </table>
+    
+</div>
+<div class="qx-other">
+	 <span><input name="" type="checkbox" value="" />&nbsp;&nbsp;全选</span>
+	 <ul>
+     	 <li class="qx1"><img src="../../images/quanxuan-icon.png" width="4" height="7" /></li>
+         <li>共41564564156456415645条</li>
+         <li>显示1-1156456415642条</li>
+         <li>第815645641564页</li>
+         <li><input name="" type="text" size="2"/></li>
+         <li><img src="../../images/queding.png" width="63" height="23" /></li>
+     </ul>
+</div>
+<div class="num-other">
+	<ul>
+        <li class="num-on"><a href="#"><strong>上一页</strong></a></li>
+        <li class="num-out"><a href="#">1</a></li>
+        <li class="num-on"><a href="#">2</a></li>
+        <li class="num-on"><a href="#">3</a></li>
+        <li class="num-on"><a href="#">4</a></li>
+        <li class="num-on"><a href="#">5</a></li>
+        <li class="num-on"><a href="#">6</a></li>
+        <li class="num-on"><a href="#">7</a></li>
+        <li class="num-on"><a href="#">8</a></li>
+        <li class="num-on"><a href="#">9</a></li>
+        <li class="num-on"><a href="#">10</a></li>
+        <li class="num-on"><a href="#">11</a></li>
+        <li class="num-on"><a href="#">12</a></li>
+        <li class="num-on"><a href="#"><strong>下一页</strong></a></li>
+    </ul>
+</div>
+
+
+</body>
+</html>

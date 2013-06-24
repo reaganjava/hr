@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+ 	<typeAlias alias="jobInfoDto" type="com.dotoyo.buildjob.headhunterCenter.dto.JobInfoDto"/>
+<!-- ********************************************************************************** 
+        模块:    猎头中心
+        功能:    加载职位模板（ID,名称）
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-27    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryJobTemplateList" resultClass="jobInfoDto" parameterClass="java.util.Map">
+		SELECT id,CONCAT(tmpName,romanNum) AS tmpName,romanNum 
+		  FROM t_hhc_jobinfotemplate 
+		 <dynamic prepend="where">
+		 	<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="tmpName">
+				(tmpName = #tmpName#)
+			</isNotEmpty>
+		 </dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    猎头中心
+        功能:    新增职位模板
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-30    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="addJobInfoTemplate" parameterClass="jobInfoDto">
+		<![CDATA[INSERT INTO T_HHC_JOBINFOTEMPLATE 
+		(userId,jobName,industryType,competency,specializedType,jobNature,isAdviser,
+		 recruitingNumber, provinceCode,cityCode,areaCode,salary,age,sex,
+		 education,workingLife,langCapa,mastery,computerGrade,jobResponsibility, jobRequirements,
+		 jobIssuetDate,jobEffectiveStartDate,jobExpiryDate,tmpName,romanNum,filterIndustryType,filterSpecializedType,filterMetier,filterJobNature, 
+	     filterltWorkingLife,filtergtWorkingLife,filterEducation,filterSex,filterltAge,filtergtAge)VALUES
+		(#userId#,#jobName#,#industryType#,#competency#,#specializedType#,#jobNature#,#isAdviser#,
+		 #recruitingNumber#,#provinceCode#,#cityCode#,#areaCode#,#salary#,#age#,#sex#,
+		 #education#,#workingLife#,#langCapa#,#mastery#,#computerGrade#,#jobResponsibility#,#jobRequirements#,
+		 #jobIssuetDate#,#jobEffectiveStartDate#,#jobExpiryDate#,#tmpName#,#romanNum#,#filterIndustryType#,#filterSpecializedType#,#filterMetier#,#filterJobNature#, 
+	     #filterltWorkingLife#,#filtergtWorkingLife#,#filterEducation#,#filterSex#,#filterltAge#,#filtergtAge#
+		)]]>
+		
+		<selectKey resultClass="Long" keyProperty="id">  
+		  <![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>   
+        </selectKey>  
+		
+	</insert>	
+<!-- ********************************************************************************** 
+        模块:    猎头中心－保存职位模板
+        功能:    查询用户已有模板（同名）
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-4    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+	<select id="" parameterClass="java.util.Map" resultClass="jobInfoDto">
+		
+	</select>
+	
+</sqlMap>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+
+	<typeAlias alias="certAccessHistory" type="com.dotoyo.buildjob.certificateCenter.dto.CertAccessHistoryDto"/>
+	
+<!-- ********************************************************************************** 
+        模块:    证书浏览记录管理
+        功能:    增加浏览记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveCertAccessHistory" parameterClass="certAccessHistory">
+		INSERT INTO
+		t_certctr_certaccesshistory
+			(personalCertId,companyId,accessDate)
+		VALUES
+			(#personalCertId#,#companyId#,#accessDate#)
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:    证书浏览记录管理
+        功能:    删除浏览记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteCertAccessHistory" parameterClass="java.lang.Long">
+		DELETE FROM
+		t_certctr_certaccesshistory
+		WHERE
+			id = #id#
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:    证书浏览记录管理
+        功能:    根据证书ID查找浏览记录条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCertAccessHistoryCountByCertId" parameterClass="java.lang.Long" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM t_certctr_certaccesshistory WHERE personalCertId = #personalCertId#
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    证书浏览记录管理
+        功能:    根据证书ID查找浏览记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCertAccessHistoryListByCertId" parameterClass="java.lang.Long" resultClass="certAccessHistory">
+		SELECT
+			c.id,c.personalCertId,c.companyId,c.accessDate,u.status as companyUserStatus,u.lastLoginDate as companyUserLastLoginDate
+		FROM
+		t_certctr_certaccesshistory c,t_login_user u
+		WHERE
+			c.personalCertId = #personalCertId# AND c.companyId = u.id
+	</select>
+<!-- ********************************************************************************** 
+        模块:    证书浏览记录管理
+        功能:    根据证书ID和浏览公司ID查找浏览记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCertAccessHistoryListByCertIdAndCompanyId" parameterClass="certAccessHistory" resultClass="certAccessHistory">
+		SELECT
+			c.id,c.personalCertId,c.companyId,c.accessDate,u.status as companyUserStatus,u.lastLoginDate as companyUserLastLoginDate
+		FROM
+		t_certctr_certaccesshistory c,t_login_user u
+		WHERE
+			c.personalCertId = #personalCertId# AND c.companyId = u.id AND c.companyId = #companyId#
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    证书浏览记录管理
+        功能:    根据个人证书ID批量删除浏览记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-9    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteCertAccessHistoryByPersonalCertId" parameterClass="java.lang.String">
+		DELETE FROM
+		t_certctr_certaccesshistory
+		WHERE
+			personalCertId in ($ids$)
+	</delete>
+</sqlMap>

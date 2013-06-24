@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="filterCompanyDto" type="com.dotoyo.buildjob.personalCenter.dto.FilterCompanyDto"/>
+	
+<!-- ********************************************************************************** 
+        模块:    屏蔽公司管理
+        功能:    增加屏蔽公司
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveFilterCompany" parameterClass="filterCompanyDto">
+		INSERT INTO
+		t_personcenter_filtercompany
+			(userId,companyName1,companyName2,companyName3,companyName4,companyName5)
+		VALUES
+			(#userId#,#companyName1#,#companyName2#,#companyName3#,#companyName4#,#companyName5#)
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:    屏蔽公司管理
+        功能:    修改屏蔽公司
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateFilterCompany" parameterClass="filterCompanyDto">
+		UPDATE t_personCenter_filtercompany
+		SET
+			companyName1 = #companyName1#, companyName2 = #companyName2#, companyName3 = #companyName3#,
+			companyName4 = #companyName4#, companyName5 = #companyName5#
+		WHERE
+			id = #id#
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    屏蔽公司管理
+        功能:    根据用户ID查找屏蔽公司
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getFilterCompanyByUserId" parameterClass="java.lang.Long" resultClass="filterCompanyDto">
+		SELECT
+			id,userId,companyName1,companyName2,companyName3,companyName4,companyName5
+		FROM
+			t_personCenter_filtercompany
+		WHERE
+			userId = #userId#
+	</select>
+</sqlMap>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="filterWordsDto" type="com.dotoyo.buildjob.systemManage.dto.FilterWordsDto"/>
+<!-- ********************************************************************************** 
+        模块:	          系统管理，过滤词管理 
+        功能:    添加过滤词
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-2    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="addFilterWord" parameterClass="filterWordsDto">
+		INSERT INTO T_COMM_FILTER_WORDS(words,notes,operator) VALUES(#words#,#notes#,#operator#)
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理，过滤词管理
+        功能:    删除过滤词
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-2    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+	<delete id="deleteFilterWord" parameterClass="java.lang.String">
+		DELETE FROM T_COMM_FILTER_WORDS WHERE id in(#ids#)
+	</delete>
+
+<!-- ********************************************************************************** 
+        模块:    系统管理，过滤词管理
+        功能:    编辑过滤词
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-2    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateFilterWord" parameterClass="filterWordsDto">
+		UPDATE T_COMM_FILTER_WORDS SET words=#words#,notes=#notes# where id=#id#
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理，过滤词管理
+        功能:    加载过滤词列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-2    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryFilterWordsForList" resultClass="filterWordsDto">
+		select id,words,notes,operator from T_COMM_FILTER_WORDS
+	</select>
+ </sqlMap>

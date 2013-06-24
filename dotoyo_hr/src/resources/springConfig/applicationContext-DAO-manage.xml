@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/tx
+                    http://www.springframework.org/schema/tx/spring-tx.xsd
+                    http://www.springframework.org/schema/aop
+                    http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!--System manager increment service  -->
+    <bean id="sysIncrementServiceNameMaintainanceDao" class="com.dotoyo.buildjob.sys.dao.impl.SysIncrementServiceNameMaintainanceDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+    <bean id="sysIncrementTalentsFoundSettingDao" class="com.dotoyo.buildjob.sys.dao.impl.SysIncrementTalentsFoundSettingDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+    <bean id="sysIncrementTalentsFoundOfflineSettingDao" class="com.dotoyo.buildjob.sys.dao.impl.SysIncrementTalentsFoundOfflineSettingDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+    <bean id="sysIncrementHangCardSettingDao" class="com.dotoyo.buildjob.sys.dao.impl.SysIncrementHangCardSettingDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+    <bean id="sysIncrementHuntCardSettingDao" class="com.dotoyo.buildjob.sys.dao.impl.SysIncrementHuntCardSettingDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+    <bean id="sysIncrementRecruitSettingDao" class="com.dotoyo.buildjob.sys.dao.impl.SysIncrementRecruitSettingDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+    <bean id="sysIncrementAdvertSettingDao" class="com.dotoyo.buildjob.sys.dao.impl.SysIncrementAdvertSettingDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+    <bean id="sysOrderDao" class="com.dotoyo.buildjob.sys.dao.impl.SysOrderDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<!-- System manager increment service End  -->
+	<bean id="sysFunctionDao" class="com.dotoyo.buildjob.sys.dao.impl.SysFunctionDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	<bean id="sysRoleDao" class="com.dotoyo.buildjob.sys.dao.impl.SysRoleDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	<bean id="sysUserRoleDao" class="com.dotoyo.buildjob.sys.dao.impl.SysUserRoleDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	<bean id="sysFunctionRoleDao" class="com.dotoyo.buildjob.sys.dao.impl.SysFunctionRoleDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	<bean id="sysFilterWordDao" class="com.dotoyo.buildjob.sys.dao.impl.SysFilterWordDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	<bean id="sysPointDao" class="com.dotoyo.buildjob.sys.dao.impl.SysPointDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	<bean id="sysAdDao" class="com.dotoyo.buildjob.sys.dao.impl.SysAdDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	<bean id="sysRoleAdminDao" class="com.dotoyo.buildjob.sys.dao.impl.SysRoleAdminDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	<bean id="sysUserRoleAdminDao" class="com.dotoyo.buildjob.sys.dao.impl.SysUserRoleAdminDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	<bean id="sysFunctionRoleAdminDao" class="com.dotoyo.buildjob.sys.dao.impl.SysFunctionRoleAdminDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	<!--salon module  -->
+	 <bean id="salonAdminDao" class="com.dotoyo.buildjob.sys.dao.impl.SalonAdminDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<bean id="certificateAdminDao" class="com.dotoyo.buildjob.sys.dao.impl.CertificateAdminDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<bean id="applyJobAdminDao" class="com.dotoyo.buildjob.sys.dao.impl.ApplyJobAdminDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+</beans>

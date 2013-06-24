@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="applyJobInfo" type="com.dotoyo.buildjob.applyJobCenter.dto.ApplyJobInfoDto" />
+	<typeAlias alias="applyJobInfoVo" type="com.dotoyo.buildjob.applyJobCenter.vo.ApplyJobInfoVo"/>
+	
+	<resultMap class="applyJobInfoVo" id="get-applyJobInfo-result">
+		<result property="id" column="id"/>
+		<result property="userId" column="userId"/>
+		<result property="userInfo" column="userId" select="getBlogUserInfoByLoginUserId"/>
+		<result property="function" column="functionCode" select="getClassMasterByCode"/>
+		<result property="expectedPosition" column="expectedPosition"/>
+		<result property="province" column="provinceCode" select="getProvinceByCode"/>
+		<result property="city" column="cityCode" select="getCityByCode"/>
+		<result property="area" column="areaCode" select="getAreaByCode"/>
+		<result property="jobType" column="jobTypeCode" select="getClassMasterByCode"/>
+		<result property="isAdvisor" column="isAdvisor"/>
+		<result property="submitDate" column="submitDate"/>
+		<result property="lastEditDate" column="lastEditDate"/>
+		<result property="expectedSalary" column="expectedSalaryCode" select="getClassMasterByCode"/>
+		<result property="actStatus" column="actstatus"/>
+	</resultMap>
+		
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    添加求职信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveApplyJobInfo" parameterClass="applyJobInfo">
+		insert into
+		t_applyjobctr_applyjobinfo
+			(userId,functionCode,expectedPosition,provinceCode,cityCode,areaCode,jobTypeCode,
+			isAdvisor,submitDate,lastEditDate,expectedSalaryCode,actStatus)
+		values
+			(#userId#,#functionCode#,#expectedPosition#,#provinceCode#,#cityCode#,#areaCode#,#jobTypeCode#
+			,#isAdvisor#,#submitDate#,#lastEditDate#,#expectedSalaryCode#,#actStatus#)
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    查询求职信息列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-2    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryApplyJobInfoList" parameterClass="applyJobInfo" resultMap="get-applyJobInfo-result">
+		select id,userId,functionCode,expectedPosition,provinceCode,cityCode,areaCode,jobTypeCode,
+			isAdvisor,submitDate,lastEditDate,expectedSalaryCode,actStatus
+		from t_applyjobctr_applyjobinfo
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="id">
+				(id = #id#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="functionCode">
+				(functionCode = #functionCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedPosition">
+				(expectedPosition like concat("%",#expectedPosition#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="provinceCode">
+				(provinceCode = #provinceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="cityCode">
+				(cityCode = #cityCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="areaCode">
+				(areaCode = #areaCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="jobTypeCode">
+				(jobTypeCode = #jobTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isAdvisor">
+				(isAdvisor = #isAdvisor#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="submitDate">
+				(submitDate = #submitDate#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="lastEditDate">
+				(lastEditDate = #lastEditDate#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedSalaryCode">
+				(expectedSalaryCode = #expectedSalaryCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="actStatus">
+				(actStatus = #actStatus#)
+			</isNotEmpty>
+		</dynamic>
+		order by submitDate desc
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    求职中心
+        功能:    查询求职信息记录条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-18    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryApplyJobInfoCount" parameterClass="applyJobInfo" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			t_applyjobctr_applyjobinfo
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="id">
+				(id = #id#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="functionCode">
+				(functionCode = #functionCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedPosition">
+				(expectedPosition like concat("%",#expectedPosition#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="provinceCode">
+				(provinceCode = #provinceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="cityCode">
+				(cityCode = #cityCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="areaCode">
+				(areaCode = #areaCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="jobTypeCode">
+				(jobTypeCode = #jobTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isAdvisor">
+				(isAdvisor = #isAdvisor#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="submitDate">
+				(submitDate = #submitDate#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="lastEditDate">
+				(lastEditDate = #lastEditDate#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedSalaryCode">
+				(expectedSalaryCode = #expectedSalaryCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="actStatus">
+				(actStatus = #actStatus#)
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    查询重复的求职记录条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-03-12    arthas.zou
+   Notes:     备注
+********************************************************************************** -->	
+	<select id="queryDuplicatedIntentionCount" parameterClass="applyJobInfo" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			t_applyjobctr_applyjobinfo
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="functionCode">
+				(functionCode = #functionCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedPosition">
+				(expectedPosition = #expectedPosition#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="jobTypeCode">
+				(jobTypeCode = #jobTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isAdvisor">
+				(isAdvisor = #isAdvisor#)
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    查询重复的求职记录ID列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-03-12    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryDuplicatedIntentionIdList" parameterClass="applyJobInfo" resultClass="java.lang.Long">
+		SELECT
+			id
+		FROM
+			t_applyjobctr_applyjobinfo
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="functionCode">
+				(functionCode = #functionCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedPosition">
+				(expectedPosition = #expectedPosition#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="jobTypeCode">
+				(jobTypeCode = #jobTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isAdvisor">
+				(isAdvisor = #isAdvisor#)
+			</isNotEmpty>
+		</dynamic>
+	</select>		
+
+
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    查询求职信息详细信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-6    arthas.zou
+   Notes:     备注
+********************************************************************************** -->	
+	<select id="getApplyJobInfoById" parameterClass="java.lang.Long" resultMap="get-applyJobInfo-result">
+		select id,userId,functionCode,expectedPosition,provinceCode,cityCode,areaCode,
+			jobTypeCode,isAdvisor,submitDate,lastEditDate,expectedSalaryCode,actStatus
+		from t_applyjobctr_applyjobinfo
+		where id = #id#
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    批量删除求职信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-3    arthas.zou
+   Notes:     备注
+********************************************************************************** -->	
+	<delete id="deleteApplyJobInfo" parameterClass="java.lang.String">
+		delete from t_applyjobctr_applyjobinfo where id in ($ids$)
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    更新求职信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-3    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateApplyJobInfo" parameterClass="applyJobInfo">
+		update t_applyjobctr_applyjobinfo
+		set id = #id#
+		<dynamic>
+			<isNotEmpty prepend="," property="functionCode">
+				functionCode = #functionCode#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="expectedPosition">
+				expectedPosition = #expectedPosition#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="provinceCode">
+				provinceCode = #provinceCode#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="cityCode">
+				cityCode = #cityCode#
+			</isNotEmpty>
+				,areaCode = #areaCode#
+			<isNotEmpty prepend="," property="jobTypeCode">
+				jobTypeCode = #jobTypeCode#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="isAdvisor">
+				isAdvisor = #isAdvisor#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="lastEditDate">
+				lastEditDate = #lastEditDate#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="expectedSalaryCode">
+				expectedSalaryCode = #expectedSalaryCode#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="actStatus">
+				actStatus = #actStatus#
+			</isNotEmpty>
+		</dynamic>
+		where id = #id#
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    人才挖掘
+        功能:    求职人才统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-15    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+	<select id="getCountOfPersonnel" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)  FROM t_login_user loginUser,t_user_info userInfo
+			 WHERE userInfo.userName=loginUser.userName
+			   AND userInfo.userType=0
+		]]>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理-求职管理
+        功能:    加载求职意向列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryApplyJobList4Admin" parameterClass="java.util.Map" resultClass="applyJobInfo">
+		SELECT
+			applyJobInfo.id,applyJobInfo.userId,userInfo.userName,userInfo.companyName AS userRealName,
+			applyJobInfo.functionCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = applyJobInfo.functionCode)AS functionName,
+			applyJobInfo.expectedPosition,
+			applyJobInfo.provinceCode,
+			(SELECT name FROM T_COMM_PROVINCE WHERE code = applyJobInfo.provinceCode)AS provinceName,
+			applyJobInfo.cityCode,
+			(SELECT name FROM T_COMM_CITY WHERE code = applyJobInfo.cityCode)AS cityName,
+			applyJobInfo.areaCode,
+			(SELECT name FROM T_COMM_AREA WHERE code = applyJobInfo.areaCode)AS areaName,
+			applyJobInfo.jobTypeCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = applyJobInfo.jobTypeCode)AS jobTypeName,
+			applyJobInfo.isAdvisor,applyJobInfo.submitDate,applyJobInfo.lastEditDate,
+			applyJobInfo.expectedSalaryCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = applyJobInfo.expectedSalaryCode)AS expectedSalaryName,
+			applyJobInfo.actStatus
+		FROM
+			T_APPLYJOBCTR_APPLYJOBINFO applyJobInfo,T_LOGIN_USER loginUser, T_USER_INFO userInfo
+		WHERE
+			loginUser.userName = userInfo.userName
+		AND
+			applyJobInfo.userId = loginUser.id
+		<dynamic>
+			<isNotEmpty prepend="and" property="userName">
+				(userInfo.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedPosition">
+				(applyJobInfo.expectedPosition like concat("%",#expectedPosition#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="submitDate">
+				(DATE_FORMAT(applyJobInfo.submitDate,'%Y-%m-%d') = DATE_FORMAT(#submitDate#,'%Y-%m-%d'))
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY applyJobInfo.submitDate DESC
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理-求职管理
+        功能:    计算加载求职意向列表条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryApplyJobCount4Admin" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			T_APPLYJOBCTR_APPLYJOBINFO applyJobInfo,T_LOGIN_USER loginUser, T_USER_INFO userInfo
+		WHERE
+			loginUser.userName = userInfo.userName
+		AND
+			applyJobInfo.userId = loginUser.id
+		<dynamic>
+			<isNotEmpty prepend="and" property="userName">
+				(userInfo.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedPosition">
+				(applyJobInfo.expectedPosition like concat("%",#expectedPosition#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="submitDate">
+				(DATE_FORMAT(applyJobInfo.submitDate,'%Y-%m-%d') = DATE_FORMAT(#submitDate#,'%Y-%m-%d'))
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    个人后台
+        功能:    暂停发布求职意向
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateApplyJobInfoActiveStatus" parameterClass="java.util.Map">
+		update t_applyjobctr_applyjobinfo
+		set actStatus = #actStatus#
+		where id in ($ids$)
+	</update>
+</sqlMap>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+ 	<typeAlias alias="paymentDto" type="com.dotoyo.buildjob.common.paymentonline.PaymentDto"/>
+ 	<typeAlias alias="searchPaymentVo" type="com.dotoyo.buildjob.common.vo.SearchPaymentVo"/>
+<!-- ********************************************************************************** 
+        模块:    用户管理·支付管理
+        功能:    新增付费记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+<insert id="addPaymentRecord" parameterClass="paymentDto">	
+	INSERT INTO T_COMM_PAYMENT(payer,
+					           status,
+					           amount,
+					           submitDate,
+					           confirmDate,
+					           confirmMan,
+					           notes) 
+	                    VALUES(#payer#,
+	                           #status#,
+	                           #amount#,
+	                           now(),
+	                           #confirmDate#,
+	                           #confirmMan#,
+	                           #notes#)
+</insert>
+ 	
+<!-- ********************************************************************************** 
+        模块:    用户管理·支付管理
+        功能:    加载支付记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    tyler.qu      
+   Notes:     备注
+********************************************************************************** --> 	
+	<select id="queryPaymentForList" resultClass="paymentDto">
+		SELECT t.id,t.payer,t.status,t.amount,t.submitDate,t.confirmDate,t.confirmMan,t.notes 
+		  FROM T_COMM_PAYMENT t
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:    用户管理·支付管理
+        功能:    根据记录ID删除支付记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+	<delete id="deletePaymentRecordById" parameterClass="java.lang.Long">
+		DELETE FROM T_COMM_PAYMENT WHERE id=#id#
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:    用户管理·支付管理
+        功能:    确认支付
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="confirmPayment" parameterClass="paymentDto">
+		UPDATE T_COMM_PAYMENT t SET t.status=1,
+		                            t.confirmDate=NOW(),
+		                            t.confirmMan=#confirmMan#,
+		                            t.notes=#notes# 
+		                      WHERE t.id=#id# 
+	</update>
+
+<!-- ********************************************************************************** 
+        模块:    所属功能模块 
+        功能:    功能说明
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="searchPaymentForList" parameterClass="searchPaymentVo" resultClass="paymentDto">
+	<![CDATA[
+		 SELECT tl.userName,tc.status,tc.confirmDate,tc.submitDate,tc.confirmMan FROM t_login_user tl,t_comm_payment tc 
+             WHERE tl.id=tc.payer 
+                  AND tl.userName like concat("%",#userName#,"%") 
+                  AND tc.submitDate>=DATE_FORMAT(#startSubmitDate#,'%Y-%m-%d')
+                  AND tc.submitDate<=DATE_FORMAT(#endSubmitDate#,'%Y-%m-%d')
+		          AND tc.confirmDate>=DATE_FORMAT(#startConfirmDate#,'%Y-%m-%d')
+                  AND tc.confirmDate<=DATE_FORMAT(#endConfirmDate#,'%Y-%m-%d')
+                  AND tc.status=#status#
+    ]]>
+	</select>
+	
+</sqlMap>

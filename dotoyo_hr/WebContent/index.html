@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大太阳建筑猎头--首页</title>
+<link href="css/index-style.css" rel="stylesheet" type="text/css" />
+<script src="javascripts/common/jquery.js"></script>
+<script src="javascripts/common/select.js"></script>
+<script type="text/javascript">
+function changeMenu(obj)
+{
+	for(var i=1;i<=8;i++)
+	{
+		$("#menu0"+i).attr("class","nav-on");
+	}
+	
+	$(obj).attr("class","nav-out");
+}
+</script>
+</head>
+<body>
+<div class="top">
+	<div class="logo1"><img src="images/logo.png" width="152" height="88" alt="中国建筑平台"/></div>
+    <div class="logo2"><a href="#"><img src="images/logo2.png" width="147" height="55" alt="猎头，甄别模下的人才交流"/></a></div>
+    <div class="top-right">
+    	<div class="top-add"><a href="#"><img src="pic/top-add.jpg" width="612" height="82" /></a></div>
+        <div class="top-font">
+        	<span>arthas，欢迎您！</span>
+        	<ul>
+            	<li><a href="#">大太阳公益</a></li>
+                <li><a href="help.html">帮助中心</a></li>
+                <li><a href="services.html">增值服务</a></li>
+                <li><a href="#">注册</a></li>
+                <li><a href="#">登录</a></li>
+            </ul>
+        </div>
+    </div>
+    
+</div>
+<div class="nav">
+	<ul>
+    	<li class="nav-out" id="menu01" onmouseover="changeMenu(this)"><a href="index.html">首页</a></li>
+        <li class="nav-on" id="menu02" onmouseover="changeMenu(this)"><a href="jsp/headhunterCenter/head.html">猎头中心</a></li>
+        <li class="nav-on" id="menu03" onmouseover="changeMenu(this)"><a href="jsp/applyJobCenter/people.html">人才中心</a></li>
+        <li class="nav-on" id="menu04" onmouseover="changeMenu(this)"><a href="jsp/peopleExcavate/excavate.html">人才挖掘</a></li>
+        <li class="nav-on" id="menu05" onmouseover="changeMenu(this)"><a href="jsp/certificateCenter/certificate.html">猎证中心</a></li>
+        <li class="nav-on" id="menu08" onmouseover="changeMenu(this)"><a href="jsp/innovationSalon/salon.html">创业沙龙</a></li>
+    </ul>
+</div>
+<div class="banner-line">
+  <div class="banner-box">
+    <div class="banner"><img src="images/banner.png" width="682" height="220" /></div>
+    <!--
+    <div class="login">
+      <p>欢迎您，用户名  再次光临猎头系统！<br /><strong>今日提醒：</strong><br />（企业）您有0个职位即将到期；<br />（个人）您有0个面试通知还未查看</p>
+      <div class="login-botton">
+        <div class="l-botton"><a href="#"><img src="images/login-botton2.png" width="101" height="29" /></a></div>
+        <div class="l-font2"><a href="#">退出登录</a></div>
+      </div>
+      <div class="login-wz"><a href="#">密码修改</a>|<a href="#">猎头服务</a>|<a href="#"><img src="images/bz-icon.jpg" width="17" height="13" />&nbsp;<strong>我的博站</strong></a></div>
+    </div>
+    -->
+    	<div class="login">
+      <div class="login-title"></div>
+      <div class="login-input">
+        <input name="input" type="text" value="用户名/注册邮箱"/>
+      </div>
+      <div class="login-input">
+        <input name="input2" type="text" value="密码"/>
+      </div>
+      <div class="yzm">
+        <div class="yzm-left">
+          <input name="input2" type="text" value="验证码"/>
+        </div>
+        <div class="yzm-pic"><img src="pic/yzm.jpg" width="80" height="20" /></div>
+      </div>
+      <div class="login-botton">
+        <div class="l-botton"><a href="#"><img src="images/login-botton.png" width="101" height="29" /></a></div>
+        <div class="l-font"><a href="#">还没有帐号？</a></div>
+      </div>
+      <div class="login-wz"><a href="#">忘记密码？</a>|<a href="#">猎头服务</a>|<a href="#"><img src="images/bz-icon.jpg" width="17" height="13" />&nbsp;<strong>我的博站</strong></a></div>
+    </div>
+    
+  </div>
+</div>
+<div class="search-box">
+	<ul>
+    	<li class="search1">
+        <img src="images/search-down.png" width="21" height="22" onclick="menuClick('#border1', '#searchDown1')" />
+        <input name="input" id="border1" type="text" value="选择省份"/></li>
+        <li class="search1"><img src="images/search-down.png" width="21" height="22" onclick="menuClick('#border2', '#searchDown2')" /><input id="border2" name="input" type="text" value="选择城市"/></li>
+        <li class="search1"><img src="images/search-down.png" width="21" height="22" onclick="menuClick('#border3', '#searchDown3')" /><input id="border3" name="input" type="text" value="选择职位"/>
+        </li>
+        <li class="search1"><img src="images/search-down.png" width="21" height="22" onclick="menuClick('#border4', '#searchDown4')" /><input id="border4" name="input" type="text" value="选择日期"/></li>
+        <li class="search2"><input name="input" type="text" value="输入关键字"/></li>
+        <li class="search-botton"><a href="#"><img src="images/search-botton.png" width="71" height="29" /></a></li>
+        <li class="gaoji"><a href="#">高级搜索</a></li>
+    </ul>
+</div>
+<!--搜索下拉菜单~绝对定位~-->
+
+<!--搜索下拉菜单~绝对定位~-->
+<div class="search-down" id="showMenuID">
+    <div class="search-down1" id="searchDown1" onmouseleave="menuHide(this)" style="display:none;">
+        <ul>
+            <li><a href="#">海南省海南省</a></li>
+            <li><a href="#">湖南省</a></li>
+            <li><a href="#">浙江省</a></li>
+            <li><a href="#">江苏省</a></li>
+            <li><a href="#">四川省</a></li>
+            <li><a href="#">广西省</a></li>
+            <li><a href="#">江西省</a></li>
+            <li><a href="#">黑龙江</a></li>
+            <li><a href="#">浙江省</a></li>
+            <li><a href="#">江苏省</a></li>
+            <li><a href="#">四川省</a></li>
+            <li><a href="#">广西省</a></li>
+            <li><a href="#">江西省</a></li>
+            <li><a href="#">内蒙古</a></li>
+        </ul>
+    </div>
+    <div class="search-down1" id="searchDown2" onmouseleave="menuHide(this)" style="display:none;">
+        <ul>
+            <li><a href="#">东莞</a></li>
+            <li><a href="#">大连</a></li>
+            <li><a href="#">沈阳</a></li>
+            <li><a href="#">苏州</a></li>
+            <li><a href="#">昆明</a></li>
+            <li><a href="#">长沙</a></li>
+            <li><a href="#">合肥</a></li>
+            <li><a href="#">宁波</a></li>
+            <li><a href="#">郑州</a></li>
+            <li><a href="#">哈尔滨</a></li>
+            <li><a href="#">天津</a></li>
+            <li><a href="#">青岛</a></li>
+            <li><a href="#">济南</a></li>
+            <li><a href="#">长春</a></li>
+            <li><a href="#">福州</a></li>
+            <li><a href="#">石家庄</a></li>
+        </ul>
+    </div>
+     <div class="search-down2" id="searchDown3" onmouseleave="menuHide(this)" style="display:none;">
+        <ul>
+            <li><a href="#">监理工程师</a></li>
+            <li><a href="#">土木结构</a></li>
+            <li><a href="#">一级建造师</a></li>
+            <li><a href="#">造价工程师</a></li>
+            <li><a href="#">一级建筑师</a></li>
+            <li><a href="#">规划师</a></li>
+            <li><a href="#">一级结构师证</a></li>
+            <li><a href="#">土木结构</a></li>
+            <li><a href="#">一级建造师</a></li>
+            <li><a href="#">造价工程师</a></li>
+            <li><a href="#">监理工程师</a></li>
+            <li><a href="#">一级建筑师</a></li>
+            <li><a href="#">造价师</a></li>
+            <li><a href="#">土木结构</a></li>
+            <li><a href="#">监理工程师</a></li>
+            <li><a href="#">一级结构师</a></li>
+            <li><a href="#">土木结构</a></li>
+            <li><a href="#">规划师</a></li>
+            <li><a href="#">造价师</a></li>
+            <li><a href="#">国家岩土建筑师</a></li>
+        </ul>
+    </div>
+    <div class="search-down3" id="searchDown4" onmouseleave="menuHide(this)" style="display:none;">
+        <ul>
+            <li><a href="#">三天内</a></li>
+            <li><a href="#">两周内</a></li>
+            <li><a href="#">一个月</a></li>
+            <li><a href="#">三个月</a></li>
+            <li><a href="#">一年</a></li>
+            <li><a href="#">一年至三年</a></li>
+            <li><a href="#">十年以上</a></li>
+        </ul>
+    </div>
+</div>
+<!---->
+<div class="mid">
+	<div class="diqu">
+    	<h3></h3>
+        <ul>
+            <li><a href="#">北京</a></li>
+            <li><a href="#">上海</a></li>
+            <li><a href="#">广州</a></li>
+            <li><a href="#">深圳</a></li>
+            <li><a href="#">武汉</a></li>
+            <li><a href="#">西安</a></li>
+            <li><a href="#">杭州</a></li>
+            <li><a href="#">南京</a></li>
+            <li><a href="#">成都</a></li>
+            <li><a href="#">重庆</a></li>
+            <li><a href="#">东莞</a></li>
+            <li><a href="#">大连</a></li>
+            <li><a href="#">沈阳</a></li>
+            <li><a href="#">苏州</a></li>
+            <li><a href="#">昆明</a></li>
+            <li><a href="#">长沙</a></li>
+            <li><a href="#">合肥</a></li>
+            <li><a href="#">宁波</a></li>
+            <li><a href="#">郑州</a></li>
+            <li><a href="#">哈尔滨</a></li>
+            <li><a href="#">天津</a></li>
+            <li><a href="#">青岛</a></li>
+            <li><a href="#">济南</a></li>
+            <li><a href="#">长春</a></li>
+            <li><a href="#">福州</a></li>
+            <li><a href="#">石家庄</a></li>
+            <li><a href="#">无锡</a></li>
+            <li><a href="#">常州</a></li>
+            <li><a href="#">佛山</a></li>
+            <li><a href="#">中山</a></li>
+            <li><a href="#">珠海</a></li>
+            <li><a href="#">更多>></a></li>
+        </ul>
+    </div>
+    <div class="hot-job">
+    	<h3></h3>
+        <ul>              
+            <li><a href="#">监理工程师</a></li>
+            <li><a href="#">土木结构</a></li>
+            <li><a href="#">一级建造师</a></li>
+            <li><a href="#">造价工程师</a></li>
+            <li><a href="#">一级建筑师</a></li>
+            <li><a href="#">规划师</a></li>
+            <li><a href="#">一级结构师证</a></li>
+            <li><a href="#">土木结构</a></li>
+            <li><a href="#">一级建造师</a></li>
+            <li><a href="#">造价工程师</a></li>
+            <li><a href="#">监理工程师</a></li>
+            <li><a href="#">一级建筑师</a></li>
+            <li><a href="#">造价师</a></li>
+            <li><a href="#">土木结构</a></li>
+            <li><a href="#">监理工程师</a></li>
+            <li><a href="#">一级结构师</a></li>
+            <li><a href="#">土木结构</a></li>
+            <li><a href="#">规划师</a></li>
+            <li><a href="#">造价师</a></li>
+            <li><a href="#">更多职位>></a></li>
+        </ul>
+  </div>
+</div>
+<div class="add"><a href="advertisement.html"><img src="pic/bottom-add.png" width="980" height="77" /></a></div>
+<div class="bottom">
+	<a href="about.html">关于我们</a>|
+    <a href="contact-us.html">联系我们</a>|
+    <a href="#">在线客服</a>|
+    <a href="#">在线培训</a>|
+    <a href="#">免费注册</a>|
+    <a href="#">用户中心</a>|
+    <a href="legal-notices.html">法律声明</a>|
+    <a href="#">意见反馈</a>|
+    <a onclick="this.style.behavior='url(#default#homepage)';this.sethomepage('http://www.jzpt.com');return false;" href="http://www.jzpt.com">
+		设为首页</a><br />
+    粤ICP备10009347号 增值电信业务经营许可证：粤B2-20100358 广播电视节目制作经营许可证：（粤）字第1116号
+		Copyright(C)2010-2012 jzpt.All Rights Reserved
+</div>
+<div class="bottom-links"><a href="http://www.sznet110.gov.cn/webrecord/innernet/Welcome.jsp?bano=4403101010155"><img src="images/bottom-logo1.png" width="108" height="42" alt="公共信息安全网络监察"/></a><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=0272000112400002"><img src="images/bottom-logo2.png" width="108" height="42"  alt="经营性网站备案信息"/></a><a href="http://net.china.cn/chinese/index.htm"><img src="images/bottom-logo3.png" width="108" height="42" alt="不良信息举报中心"/></a></div>
+
+</body>
+</html>
+

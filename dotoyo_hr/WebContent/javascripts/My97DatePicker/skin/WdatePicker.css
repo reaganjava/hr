@@ -1,0 +1,13 @@
+﻿.Wdate{
+	border:#999 1px solid;
+	background:#fff url(jobs-date.png) right center no-repeat;
+
+}
+.Wdate2{
+	background:#fff url(jobs-date2.png) right center no-repeat;
+
+}
+.WdateFmtErr{
+	font-weight:bold;
+	color:red;
+}

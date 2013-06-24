@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+ 	<typeAlias alias="applicationJobRecord" type="com.dotoyo.buildjob.headhunterCenter.dto.ApplicationJobRecordDto"/>
+ 	
+ 	<resultMap class="applicationJobRecord" id="get-applicationJobRecord-result">
+ 		<result property="id" column="id"/>
+ 		<result property="userId" column="userId"/>
+ 		<result property="jobId" column="jobId"/>
+ 		<result property="recruitLtdId" column="recruitLtdId"/>
+ 		<result property="applicationDate" column="applicationDate"/>
+ 		<result property="status" column="status"/>
+ 		<result property="companyUserInfo" column="recruitLtdId" select="getBlogUserInfoByLoginUserId"/>
+ 		<result property="personalUserInfo" column="userId" select="getBlogUserInfoByLoginUserId"/>
+ 		<result property="jobName" column="jobId" select="getJobNameByJobId"/>
+ 	</resultMap>
+<!-- ********************************************************************************** 
+        模块:    猎头中心
+        功能:    新增用户职位申请记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-29    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="addAppliedJobRecord" parameterClass="applicationJobRecord" >
+		INSERT INTO T_HHC_APPLICATIONJOBRECORD(userId,jobId,recruitLtdId) VALUES(#userId#,#jobId#,#recruitLtdId#)
+		
+		<selectKey resultClass="Long" keyProperty="id">  
+		  <![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>   
+        </selectKey>  
+	</insert>
+
+<!-- ********************************************************************************** 
+        模块:    系统管理-求职方管理
+        功能:    加载申请应聘记录列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryApplyJobRecordList4Admin" parameterClass="java.util.Map" resultMap="get-applicationJobRecord-result">
+		SELECT
+			record.id,record.userId,record.jobId,record.recruitLtdId,record.applicationDate,record.status
+		FROM
+			T_HHC_APPLICATIONJOBRECORD record
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="personalUserName">
+				(record.userId in (SELECT t1.id FROM t_login_user t1 where t1.userName like concat("%",#personalUserName#,"%")))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="companyUserRealName">
+				(
+					record.recruitLtdId in
+				(					SELECT t2.id from t_login_user t2
+					WHERE
+						t2.userName in
+					(SELECT i1.userName FROM t_user_info i1 where i1.companyName like concat("%",#companyUserRealName#,"%")))
+
+				)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="jobName">
+				(record.jobId in (SELECT job1.id FROM t_hhc_jobinfo job1 where job1.jobName like concat("%",#jobName#,"%")))
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:    系统管理-求职方管理
+        功能:    计算加载申请应聘记录列表条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-26    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryApplyJobRecordCount4Admin" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			T_HHC_APPLICATIONJOBRECORD record
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="personalUserName">
+				(record.userId in (SELECT t1.id FROM t_login_user t1 where t1.userName like concat("%",#personalUserName#,"%")))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="companyUserRealName">
+				(
+					record.recruitLtdId in
+				(					SELECT t2.id from t_login_user t2
+					WHERE
+						t2.userName in
+					(SELECT i1.userName FROM t_user_info i1 where i1.companyName like concat("%",#companyUserRealName#,"%")))
+
+				)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="jobName">
+				(record.jobId in (SELECT job1.id FROM t_hhc_jobinfo job1 where job1.jobName like concat("%",#jobName#,"%")))
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:    企业用户后台
+        功能:    招聘管理 删除收到的求职申请
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-28    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteCandidatesByAppId" parameterClass="java.lang.String">
+		DELETE FROM t_hhc_applicationjobrecord WHERE id IN($appIds$);
+	</delete>
+
+</sqlMap>

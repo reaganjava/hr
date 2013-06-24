@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="talentsDto" type="com.dotoyo.buildjob.sys.dto.SysIncrementTalentsFoundSettingDto"/>
+ 	<typeAlias alias="talentsOfflineDto" type="com.dotoyo.buildjob.sys.dto.SysIncrementTalentsFoundOfflineSettingDto"/>
+ 	<typeAlias alias="sysOrderDto" type="com.dotoyo.buildjob.sys.dto.SysOrderDto"/>
+	<resultMap class="sysOrderDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="serviceCode" column="service_code"/>
+		<result property="serviceName" column="service_name"/>
+		<result property="itemCode" column="itemCode"/>
+		<result property="inOrder" column="in_order"/>
+		<result property="inOrderName" column="in_order_name"/>
+		<result property="status" column="status"/>
+		<result property="payDate" column="pay_date"/>
+		<result property="orderDate" column="order_date"/>
+		<result property="price" column="price"/>
+		<result property="priceStatus" column="priceStatus"/>
+		<result property="confirmor" column="confirmor"/>
+		<result property="confirmorName" column="confirmor_name"/>
+		<result property="operator" column="operator"/>
+		<result property="lastEditDate" column="last_edit_date"/>
+		<result property="remark" column="remark"/>
+		<result property="orderId" column="orderId"/>
+		<result property="resId" column="resId"/>
+		<result property="extensionFlag" column="extensionFlag"/>
+		<result property="extensionDays" column="extensionDays"/>
+		<result property="startDate" column="startDate"/>
+		<result property="endDate" column="endDate"/>
+		<result property="service1Remains" column="service1Remains"/>
+		<result property="service2Remains" column="service2Remains"/>
+		<result property="service3Remains" column="service3Remains"/>
+	</resultMap>
+
+ <!-- **********************************************************************************
+   Module:  System manager, order manage
+   Function: add  order
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addOrder" parameterClass="sysOrderDto">
+ 		     insert into T_SYS_ORDER(
+			 service_code,
+			 itemCode,
+			 in_order,
+			 status,
+			 pay_date,
+			 order_date,
+			 price,
+			 priceStatus,
+			 confirmor,
+			 operator,
+             last_edit_date,
+             remark,
+             orderId,
+             resId,
+             extensionFlag,
+             extensionDays,
+             startDate,
+             endDate,
+             service1Remains,
+             service2Remains,
+             service3Remains
+             ) values(
+             #serviceCode#,
+             #itemCode#,
+ 		     #inOrder#,
+ 		     #status#,
+             #payDate#,
+             #orderDate#,
+             #price#,
+             #priceStatus#,
+             #confirmor#,
+             #operator#,
+ 			 #lastEditDate#,
+ 			 #remark#,
+ 			 #orderId#,
+ 			 #resId#,
+ 			 #extensionFlag#,
+ 			 #extensionDays#,
+ 			 #startDate#,
+ 			 #endDate#,
+ 			 #service1Remains#,
+ 			 #service2Remains#,
+ 			 #service3Remains#
+ 			 )
+ 	</insert>
+ 	<select id="queryOrderByOrderIdList" resultMap="result_dto" parameterClass="sysOrderDto">
+ 		select
+			od.id,
+			od.service_code,
+			service.service_name,
+			od.itemCode,
+			od.in_order,
+			(select userName from T_LOGIN_USER user where user.id=od.in_order) in_order_name,
+			od.status,
+			od.pay_date,
+			od.order_date,
+			od.price,
+			od.priceStatus,
+			od.confirmor,
+			(select userName from T_LOGIN_USER_ADMIN user where user.id=od.confirmor) confirmor_name,
+			od.operator,
+			od.last_edit_date,
+			od.remark,
+            od.orderId,
+            od.resId,
+            od.extensionFlag,
+            od.extensionDays,
+            od.startDate,
+            od.endDate,
+            od.service1Remains,
+            od.service2Remains,
+            od.service3Remains
+			from T_SYS_ORDER od,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service
+			where od.service_code = service.service_code
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="orderId">
+				od.orderId = #orderId#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="resId">
+				od.resId = #resId#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="inOrder">
+				od.in_order = #inOrder#
+			</isNotEmpty>
+		    </dynamic>
+
+	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,order manage
+   Function: get order list
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="queryOrderList" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+			od.id,
+			od.service_code,
+			service.service_name,
+			od.itemCode,
+			od.in_order,
+			(select userName from T_LOGIN_USER user where user.id=od.in_order) in_order_name,
+			od.status,
+			od.pay_date,
+			od.order_date,
+			od.price,
+			od.priceStatus,
+			od.confirmor,
+			(select userName from T_LOGIN_USER_ADMIN user where user.id=od.confirmor) confirmor_name,
+			od.operator,
+			od.last_edit_date,
+			od.remark,
+            od.orderId,
+            od.resId,
+            od.extensionFlag,
+            od.extensionDays,
+            od.startDate,
+            od.endDate,
+            od.service1Remains,
+            od.service2Remains,
+            od.service3Remains
+			from T_SYS_ORDER od,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service
+			<isNotEmpty property="inOrderName">
+				,T_LOGIN_USER user1
+			</isNotEmpty>
+			where od.service_code = service.service_code
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="fromOrderDate">
+				(to_days(od.order_date) &gt;= to_days(#fromOrderDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="toOrderDate">
+				(to_days(od.order_date) &lt;= to_days(#toOrderDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="fromPayDate">
+				(to_days(od.pay_date) &gt;= to_days(#fromPayDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="toPayDate">
+				(to_days(od.pay_date) &lt;= to_days(#toPayDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(od.status = #status#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="payDate">
+				(to_days(od.pay_date) = to_days(#payDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="serviceCode">
+				(od.service_code = #serviceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="inOrderName">
+				user1.userName like concat("%",#inOrderName#,"%")
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="inOrderName">
+				user1.id=od.in_order
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="serviceName">
+				service.service_name like concat("%",#serviceName#,"%")
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="itemCode">
+				od.itemCode = #itemCode#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="inOrder">
+				od.in_order = #inOrder#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[DATE_FORMAT(od.endDate,'%Y-%m-%d') < DATE_FORMAT(#endDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isNew">
+				DATE_FORMAT(od.order_date,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+			</isNotEmpty>
+		   </dynamic>
+		  group by od.resId
+ 		  order by od.order_date DESC
+ 	</select>
+ 	<select id="queryOrderCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(result.resId)
+			from 
+			(
+			select
+				resId 
+			from
+			T_SYS_ORDER od,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service
+			<isNotEmpty property="inOrderName">
+				,T_LOGIN_USER user1
+			</isNotEmpty>
+			where od.service_code = service.service_code
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="fromOrderDate">
+				(to_days(od.order_date) &gt;= to_days(#fromOrderDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="toOrderDate">
+				(to_days(od.order_date) &lt;= to_days(#toOrderDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="fromPayDate">
+				(to_days(od.pay_date) &gt;= to_days(#fromPayDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="toPayDate">
+				(to_days(od.pay_date) &lt;= to_days(#toPayDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(od.status = #status#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="payDate">
+				(to_days(od.pay_date) = to_days(#payDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="serviceCode">
+				(od.service_code = #serviceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="inOrderName">
+				user1.userName like concat("%",#inOrderName#,"%")
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="inOrderName">
+				user1.id=od.in_order
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="serviceName">
+				service.service_name like concat("%",#serviceName#,"%")
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="itemCode">
+				od.itemCode = #itemCode#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="inOrder">
+				od.in_order = #inOrder#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[DATE_FORMAT(od.endDate,'%Y-%m-%d') < DATE_FORMAT(#endDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isNew">
+				DATE_FORMAT(od.order_date,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+			</isNotEmpty>
+		   </dynamic>
+		   group by od.resId
+		   ) result
+ 	</select>
+<!-- **********************************************************************************
+   Module:  Common
+   Function: 查询有效订单
+   Date：2011-03-06
+   Author arthas.zou
+  ********************************************************************************** -->
+ 	<select id="queryEffectiveOrderList" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+			od.id,
+			od.service_code,
+			service.service_name,
+			od.itemCode,
+			od.in_order,
+			(select userName from T_LOGIN_USER user where user.id=od.in_order) in_order_name,
+			od.status,
+			od.pay_date,
+			od.order_date,
+			od.price,
+			od.priceStatus,
+			od.confirmor,
+			(select userName from T_LOGIN_USER_ADMIN user where user.id=od.confirmor) confirmor_name,
+			od.operator,
+			od.last_edit_date,
+			od.remark,
+            od.orderId,
+            od.resId,
+            od.extensionFlag,
+            od.extensionDays,
+            od.startDate,
+            od.endDate,
+            od.service1Remains,
+            od.service2Remains,
+            od.service3Remains
+			from T_SYS_ORDER od,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service
+			<isNotEmpty property="inOrderName">
+				,T_LOGIN_USER user1
+			</isNotEmpty>
+			where od.service_code = service.service_code
+			AND
+				od.status = 1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="fromOrderDate">
+				(to_days(od.order_date) &gt;= to_days(#fromOrderDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="toOrderDate">
+				(to_days(od.order_date) &lt;= to_days(#toOrderDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="fromPayDate">
+				(to_days(od.pay_date) &gt;= to_days(#fromPayDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="toPayDate">
+				(to_days(od.pay_date) &lt;= to_days(#toPayDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(od.status = #status#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="payDate">
+				(to_days(od.pay_date) = to_days(#payDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="serviceCode">
+				(od.service_code = #serviceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="inOrderName">
+				user1.userName like concat("%",#inOrderName#,"%")
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="inOrderName">
+				user1.id=od.in_order
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="serviceName">
+				service.service_name like concat("%",#serviceName#,"%")
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="itemCode">
+				od.itemCode = #itemCode#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="inOrder">
+				od.in_order = #inOrder#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				od.endDate > #endDate#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="service1Remains">
+				od.service1Remains > 0
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="service2Remains">
+				od.service2Remains > 0
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="service3Remains">
+				od.service3Remains > 0
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by od.endDate ASC
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,order manage
+   Function: get order
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="queryOrder" resultMap="result_dto" parameterClass="sysOrderDto">
+ 		select
+			od.id,
+			od.service_code,
+			service.service_name,
+			od.itemCode,
+			od.in_order,
+			(select userName from T_LOGIN_USER user where user.id=od.in_order) in_order_name,
+			od.status,
+			od.pay_date,
+			od.order_date,
+			od.price,
+			od.priceStatus,
+			od.confirmor,
+			(select userName from T_LOGIN_USER_ADMIN user where user.id=od.confirmor) confirmor_name,
+			od.operator,
+			od.last_edit_date,
+			od.remark,
+            od.orderId,
+            od.resId,
+            od.extensionFlag,
+            od.extensionDays,
+            od.startDate,
+            od.endDate,
+            od.service1Remains,
+            od.service2Remains,
+            od.service3Remains
+			from T_SYS_ORDER od,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service
+			where od.service_code = service.service_code
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="id">
+				(od.id = #id#)
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,order manage
+   Function: update order
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateOrder" parameterClass="sysOrderDto">
+ 		update T_SYS_ORDER
+ 		set
+ 			resId = #resId#
+ 			<isNotEmpty property="price">
+ 			</isNotEmpty>
+			 	,price = #price#
+			<isNotEmpty property="priceStatus">
+				,priceStatus = #priceStatus#
+			</isNotEmpty>
+			<isNotEmpty property="status">
+				,status = #status#
+			</isNotEmpty>
+			<isNotEmpty property="remark">
+				,remark = #remark#
+			</isNotEmpty>
+			<isNotEmpty property="confirmor">
+				,confirmor = #confirmor#
+			</isNotEmpty>
+			<isNotEmpty property="operator">
+				,operator = #operator#
+			</isNotEmpty>
+			<isNotEmpty property="payDate">
+				,pay_date = #payDate#
+			</isNotEmpty>
+			<isNotEmpty property="payDate">
+				,startDate = #startDate#
+			</isNotEmpty>
+			<isNotEmpty property="payDate">
+				,endDate = #endDate#
+			</isNotEmpty>
+			<isNotEmpty property="extensionFlag">
+				,extensionFlag = #extensionFlag#
+			</isNotEmpty>
+			<isNotEmpty property="service1Remains">
+				,service1Remains = #service1Remains#
+			</isNotEmpty>
+			<isNotEmpty property="service2Remains">
+				,service2Remains = #service2Remains#
+			</isNotEmpty>
+			<isNotEmpty property="service3Remains">
+				,service3Remains = #service3Remains#
+			</isNotEmpty>
+
+ 		where resId = #resId#
+ 	</statement>
+ 	
+ <!-- **********************************************************************************
+   Module:  System manager,order manage
+   Function: update service times
+   Date：2011-01-11
+   Author arthas.zou
+  ********************************************************************************** -->
+ 	<statement id="updateServiceTimes" parameterClass="sysOrderDto">
+ 		update T_SYS_ORDER
+ 		set
+ 			id = #id#
+ 			<isNotEmpty property="price">
+ 			</isNotEmpty>
+			 	,price = #price#
+			<isNotEmpty property="priceStatus">
+				,priceStatus = #priceStatus#
+			</isNotEmpty>
+			<isNotEmpty property="status">
+				,status = #status#
+			</isNotEmpty>
+			<isNotEmpty property="remark">
+				,remark = #remark#
+			</isNotEmpty>
+			<isNotEmpty property="confirmor">
+				,confirmor = #confirmor#
+			</isNotEmpty>
+			<isNotEmpty property="operator">
+				,operator = #operator#
+			</isNotEmpty>
+			<isNotEmpty property="payDate">
+				,pay_date = #payDate#
+			</isNotEmpty>
+			<isNotEmpty property="payDate">
+				,startDate = #startDate#
+			</isNotEmpty>
+			<isNotEmpty property="payDate">
+				,endDate = #endDate#
+			</isNotEmpty>
+			<isNotEmpty property="extensionFlag">
+				,extensionFlag = #extensionFlag#
+			</isNotEmpty>
+			<isNotEmpty property="service1Remains">
+				,service1Remains = #service1Remains#
+			</isNotEmpty>
+			<isNotEmpty property="service2Remains">
+				,service2Remains = #service2Remains#
+			</isNotEmpty>
+			<isNotEmpty property="service3Remains">
+				,service3Remains = #service3Remains#
+			</isNotEmpty>
+
+ 		where id = #id#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager,order manage
+   Function: remove order
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeOrder" parameterClass="sysOrderDto">
+ 		delete from T_SYS_ORDER
+ 		where resId = #resId#
+ 	</statement>
+
+<!-- **********************************************************************************
+        模块:    系统管理
+        功能:    管理员首页 新增订单数统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-25    tyler.qu
+   Notes:     备注
+********************************************************************************** -->
+ 	<select id="getNewOrdersStatisticsToDay" resultClass="java.lang.Integer" parameterClass="java.util.Date">
+ 		SELECT COUNT(result.id)
+ 		FROM
+ 		(
+ 		SELECT o.id
+		  FROM t_sys_order o
+		 WHERE DATE_FORMAT(o.order_date,'%y-%m-%d')=DATE_FORMAT(#toDay#,'%y-%m-%d')
+		 group by o.resId
+		 ) result
+ 	</select>
+
+<!-- **********************************************************************************
+        模块:    用户首页
+        功能:		用户尚未支付的订单统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-4    tyler.qu
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getCountOfHaveNotYetPaidOrder" parameterClass="java.lang.Long" resultClass="java.lang.Integer">
+		SELECT COUNT(so.id) FROM t_sys_order so WHERE so.in_order=#userId# AND so.status=0
+	</select>
+
+<!-- **********************************************************************************
+        模块:    用户首页
+        功能:    即将到期的订单统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-4    tyler.qu
+   Notes:     备注
+********************************************************************************** -->
+ 	<select id="getCountAboutToExpireOrder" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+ 	<![CDATA[
+ 		 SELECT COUNT(aa.resId)  FROM ( SELECT
+                      DISTINCT so.resId 
+                    FROM t_sys_order so
+ 		 WHERE so.in_order=#userId#
+ 		   AND so.status=1
+ 		   AND datediff(so.endDate,#currentDate#)<#dayEnd#) aa 
+ 		   ]]>
+ 	</select>
+
+ <!-- **********************************************************************************
+        模块:    服务，人才挖掘 字段设置服务
+        功能:    用户可搜索字段设置
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-26    tyler.qu
+   Notes:     备注
+********************************************************************************** -->
+ 	<select id="loadingSearchField" parameterClass="java.util.Map" resultClass="talentsDto">
+ 		SELECT o.id,
+ 			   t.service_code as serviceCode,
+ 			   t.fields_of_search as fieldsOfSearch,
+ 			   t.times_of_search as timesOfSearch
+		  FROM t_sys_increment_talents_setting t,t_sys_order o
+		 WHERE t.service_code=o.service_code
+		   AND o.service1Remains>0
+		   AND o.status='1'
+		   AND o.itemCode='1'
+		   AND o.in_order=#userId#
+		   AND DATE_FORMAT(o.endDate,'%Y-%m-%d')>DATE_FORMAT(#currentDate#,'%Y-%m-%d')
+ 	</select>
+ 	
+ <!-- **********************************************************************************
+        模块:    服务，线下人才挖掘 字段设置服务
+        功能:    用户可搜索字段设置
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-26    tyler.qu
+   Notes:     备注
+********************************************************************************** -->
+ 	<select id="loadingOfflineSearchField" parameterClass="java.util.Map" resultClass="talentsOfflineDto">
+ 		SELECT o.id,
+ 			   t.service_code as serviceCode,
+ 			   t.fields_of_search as fieldsOfSearch,
+ 			   t.times_of_search as timesOfSearch
+		  FROM t_sys_increment_talents_offline_setting t,t_sys_order o
+		 WHERE t.service_code=o.service_code
+		   AND o.service1Remains>0
+		   AND o.status='1'
+		   AND o.itemCode='0'
+		   AND o.in_order=#userId#
+		   AND DATE_FORMAT(o.endDate,'%Y-%m-%d')>DATE_FORMAT(#currentDate#,'%Y-%m-%d')
+ 	</select>
+
+<!-- **********************************************************************************
+        模块:    所属功能模块
+        功能:    功能说明
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-26    tyler.qu
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateUserSearches" parameterClass="java.lang.Long">
+		UPDATE t_sys_order o SET o.service1Remains=o.service1Remains-1 WHERE o.id=#orderId#
+	</update>
+
+ </sqlMap>

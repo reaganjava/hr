@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysLogDto" type="com.dotoyo.buildjob.systemManage.dto.SysLogDto"/>
+	<resultMap class="sysLogDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="operator" column="operator"/>
+		<result property="operatorName" column="operatorName"/>
+		<result property="ip" column="ip"/>
+		<result property="action" column="action"/>
+		<result property="operate_time" column="operate_time"/>
+	</resultMap>
+ <!-- **********************************************************************************
+   Module:  System manager, system log maintain
+   Function: add  system log
+   Date：2011-01-30
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addSysLog" parameterClass="sysLogDto">
+ 		     insert into T_SYS_LOG(
+			 operator,
+			 ip,
+			 action,
+			 operate_time
+             ) values(
+             #operator#,
+             #ip#,
+             #action#,
+             #operate_time#
+ 			 )
+ 	</insert>
+ <!-- **********************************************************************************
+   Module:  System manager,system log maintain
+   Function: get system log list
+   Date：2011-01-30
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysLogList" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+			log.id,
+			log.operator,
+			user.userName operatorName,
+			log.ip,
+			log.action,
+			log.operate_time
+			from T_SYS_LOG log,T_LOGIN_USER user
+			where log.operator = user.id
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="operatorName">
+				(user.userName like concat("%",#operatorName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="operatorTime">
+				(to_days(log.operate_time) = to_days(#operatorTime#))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by log.operate_time desc
+ 	</select>
+ 	<select id="querySysLogCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(*)
+			from T_SYS_LOG log,T_LOGIN_USER user
+			where log.operator = user.id
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="operatorName">
+				(user.userName like concat("%",#operatorName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="operatorTime">
+				(to_days(log.operate_time) = to_days(#operatorTime#))
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,system log maintain
+   Function: remove system log
+   Date：2011-01-30
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeSysLogById" parameterClass="sysLogDto">
+ 		delete from T_SYS_LOG
+ 		where id = #id#
+ 	</statement>
+
+
+ </sqlMap>

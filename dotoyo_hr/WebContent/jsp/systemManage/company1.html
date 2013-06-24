@@ -1,0 +1,342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大太阳建筑猎头--系统管理--新增职位</title>
+<link href="../../css/system-manage.css" rel="stylesheet" type="text/css" />
+<script src="../../javascripts/common/jquery.js"></script>
+<script src="../../javascripts/common/jquery-ui-1.7.2.custom.min.js"></script>
+<script src="../../javascripts/common/accordion.js"></script>
+<script src="../../javascripts/common/jquery.cookie.js"></script>
+<script type="text/javascript">
+
+$(function(){
+			//Main menu
+			$(".nav li").mouseover(function(){
+				$(".nav li").attr("class","nav-on");
+				$(this).addClass("nav-out");
+			});
+		
+			// Accordion
+            $("#leftNav").accordion({
+                header: "h3",
+                collapsible: true,
+				autoHeight: false,
+                active: false,
+				multipleMode: true
+            });
+			
+			//Init active array
+			var activeArr;
+			if($.cookie("active_left_nav")!=null){
+				activeArr = $.cookie("active_left_nav").replace(/(^\,*)|(\,*$)/g, "").split(",");
+			}
+			else{
+				activeArr = new Array();
+			}
+			//Init left nav
+			var activeA = $.cookie("active_left_nav_a");
+			if(activeA != null){
+				$("#leftNav a").removeClass("active");
+				$("#leftNav a").eq(activeA).addClass("active");
+			}
+			if(activeArr.length>0)
+			{
+				$.each(activeArr,function(key,val){
+					if(val!=""){
+						$("#leftNav h3").eq(val).addClass("ui-state-active").next().addClass("ui-accordion-content-active").show();
+					}
+				});
+			}
+			//Set active array when click
+			$("#leftNav h3").click(function(){
+				var index = $("#leftNav h3").index($(this)[0]);
+				if($(this).hasClass("ui-state-active")){
+					//Add to array
+					if($.inArray(index, activeArr)){
+						activeArr.push(index);
+					}
+				}
+				else{
+					//Remove from array
+					$.grep(activeArr,function(val,key){
+						if(val==index){
+							activeArr.splice(key, 1);
+						}
+					});
+				}
+				$.cookie("active_left_nav", activeArr.join(","));
+			});
+			
+			$("#leftNav a").click(function(){
+				$("#leftNav a").removeClass("active");
+				var index = $("#leftNav a").index($(this)[0]);
+				$(this).addClass("active");
+				$.cookie("active_left_nav_a", index);
+			});
+        });
+</script>
+</head>
+<body>
+<div class="top">
+	<div class="top-left"><img src="../../images/logo.png" width="152" height="88" alt="中国建筑平台"/></div>
+    <div class="top-right">arthas&nbsp;&nbsp;中国建筑猎头平台欢迎您！</div>
+</div>
+<div class="nav">
+	<ul>
+    	<li class="nav-on"><a href="../../index.html">首页</a></li>
+        <li class="nav-on"><a href="../headhunterCenter/head.html">猎头中心</a></li>
+        <li class="nav-on"><a href="../applyJobCenter/people.html">人才中心</a></li>
+        <li class="nav-on"><a href="../peopleExcavate/excavate.html">人才挖掘</a></li>
+        <li class="nav-out"><a href="../certificateCenter/certificate.html">猎证中心</a></li>
+        <li class="nav-on"><a href="../innovationPark/park.html">创业园</a></li>
+        <li class="nav-on"><a href="../wisdomChina/china.html">智慧中国</a></li>
+        <li class="nav-on"><a href="../innovationSalon/salon.html">创业沙龙</a></li>
+    </ul>
+</div>
+<!--以上为头部分-->
+<!--中间部分-->
+<div class="content">
+	<div id="leftNav">
+    	<ul>
+        	<li>
+                <h3>职位管理</h3>
+                <ul>
+                    <li><a href="company1.html">新增职位</a></li>
+                    <li><a href="company2.html">发布中的职位</a></li>
+                    <li><a href="company3.html">暂停的职位</a></li>
+                    <li><a href="company4.html">即将到期的职位</a></li>
+                    <li><a href="company5.html">已结束的职位</a></li>
+                </ul>
+            </li>
+            <li>
+				<h3><a tabindex="-1" href="#">招聘管理</a></h3>
+                <div>
+                    <a class="second-nav" tabindex="-1" href="company6.html">收到的申请</a><span></span>
+                    <a class="second-nav" tabindex="-1" href="company7.html">查看已发送邀请</a><span></span>
+                    <h3>站内信管理</h3>
+                    <ul>
+                        <li><a href="personal-5.html">-&nbsp;&nbsp;收件箱</a> </li>
+                        <li><a href="personal-7.html">-&nbsp;&nbsp;职位申请自动回复设置</a> </li>
+                    </ul>
+              </div>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="company8.html">线下人才推荐</a></h3>
+            </li>
+            <li>
+                <h3>证书管理</h3>
+                <ul>
+                    <li><a href="personal-9.html">已提交证书管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>发起的沙龙</h3>
+                <ul>
+                    <li><a href="personal-10.html">线上沙龙</a></li>
+                    <li><a href="personal-11.html">线下沙龙</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>参与的沙龙</h3>
+                <ul>
+                    <li><a href="personal-12.html">线上沙龙</a></li>
+                    <li><a href="personal-13.html">线下沙龙</a></li>
+                </ul>
+            </li>
+   			<li>
+                <h3><a tabindex="-1" href="personal-14.html">线下沙龙图片库</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="personal-15.html">线下沙龙视频库</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="personal-16.html">文章管理</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="personal-17.html">评论管理</a></h3>
+            </li>
+           	<li>
+                <h3>积分管理</h3>
+                <ul>
+                    <li><a href="personal-18.html">积分情况</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>猎头服务管理</h3>
+                <ul>
+                    <li><a href="personal-19.html">购买服务</a></li>
+                    <li><a href="personal-20.html">已购买的服务</a></li>
+                    <li><a href="personal-21.html">已过期的服务</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="#">退出系统</a></h3>
+            </li>
+        </ul>
+    </div>
+    <div class="content-right">
+    	<div class="fbzp">发布模板选择：<select name=""><option>发布模板选择</option></select></div>
+    	<div class="administrator-title"><strong>基本信息</strong></div>
+        <div class="inside-tab">
+   	    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="18%" height="40" align="right"><em>*</em><strong>职位名称</strong>：</td>
+                <td width="22%" align="left" class="tab-input"><input name="" type="text" /></td>
+                <td width="9%">&nbsp;</td>
+                <td width="12%" align="right"><em>*</em><strong>行业类型</strong>：</td>
+                <td width="39%" align="left"><select name=""><option>行业类型</option></select></td>
+              </tr>
+              <tr>
+                <td height="40" align="right"><strong>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;能</strong>：</td>
+                <td align="left"><select name=""><option>请选择职能</option></select></td>
+                <td>&nbsp;</td>
+                <td align="right"><em>*</em><strong>专业类型</strong>：</td>
+                <td align="left"><select id="industry" name="industry2">
+                        <option selected="selected" value="请您选择专业类别">请您选择专业类型</option>
+                        <option value="房地产及物业">房地产及物业</option>
+                        <option value="勘察设计单位">勘察设计单位</option>
+                        <option value="施工及装饰">施工及装饰</option>
+                        <option value="监理与工程咨询">监理与工程咨询</option>
+                        <option value="建材设备厂商">建材设备厂商</option>
+                        <option value="其他类企业">其他类企业</option>
+                      </select></td>
+              </tr>
+              <tr>
+                <td height="40" align="right"><em>*</em><strong>工作性质</strong>：</td>
+                <td align="left"><select name=""><option>工作性质</option></select></td>
+                <td>&nbsp;</td>
+                <td align="right"><em>*</em><strong>顾&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;问</strong>：</td>
+                <td align="left">否</td>
+              </tr>
+              <tr>
+                <td height="40" align="right"><em>*</em><strong>招聘人数</strong>：</td>
+                <td align="left" class="tab-input"><input name="" type="text" /></td>
+                <td>&nbsp;</td>
+                <td align="right"><em>*</em><strong>工作地点</strong>：</td>
+                <td align="left"><select name=""><option>省级</option></select>&nbsp;<select name=""><option>市级</option></select>&nbsp;<select name=""><option>区级</option></select></td>
+              </tr>
+              <tr>
+                <td height="40" align="right"><em>*</em><strong>月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;薪</strong>：</td>
+                <td align="left"><select name=""><option>不限</option></select></td>
+                <td>&nbsp;</td>
+                <td align="right">&nbsp;</td>
+                <td align="left">&nbsp;</td>
+              </tr>
+            </table>
+		</div>
+        <div class="administrator-title2"><strong>具体要求</strong></div>
+        <div class="inside-tab">
+   	    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="18%" height="40" align="right"><strong>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄</strong>：</td>
+                <td width="22%" align="left" class="tab-input"><input name="" type="text" /></td>
+                <td width="9%">&nbsp;</td>
+                <td width="12%" align="right"><strong>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</strong>：</td>
+                <td width="39%" align="left"><select name=""><option>男</option></select></td>
+              </tr>
+              <tr>
+                <td height="40" align="right"><strong>学历要求</strong>：</td>
+                <td align="left"><select name=""><option>不限</option></select></td>
+                <td>&nbsp;</td>
+                <td align="right"><strong>工作年限</strong>：</td>
+                <td align="left"><select name=""><option>请选择</option></select></td>
+              </tr>
+              <tr>
+                <td height="40" align="right"><strong>语言能力</strong>：</td>
+                <td align="left"><select name=""><option>不限</option></select></td>
+                <td>&nbsp;</td>
+                <td align="right"><strong>掌握程度</strong>：</td>
+                <td align="left"><select name=""><option>请选择</option></select></td>
+              </tr>
+              <tr>
+                <td height="40" align="right"><strong>计算机能力</strong>：</td>
+                <td align="left"><select name=""><option>不限</option></select></td>
+                <td>&nbsp;</td>
+                <td align="right">&nbsp;</td>
+                <td align="left">&nbsp;</td>
+              </tr>
+              <tr>
+                <td height="130" align="right"><strong>岗位职责</strong>：</td>
+                <td colspan="4" align="left" class="tab-input"><textarea name="" cols="" rows=""></textarea></td>
+              </tr>
+              <tr>
+                <td height="130" align="right"><strong>任职要求</strong>：</td>
+                <td colspan="4" align="left" class="tab-input"><textarea name="" cols="" rows=""></textarea></td>
+              </tr>
+            </table>
+		</div>
+        <div class="administrator-title3"><strong>发布设置</strong></div>
+        <div class="inside-tab">
+   	    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="16%" height="70" align="right"><em>*</em><strong>发布日期</strong>：</td>
+                <td width="21%" align="left" class="tab-input"><input name="" type="text" /></td>
+                <td width="13%" align="right"><em>*</em><strong>有效期</strong>：</td>
+                <td width="50%" align="left" class="tab-input"><input name="" type="text"/>&nbsp;&nbsp;至&nbsp;&nbsp;<input name="" type="text"/></td>
+              </tr>
+            </table>
+		</div>
+        <div class="administrator-title3"><strong>职位过滤条件</strong></div>
+        <div class="inside-tab">
+   	    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="18%" height="40" align="right"><strong>行业类型</strong>：</td>
+                <td width="22%" align="left"><select name="select">
+                  <option>行业类型</option>
+                </select></td>
+                <td width="9%">&nbsp;</td>
+                <td width="12%" align="right"><strong>专业类型</strong>：</td>
+                <td width="39%" align="left"><select name="select2">
+                  <option>专业类型</option>
+                </select></td>
+              </tr>
+              <tr>
+                <td height="40" align="right"><strong>专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;长</strong>：</td>
+                <td align="left" class="tab-input"><input name="" type="text" /></td>
+                <td>&nbsp;</td>
+                <td align="right"><strong>工作性质</strong>：</td>
+                <td align="left"><select name="select2">
+                  <option>全职</option>
+                </select></td>
+              </tr>
+              <tr>
+                <td height="40" align="right"><strong>工作年限</strong>：</td>
+                <td align="left" class="tab-input">&nbsp;&nbsp;小于&nbsp;&nbsp;<input name="" type="text" size="1"/>&nbsp;&nbsp;大于&nbsp;&nbsp;<input name="" type="text" size="1"/></td>
+                <td>&nbsp;</td>
+                <td align="right"><strong>最低学历</strong>：</td>
+                <td align="left"><select name="select2">
+                  <option>不限</option>
+                </select></td>
+              </tr>
+              <tr>
+                <td height="40" align="right"><strong>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</strong>：</td>
+                <td align="left"><select name="select2">
+                  <option>男</option>
+                </select></td>
+                <td>&nbsp;</td>
+                <td height="40" align="right"><strong>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄</strong>：</td>
+                <td align="left" class="tab-input">&nbsp;&nbsp;小于&nbsp;&nbsp;<input name="" type="text" size="1"/>&nbsp;&nbsp;大于&nbsp;&nbsp;<input name="" type="text" size="1"/></td>
+              </tr>
+            </table>
+		</div>
+        <div class="wenxintishi-box">
+        	<div class="wenxintishi">
+           		<p class="wenxintishi1">您发布的招聘信息需要建筑猎头人才网审核通过后，求职者才能搜索到。审核时间间隔一般在2小时左右，节假日除外。如需立即审核，您可致电0755－98898989或联系您你的客户服务专员。</p>
+                <p class="wenxintishi2">为了保障供求双方建筑猎头人才网的权益，请您在发布招聘信息时遵守国家相关法律法规，不得发布虚假招聘信息，不得代其它单位招聘。</p>
+                <p class="wenxintishi3">招聘单位违反国家法律法规的，建筑猎头人才网有权立即停止您在本网所有服务，且不予退款。</p>
+           </div>
+        </div>        
+      <div class="system-botton2">
+        	<ul>
+                <li class="botton1"><a href="#" title="职位预览">职位预览</a></li>
+                <li class="botton2"><a href="#" title="职位发布">职位发布</a></li>
+                <li class="botton3"><a href="#" title="存为模板">存为模板</a></li>
+                <li class="botton3"><a href="#" title="取消">取消</a></li>
+            </ul>
+      </div>
+  </div>
+</div>
+
+</body>
+</html>

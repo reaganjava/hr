@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="dotoyo" extends="global" >
+
+	<!-- #################### 完善博站资料，仅供测试使用 ########################## -->
+		<action name="blogUserAction!*" class="blogUserAction" method="{1}">
+			<result name="toCompleteBlogUserInfo">/jsp/blogUser/toCompleteBlogUserInfo.jsp</result>
+			<result name="saveUpdateBlogUserInfo">/jsp/blogUser/saveUpdateBlogUserInfoSuccess.jsp</result>
+		</action>
+
+		<action name="userRegister">
+			<result>/jsp/common/user/userRegiste.jsp</result>
+		</action>
+		<action name="saveUser" class="userAction" method="register">
+			<result name="success">/jsp/common/user/registerSuccess.jsp</result>
+			<result name="captchaError">/jsp/common/user/userRegister.jsp</result>
+		</action>
+		<action name="userAction!*" class="userAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+			<!--验证登录 -->
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name=" includeMethods">
+				 	toEditPassword,saveEditPassword
+				 </param>
+			</interceptor-ref>
+			<result name="toEditPassword">/jsp/personalCenter/editPassword.jsp</result>
+			<result name="saveEditPassword">/jsp/personalCenter/editPasswordSuccess.jsp</result>
+		</action>
+		<action name="loadCity" class="buildJobAction" method="loadCityData">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="loadArea" class="buildJobAction" method="loadArea">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="loadMastery" class="buildJobAction" method="loadMastery">
+			<result type="json">
+				<param name="root">masteryList</param>
+			</result>
+		</action>
+		<action name="loadEssentialData" class="buildJobAction" method="loadEssentialData">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="logonAction!*" class="logonAction" method="{1}">
+			<result name="backToHome">/jsp/common/backToHome.jsp</result>
+			<result name="loginSuccess" type="redirectAction">/homePage/homePageAction!init.action</result>
+			<result name="loginFail" type="chain">homePageAction!init</result>
+			<result name="captchaError" type="chain">homePageAction!init</result>
+			<result name="persionalCenter" type="redirectAction">
+				<param name="namespace">/personalCenter</param>
+				<param name="actionName">personalCenterAction!init.action</param>
+			</result>
+			<result name="enterpriseCenter" type="redirectAction">
+				<param name="namespace">/enterpriseCenter</param>
+				<param name="actionName">enterpriseCenterAction!init.action</param>
+			</result>
+			<result name="judgeUserTypeError">/jsp/error/judgeUserTypeError.jsp</result>
+			<result name="logout" type="redirectAction">/homePage/homePageAction!init.action</result>
+		</action>
+		<action name="shortMsgManageAction!*" class="shortMsgManageAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+			<!--验证登录 -->
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name=" excludeMethods">
+				 </param>
+			</interceptor-ref>
+			<result name="viewRecieveShortMsgList">/jsp/personalCenter/receiveShortMsgList.jsp</result>
+			<result name="viewReceiveShortMsgDetail">/jsp/personalCenter/receiveShortMsgDetail.jsp</result>
+			<result name="viewAutoShortMsgConfig">/jsp/enterpriseCenter/autoShortMsgConfig.jsp</result>
+			<result name="toReplyShortMsg">/jsp/personalCenter/replyShortMsg.jsp</result>
+			<result name="viewReceiveContact">/jsp/personalCenter/receiveContactList.jsp</result>
+			<result name="saveReplyShortMsg" type="redirectAction">shortMsgManageAction!viewRecieveShortMsgList.action</result>
+		</action>
+	</package>
+
+	<package name="headhunterCenter" extends="global" namespace="/headhunterCenter">
+		<action name="headhunterCenterAction!*" class="headhunterCenterAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+			<!--验证登录 -->
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name=" includeMethods">
+				 	publishedPosts,searchJob,homePageJobSearch
+				 </param>
+			</interceptor-ref>
+			<result name="init">/jsp/headhunterCenter/headhunterCenterIndex.jsp</result>
+			<result name="publishedPosts">/jsp/headhunterCenter/publishedPosts.jsp</result>
+			<result name="industryJobList">/jsp/headhunterCenter/industryJobList.jsp</result>
+			<result name="competencyJobList">/jsp/headhunterCenter/competencyJobList.jsp</result>
+			<result name="hotCityJobList">/jsp/headhunterCenter/hotCityJobList.jsp</result>
+			<result name="searchJobResult">/jsp/headhunterCenter/searchJobResultList.jsp</result>
+			<result name="jobInfoDetail">/jsp/headhunterCenter/position-details.jsp</result>
+			<result name="homePageJobSearchResult">/jsp/homePage/homePageJobResultList.jsp</result>
+			<result name="appliedJob" type="json">
+				<param name="root">jobAppliedStatus</param>
+			</result>
+			<result name="fastBatchAppliedJob" type="json">
+				<param name="root">jobAppliedStatus</param>
+			</result>
+			<result name="linkBoStation" type="json">
+				<param name="root">linkBoStationStatus</param>
+			</result>
+			<result name="releaseSuccess">/jsp/headhunterCenter/submitSuccess.html</result>
+		</action>
+	</package>
+
+	<package name="peopleExcavate" extends="global"  namespace="/peopleExcavate">
+		<action name="peopleExcavateAction!*" class="peopleExcavateAction" method="{1}">
+		<interceptor-ref name="defaultStack" />
+			<!--验证登录 -->
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name=" includeMethods">
+				 	btiTalentSearch,talentSearch,linkBoStation
+				 </param>
+			</interceptor-ref>
+			<result name="init">/jsp/peopleExcavate/peopleExcavateIndex.jsp</result>
+			<result name="talentSearch">/jsp/peopleExcavate/excavateResultList.jsp</result>
+			<result name="sendIIMessage" type="json">
+				<param name="root">applyStatus</param>
+			</result>
+			<result name="fastBatchApply" type="json">
+				<param name="root">applyStatus</param>
+			</result>
+			<result name="linkBoStation" type="json">
+				<param name="root">linkBoStationStatus</param>
+			</result>
+			<result name="btiTalentSearch">/jsp/peopleExcavate/btiExcavateResultList.jsp</result>
+		</action>
+	</package>
+
+<!--############################人才中心开始#########################################  -->
+	<package name="applyJobCenter" extends="global" namespace="/applyJobCenter">
+		<action name="applyJobCenter!*" class="applyJobAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+			<!--验证登录 -->
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name="excludeMethods">
+				 	init,initIndex,moreAdvisor,moreFullTimeJobseeker,morePartTimeJobseeker,viewJobseeker4ParticularCity,sendInterviewNotice
+				 </param>
+			</interceptor-ref>
+			<result name="init">/jsp/applyJobCenter/applyJobCenterIndex.jsp</result>
+			<result name="moreAdvisor">/jsp/applyJobCenter/moreAdvisor.jsp</result>
+			<result name="moreFullTimeJobseeker">/jsp/applyJobCenter/moreFullTimeJobseeker.jsp</result>
+			<result name="morePartTimeJobSeeker">/jsp/applyJobCenter/morePartTimeJobseeker.jsp</result>
+			<result name="viewJobseeker4ParticularCity">/jsp/applyJobCenter/jobseeker4ParticularCity.jsp</result>
+			<result name="sendInterviewNotice" type="json">
+				<param name="root">sendInterviewNoticeStatus</param>
+			</result>
+			<result name="toApplyJob">/jsp/applyJobCenter/applyJob.jsp</result>
+			<result name="toApplyRecommendation">/jsp/applyJobCenter/applyRecommendation.jsp</result>
+			<result name="submitApplyJobInfo">/jsp/applyJobCenter/submitSuccess.html</result>
+			<result name="intentionExists">/jsp/applyJobCenter/intentionExists.html</result>
+			<result name="submitRecommendationInfo">/jsp/applyJobCenter/submitSuccess.html</result>
+		</action>
+	</package>
+<!--############################人才中心结束#########################################  -->
+
+<!--############################猎证中心开始#########################################  -->
+	<package name="certificateCenter" extends="global" namespace="/certificateCenter">
+		<action name="certificateAction!*" class="certificateAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+			<!--验证登录 -->
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name="excludeMethods">
+				 	init,initIndex,moreCertNeedsIndeed,moreCertNeeds,morePersonalCert,viewPersonalCertDetail,viewContact,searchCertNeeds,
+				 	searchPersonalCert,viewParticularCert,viewCertNeedsDetail,verifyCert,searchCert,viewCertNeedsContact,viewPersonalCertContact
+				 </param>
+			</interceptor-ref>
+			<result name="init">/jsp/certificateCenter/certificateCenterIndex.jsp</result>
+			<result name="toViewContact" type="json">
+				<param name="root">authorized</param>
+			</result>
+			<result name="viewCertNeedsDetail">/jsp/certificateCenter/certNeedsDetails.jsp</result>
+			<result name="certNeedsIndeed">/jsp/certificateCenter/certNeedsIndeed.jsp</result>
+			<result name="certNeeds">/jsp/certificateCenter/latestCertNeeds.jsp</result>
+			<result name="personalCert">/jsp/certificateCenter/latestPersonalCert.jsp</result>
+			<result name="searchPersonalCert">/jsp/certificateCenter/searchPersonalCert.jsp</result>
+			<result name="searchCertNeeds">/jsp/certificateCenter/searchCertNeeds.jsp</result>
+			<result name="verifyCert">/jsp/certificateCenter/certVerify.jsp</result>
+			<result name="searchCert" type="json">
+				<param name="root">certList</param>
+			</result>
+			<result name="viewPersonalCertDetail">/jsp/certificateCenter/certDetails.jsp</result>
+			<result name="toSubmitCert">/jsp/certificateCenter/submitCertificate.jsp</result>
+			<result name="submitCert">/jsp/certificateCenter/submitSuccess.html</result>
+			<result name="toSubmitCertNeeds">/jsp/certificateCenter/submitCertNeeds.jsp</result>
+			<result name="submitCertNeeds">/jsp/certificateCenter/submitSuccess.html</result>
+		</action>
+	</package>
+<!--############################猎证中心结束#########################################  -->
+
+    <package name="innovationSalon"  extends="global">
+		<action name="salonAction!*" class="salonAction" method="{1}" >
+			<interceptor-ref name="defaultStack" />
+			<!--验证登录 -->
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name="excludeMethods">init,initIndex,toSalonDetail,toOffLineSalonDetail,
+				 toArticleDetail,addSalonComment,addArticleComment</param>
+
+			</interceptor-ref>
+			<result name="success">/jsp/innovationSalon/salonIndex.jsp</result>
+			<result name="launchSalon">/jsp/innovationSalon/salonLaunch.jsp</result>
+			<result name="addSalon">/jsp/innovationSalon/addSalonSuccess.jsp</result>
+			<result name="salonDetailPage" >/jsp/innovationSalon/salonOnlineDetail.jsp</result>
+			<result name="articleDetail">/jsp/innovationSalon/salonArticleDetail.jsp</result>
+			<result name="salonOnlineUploadPage">/jsp/innovationSalon/salonOnlineArticleUpload.jsp</result>
+			<result name="salonOfflineUploadPage">/jsp/innovationSalon/salonOfflineArticleUpload.jsp</result>
+			<result name="salonofflineDetailPage">/jsp/innovationSalon/salonOfflineDetail.jsp</result>
+			<result name="salonOnlineComment" type="redirectAction">salonAction!toSalonDetail.action?salonInfoDto.id=${salonInfoDto.id}</result>
+			<result name="salonOfflineComment" type="redirectAction">salonAction!toOffLineSalonDetail.action?salonInfoDto.id=${salonInfoDto.id}</result>
+			<result name="redirectToSalonDetail" type="redirectAction">salonAction!toSalonDetail.action?salonInfoDto.id=${salonInfoDto.id}</result>
+			<result name="redirectToOffLineSalonDetail" type="redirectAction">salonAction!toOffLineSalonDetail.action?salonInfoDto.id=${salonInfoDto.id}</result>
+			<result name="redirectToArticleDetail" type="redirectAction">salonAction!toArticleDetail.action?salonArticleDto.id=${salonArticleDto.id}</result>
+		</action>
+		<action name="salonSearchAction!*" class="salonSearchAction" method="{1}" >
+			<interceptor-ref name="defaultStack" />
+		    <!--验证登录 -->
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name="includeMethods">toVideoUploadPage,toPictureUploadPage,
+				 pictureDetail,videoDetail
+				 </param>
+			</interceptor-ref>
+			<result name="searchSalon">/jsp/innovationSalon/salonInfoList.jsp</result>
+			<result name="searchArticle">/jsp/innovationSalon/articleInfoList.jsp</result>
+			<result name="searchPiture">/jsp/innovationSalon/pictureInfoList.jsp</result>
+			<result name="searchVideo">/jsp/innovationSalon/videoInfoList.jsp</result>
+			<result name="viewPictureDetail">/jsp/innovationSalon/salonPictureDetail.jsp</result>
+			<result name="viewVideoDetail">/jsp/innovationSalon/salonVideoDetail.jsp</result>
+			<result name="pictureListInfoBySalon">/jsp/innovationSalon/pictureInfoListBySalonId.jsp</result>
+			<result name="classPictureListInfoBySalon">/jsp/innovationSalon/classPictureInfoListBySalonId.jsp</result>
+			<result name="videoListInfoBySalon">/jsp/innovationSalon/videoInfoListBySalonId.jsp</result>
+			<result name="classVideoListInfoBySalon">/jsp/innovationSalon/classVideoInfoListBySalonId.jsp</result>
+			<result name="toVideoUploadPage">/jsp/innovationSalon/videoUpload.jsp</result>
+			<result name="toPictureUploadPage">/jsp/innovationSalon/pictureUpload.jsp</result>
+			<result name="userListInfoBySalon">/jsp/innovationSalon/userInfoList.jsp</result>
+			<result name="serrchHostUnit">/jsp/innovationSalon/hostUnitList.jsp</result>
+			<result name="redirectToVideoUpload" type="redirectAction">salonSearchAction!toVideoUploadPage.action?salonMediaDto.salonId=${salonMediaDto.salonId}</result>
+			<result name="redirectToPictureUpload" type="redirectAction">salonSearchAction!toPictureUploadPage.action?salonMediaDto.salonId=${salonMediaDto.salonId}</result>
+		</action>
+
+		<action name="salonManageAction!*" class="salonManageAction" method="{1}" >
+			<interceptor-ref name="defaultStack" />
+			<!--验证登录 -->
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name=" excludeMethods">
+				 </param>
+			</interceptor-ref>
+			<result name="myLaunchOnlineSalonPage">/jsp/personalCenter/mySalonOnlineManage.jsp</result>
+			<result name="myLaunchOfflineSalonPage">/jsp/personalCenter/mySalonOfflineManage.jsp</result>
+			<result name="launchOfflineSalon">/jsp/personalCenter/salonOfflineLaunch.jsp</result>
+			<result name="launchOnlineSalon">/jsp/personalCenter/salonOnlineLaunch.jsp</result>
+			<result name="updateOnlineSalon">/jsp/personalCenter/updateSalonOnlineLaunch.jsp</result>
+			<result name="updateOfflineSalon">/jsp/personalCenter/updateSalonOfflineLaunch.jsp</result>
+			<result name="joinOnlineSalon">/jsp/personalCenter/joinSalonOnline.jsp</result>
+			<result name="joinOfflineSalon">/jsp/personalCenter/joinSalonOffline.jsp</result>
+			<result name="mySalonArticleList">/jsp/personalCenter/mySalonArticleList.jsp</result>
+			<result name="salonOfflinePictureList">/jsp/personalCenter/salonOfflinePictureList.jsp</result>
+			<result name="salonOfflineVideoList">/jsp/personalCenter/salonOfflineVideoList.jsp</result>
+			<result name="pictureList4Salon">/jsp/personalCenter/pictureList4Salon.jsp</result>
+			<result name="videoList4Salon">/jsp/personalCenter/videoList4Salon.jsp</result>
+			<result name="uploadPicture">/jsp/personalCenter/manageUploadPicture.jsp</result>
+			<result name="uploadVideo">/jsp/personalCenter/manageUploadVideo.jsp</result>
+		    <result name="personalArticleManage">/jsp/personalCenter/myArticleManage.jsp</result>
+			<result name="personalCommentManage">/jsp/personalCenter/myCommentManage.jsp</result>
+			<result name="modifyArticle">/jsp/personalCenter/modifyArticle.jsp</result>
+			<result name="modifyOfflineArticle">/jsp/personalCenter/modifyOfflineArticle.jsp</result>
+			<result name="modifyComment">/jsp/personalCenter/modifyComment.jsp</result>
+			<result name="addSalonFail" type="redirectAction">salonManageAction!toLaunchPage.action?salonInfoDto.salonType=${salonInfoDto.salonType}</result>
+			<result name="addSalonSuccess">/jsp/personalCenter/addSalonSuccess.jsp?salonInfoDto.salonType=${salonInfoDto.salonType}</result>
+			<result name="updateSalonSuccess" type="redirectAction">salonManageAction!myLaunchSalonList.action?salonInfoDto.salonType=${salonInfoDto.salonType}</result>
+			<result name="uploadSuccessToMediaListPage" type="redirectAction">salonManageAction!toMediaListPage.action?salonMediaDto.mediaType=${salonMediaDto.mediaType}</result>
+			<result name="uploadSuccessToMediaListBySalonPage" type="redirectAction">salonManageAction!toMediaListBySalonPage.action?salonMediaDto.mediaType=${salonMediaDto.mediaType}</result>
+		</action>
+
+     </package>
+
+	<package name="homePage" extends="global" namespace="/homePage">
+		<action name="homePageAction!*" class="homePageAction" method="{1}">
+			<result name="success_init">/homePage.jsp</result>
+			<result name="success">/homePage.jsp</result>
+			<result name="toUserRegister">/jsp/common/user/userRegister.jsp</result>
+			<result name="citySiteJobs">/jsp/homePage/citySite.jsp</result>
+			<result name="hotCompetencyJobs">/jsp/homePage/hotCompetencyJobList.jsp</result>
+			<result name="loadCitySiteHotJobs">/jsp/homePage/citySiteHotJobs.jsp</result>
+		</action>
+	</package>
+	<!-- administrator start -->
+	<!-- administrator main page -->
+	<!-- administrator end -->
+
+
+	<!-- #################### PersonalCenter Start ########################## -->
+	<package name="personalCenter" extends="global" namespace="/personalCenter" >
+		<action name="personalCenterAction!*" class="personalCenterAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+		    <!--验证个人用户登录 -->
+			<interceptor-ref name="authPersonalLoginInterceptor">
+				 <param name="excludeMethods">lookJobInfoDetail</param>
+			</interceptor-ref>
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name="includeMethods">
+				 	lookJobInfoDetail
+				 </param>
+			</interceptor-ref>
+			<result name="init">/jsp/personalCenter/personalCenterIndex.jsp</result>
+			<result name="viewApplyJobIntentionList">/jsp/personalCenter/applyJobIntention.jsp</result>
+			<result name="toAddApplyJobInfo">/jsp/personalCenter/addApplyJobInfo.jsp</result>
+			<result name="saveApplyJobInfo" type="redirectAction">personalCenterAction!viewApplyJobIntentionList.action</result>
+			<result name="toEditApplyJobInfo">/jsp/personalCenter/editApplyJobInfo.jsp</result>
+			<result name="saveEditApplyJobInfo" type="redirectAction">personalCenterAction!viewApplyJobIntentionList.action</result>
+			<result name="myAppliedJobs">/jsp/personalCenter/myAppliedJobs.jsp</result>
+			<result name="lookJobInfoDetail">/jsp/personalCenter/myJobInfoDetail.jsp</result>
+			<result name="myAppliedJobInfoDetail">/jsp/personalCenter/myAppliedJobInfoDetail.jsp</result>
+			<result name="deleteMyJob" type="redirectAction">personalCenterAction!myAppliedJobs.action</result>
+			<result name="viewApplyRecommendation">/jsp/personalCenter/recommendation.jsp</result>
+			<result name="toAddRecommendation">/jsp/personalCenter/addRecommendation.jsp</result>
+			<result name="saveAddRecommendation" type="redirectAction">personalCenterAction!viewApplyRecommendation.action</result>
+			<result name="toEditRecommendation">/jsp/personalCenter/editRecommendation.jsp</result>
+			<result name="saveEditRecommendation" type="redirectAction">personalCenterAction!viewApplyRecommendation.action</result>
+			<result name="viewNewJobs">/jsp/personalCenter/newJobResultList.jsp</result>
+		</action>
+
+		<action name="filterCompanyAction!*" class="filterCompanyAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+		    <!--验证个人用户登录 -->
+			<interceptor-ref name="authPersonalLoginInterceptor">
+				 <param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="viewFilterCompany4LogginUser">/jsp/personalCenter/filterCompany.jsp</result>
+		</action>
+
+		<action name="personalCertManageAction!*" class="personalCertManageAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+		    <!--验证个人用户登录 -->
+			<interceptor-ref name="authPersonalLoginInterceptor">
+				 <param name="excludeMethods">viewPersonPoint</param>
+			</interceptor-ref>
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name="includeMethods">viewPersonPoint</param>
+			</interceptor-ref>
+			<result name="toSubmitCert">/jsp/personalCenter/submitCert.jsp</result>
+			<result name="viewSubmitedCert">/jsp/personalCenter/submitedCert.jsp</result>
+			<result name="searchSubmitedCert">/jsp/personalCenter/submitedCert.jsp</result>
+			<result name="deletePersonalCert" type="redirectAction">personalCertManageAction!viewSubmitedCert.action</result>
+			<result name="toEditPersonalCert">/jsp/personalCenter/editPersonalCert.jsp</result>
+			<result name="saveAddPersonalCert" type="redirectAction">personalCertManageAction!viewSubmitedCert.action</result>
+			<result name="saveEditPersonalCert" type="redirectAction">personalCertManageAction!viewSubmitedCert.action</result>
+			<result name="personPoint">/jsp/personalCenter/personPoint.jsp</result>
+		</action>
+		<action name="headHuntServiceManageAction!*" class="headHuntServiceManageAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+		    <!--验证用户登录 -->
+			<interceptor-ref name="authLoginInterceptor">
+				 <param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="buyMain">/jsp/personalCenter/headhunter-buy.jsp</result>
+			<result name="boughtMain">/jsp/personalCenter/headhunter-bought.jsp</result>
+			<result name="expiredMain">/jsp/personalCenter/headhunter-expired.jsp</result>
+			<result name="buyDetail">/jsp/personalCenter/headhunter-buy-view.jsp</result>
+			<result name="orderSuccess" type="redirectAction">headHuntServiceManageAction!buyServiceInit.action?msg=${msg}</result>
+			<result name="removeFromBought" type="redirectAction">headHuntServiceManageAction!boughtServiceInit.action</result>
+			<result name="removeFromExpired" type="redirectAction">headHuntServiceManageAction!expiredServiceInit.action</result>
+			<result name="extensionFromBought" type="redirectAction">headHuntServiceManageAction!boughtServiceInit.action</result>
+			<result name="extensionFromExpired" type="redirectAction">headHuntServiceManageAction!expiredServiceInit.action</result>
+		</action>
+
+
+		<action name="receiveInterviewNoticeManageAction!*" class="receiveInterviewNoticeManageAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+		    <!--验证个人用户登录 -->
+			<interceptor-ref name="authPersonalLoginInterceptor">
+				 <param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="viewInterviewNoticeList">/jsp/personalCenter/interviewNoticeList.jsp</result>
+			<result name="viewInterviewNoticeDetail">/jsp/personalCenter/interviewNoticeDetail.jsp</result>
+		</action>
+
+	</package>
+	<!-- #################### PersonalCenter End ########################## -->
+
+	<package name="enterpriseCenter" extends="global">
+		<action name="enterpriseCenterAction!*" class="enterpriseCenterAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+		    <!--验证企业用户登录 -->
+			<interceptor-ref name="authEnterpriseLoginInterceptor">
+				 <param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="init">/jsp/enterpriseCenter/enterpriseCenterIndex.jsp</result>
+			<result name="myPublishingJobs">/jsp/enterpriseCenter/myPublishingJobs.jsp</result>
+			<result name="mySuspendJobs">/jsp/enterpriseCenter/mySuspendJobs.jsp</result>
+			<result name="isAboutToExpireJobs">/jsp/enterpriseCenter/isAboutToExpireJobs.jsp</result>
+			<result name="completeJobs">/jsp/enterpriseCenter/completeJobs.jsp</result>
+			<result name="suspendPublishedJob" type="redirectAction">enterpriseCenterAction!getMyPublishingJobs.action</result>
+			<result name="unlockPublishingJob" type="redirectAction">enterpriseCenterAction!getMySuspendJobs.action</result>
+			<result name="extendedReleaseDate" type="redirectAction">enterpriseCenterAction!getIsAboutToExpireJobs.action</result>
+			<result name="republishJobs" type="redirectAction">enterpriseCenterAction!getCompleteJobs.action</result>
+			<result name="deleteJobFromApplyRecord" type="redirectAction">applicationsReceivedAction!applicationsReceiveds.action?jobSearchVo.applyJobQueryType=${jobSearchVo.applyJobQueryType}</result>
+			<result name="deleteMyPublishingJob" type="redirectAction">enterpriseCenterAction!getMyPublishingJobs.action</result>
+			<result name="deleteMySuspendJobs" type="redirectAction">enterpriseCenterAction!getMySuspendJobs.action</result>
+			<result name="deleteIsAboutToExpireJobs" type="redirectAction">enterpriseCenterAction!getIsAboutToExpireJobs.action</result>
+			<result name="deleteCompleteJobs" type="redirectAction">enterpriseCenterAction!getCompleteJobs.action</result>
+			<result name="updateMyPublishedJob">/jsp/enterpriseCenter/updatePublishedJob.jsp</result>
+			<result name="updateSuccess">/jsp/enterpriseCenter/updateSuccess.html</result>
+		</action>
+		<!-- 招聘管理，收到的申请系列 -->
+		<action name="applicationsReceivedAction!*" class="applicationsReceivedAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+		    <!--验证企业用户登录 -->
+			<interceptor-ref name="authEnterpriseLoginInterceptor">
+				 <param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="applicationsReceiveds">/jsp/enterpriseCenter/applicationsReceiveds.jsp</result>
+			<result name="detailsOfJobApplications">/jsp/enterpriseCenter/detailsOfJobApplications.jsp</result>
+			<result name="redirectReceiveds" type="redirectAction">
+				<param name="actionName">applicationsReceivedAction!detailsOfJobApplications.action</param>
+				<param name="jobId">${jobId}</param>
+				<param name="applyJobQueryType">${applyJobQueryType}</param>
+			</result>
+			<result name="userAuthenticationService" type="json">
+				<param name="root">success</param>
+			</result>
+			<result name="linkBoStation" type="json">
+				<param name="root">success</param>
+			</result>
+		</action>
+		<action name="sendInterviewNoticeManageAction!*" class="sendInterviewNoticeManageAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+		    <!--验证企业用户登录 -->
+			<interceptor-ref name="authEnterpriseLoginInterceptor">
+				 <param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="viewInterviewNoticeList">/jsp/enterpriseCenter/interviewNoticeList.jsp</result>
+			<result name="viewInterviewNoticeDetail">/jsp/enterpriseCenter/interviewNoticeDetail.jsp</result>
+		</action>
+		<action name="certNeedsManageAction!*" class="certNeedsManageAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+		    <!--验证企业用户登录 -->
+			<interceptor-ref name="authEnterpriseLoginInterceptor">
+				 <param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="toSubmitCertNeeds">/jsp/enterpriseCenter/submitCertNeeds.jsp</result>
+			<result name="viewSubmitedCertNeedsList">/jsp/enterpriseCenter/submitedCertNeeds.jsp</result>
+			<result name="viewPausedCertNeedsList">/jsp/enterpriseCenter/pausedCertNeeds.jsp</result>
+			<result name="viewExpiringCertNeedsList">/jsp/enterpriseCenter/expiringCertNeeds.jsp</result>
+			<result name="viewExpiredCertNeedsList">/jsp/enterpriseCenter/expiredCertNeeds.jsp</result>
+			<result name="deleteCertNeedsFromSubmitedCertNeeds" type="redirectAction">certNeedsManageAction!viewSubmitedCertNeedsList.action</result>
+			<result name="deleteCertNeedsFromPausedCertNeeds" type="redirectAction">certNeedsManageAction!viewPausedCertNeedsList.action</result>
+			<result name="deleteCertNeedsFromExpiringCertNeeds" type="redirectAction">certNeedsManageAction!viewExpiringCertNeedsList.action</result>
+			<result name="deleteCertNeedsFromExpiredCertNeeds" type="redirectAction">certNeedsManageAction!viewExpiredCertNeedsList.action</result>
+			<result name="editCertNeedsStatus" type="redirectAction">certNeedsManageAction!viewSubmitedCertNeedsList.action</result>
+			<result name="toEditCertNeeds">/jsp/enterpriseCenter/editCertNeeds.jsp</result>
+			<result name="saveEditCertNeedsFromSubmitedCertNeeds" type="redirectAction">certNeedsManageAction!viewSubmitedCertNeedsList.action</result>
+			<result name="saveEditCertNeedsFromPausedCertNeeds" type="redirectAction">certNeedsManageAction!viewPausedCertNeedsList.action</result>
+			<result name="saveEditCertNeedsFromExpiringCertNeeds" type="redirectAction">certNeedsManageAction!viewExpiringCertNeedsList.action</result>
+			<result name="saveEditCertNeedsFromExpiredCertNeeds" type="redirectAction">certNeedsManageAction!viewExpiredCertNeedsList.action</result>
+			<result name="saveAddCertNeeds" type="redirectAction">certNeedsManageAction!viewSubmitedCertNeedsList.action</result>
+		</action>
+		<action name="offlineSearchResultAction!*" class="offlineSearchResultAction" method="{1}">
+			<interceptor-ref name="defaultStack" />
+		    <!--验证企业用户登录 -->
+			<interceptor-ref name="authEnterpriseLoginInterceptor">
+				 <param name="excludeMethods"></param>
+			</interceptor-ref>
+			<result name="viewSearchResult4CurrentUser">/jsp/enterpriseCenter/searchResult4CurrentUser.jsp</result>
+			<result name="toAddSearchResult">/jsp/enterpriseCenter/addSearchResult.jsp</result>
+			<result name="saveAddSearchResult" type="redirectAction">offlineSearchResultAction!viewSearchResult4CurrentUser.action</result>
+			<result name="toEditSearchResult">/jsp/enterpriseCenter/editSearchResult.jsp</result>
+			<result name="toViewSearchResult">/jsp/enterpriseCenter/viewSearchResult.jsp</result>
+			<result name="saveEditSearchResult" type="redirectAction">offlineSearchResultAction!viewSearchResult4CurrentUser.action</result>
+			<result name="btiTalentSearch">/jsp/peopleExcavate/btiExcavateResultList.jsp</result>
+		</action>
+
+	</package>
+	<package name="advertisement" extends="global">
+			<action name="advertisementManageAction!*" class="advertisementManageAction" method="{1}">
+			<result name="success">/advertisement.jsp</result>
+		</action>
+    </package>
+    	<package name="upload" extends="global">
+			<action name="uploadAction!*" class="uploadAction" method="{1}">
+			<result name="success">/advertisement.jsp</result>
+		</action>
+    </package>
+
+
+</struts>

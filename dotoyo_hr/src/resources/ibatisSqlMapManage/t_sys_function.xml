@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysFunctionDto" type="com.dotoyo.buildjob.sys.dto.SysFunctionDto"/>
+	<resultMap class="sysFunctionDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+	</resultMap>
+
+ <!-- **********************************************************************************
+   Module:  System manager, function maintain
+   Function: add  function
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addSysFunction" parameterClass="sysFunctionDto">
+ 		     insert into T_COMM_FUNCTION(
+			 code,
+             name) values(
+             #code#,
+ 			 #name#)
+ 	</insert>
+ <!-- **********************************************************************************
+   Module:  System manager,function maintain
+   Function: get function list
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysFunctionsList" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+			id,
+			code,
+			name
+			from T_COMM_FUNCTION
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="code">
+				(code like concat("%",#code#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="name">
+				(name like concat("%",#name#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by code
+ 	</select>
+ 	<select id="querySysFunctionsCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(*)
+			from T_COMM_FUNCTION
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="code">
+				(code like concat("%",#code#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="name">
+				(name like concat("%",#name#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,function maintain
+   Function: get function
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysFunction" resultMap="result_dto" parameterClass="sysFunctionDto">
+ 		select
+			id,
+			code,
+			name
+			from T_COMM_FUNCTION
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="code">
+				(code = #code#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="id">
+				(id =#id#)
+			</isNotEmpty>
+		   </dynamic>
+
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,function maintain
+   Function: update function
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateSysFunction" parameterClass="sysFunctionDto">
+ 		update T_COMM_FUNCTION
+ 		set
+			 code = #code#,
+			 name = #name#
+ 		where id = #id#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager,function maintain
+   Function: remove function
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeSysFunction" parameterClass="sysFunctionDto">
+ 		delete from T_COMM_FUNCTION
+ 		where id = #id#
+ 	</statement>
+ </sqlMap>

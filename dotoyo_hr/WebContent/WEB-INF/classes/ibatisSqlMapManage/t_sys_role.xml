@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysRoleDto" type="com.dotoyo.buildjob.sys.dto.SysRoleDto"/>
+	<resultMap class="sysRoleDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+		<result property="assignCounts" column="assignCounts"/>
+	</resultMap>
+
+ <!-- **********************************************************************************
+   Module:  System manager, role maintain
+   Function: add  order
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addSysRole" parameterClass="sysRoleDto">
+ 		     insert into T_COMM_ROLE(
+			 code,
+             name) values(
+             #code#,
+ 			 #name#)
+ 	</insert>
+ <!-- **********************************************************************************
+   Module:  System manager,role maintain
+   Function: get role list
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysRolesList" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+			role.id,
+			role.code,
+			role.name,
+			((select count(*) from T_COMM_USER_ROLE userRole where userRole.roleid=role.id)
+			+((select count(*) from T_COMM_FUNCTION_ROLE fun where fun.roleid=role.id))
+			) assignCounts
+			from T_COMM_ROLE role
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="code">
+				(role.code like concat("%",#code#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="name">
+				(role.name like concat("%",#name#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by role.code
+ 	</select>
+ 	<select id="querySysRolesCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(*)
+			from T_COMM_ROLE
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="code">
+				(code like concat("%",#code#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="name">
+				(name like concat("%",#name#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,role maintain
+   Function: get Role
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysRole" resultMap="result_dto" parameterClass="sysRoleDto">
+ 		select
+			id,
+			code,
+			name,
+			0 assignCounts
+			from T_COMM_ROLE
+			where 1=1
+ 		   <dynamic prepend="and">
+				<isNotEmpty prepend="and" property="id">
+					(id = #id#)
+				</isNotEmpty>
+				<isNotEmpty prepend="and" property="code">
+					(code = #code#)
+				</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,role maintain
+   Function: update Role
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateSysRole" parameterClass="sysRoleDto">
+ 		update T_COMM_ROLE
+ 		set
+			 code = #code#,
+			 name = #name#
+ 		where id = #id#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager,role maintain
+   Function: remove Role
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeSysRole" parameterClass="sysRoleDto">
+ 		delete from T_COMM_ROLE
+ 		where id = #id#
+ 	</statement>
+ </sqlMap>

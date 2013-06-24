@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="recommendation" type="com.dotoyo.buildjob.applyJobCenter.dto.RecommendationDto" />
+	<typeAlias alias="recommendationVo" type="com.dotoyo.buildjob.applyJobCenter.vo.RecommendationVo"/>
+	<typeAlias alias="peopleExcavateVo" type="com.dotoyo.buildjob.peopleExcavate.vo.PeopleExcavateVo"/>
+	<typeAlias alias="blogUserInfoDto" type="com.dotoyo.buildjob.common.dto.BlogUserInfoDto"/>
+	
+	<resultMap class="recommendationVo" id="get-recommendation-result">
+		<result property="id" column="id"/>
+		<result property="userId" column="userId"/>
+		<result property="userInfo" column="userId" select="getBlogUserInfoByLoginUserId"/>
+		<result property="function" column="functionCode" select="getClassMasterByCode"/>
+		<result property="expectedPosition" column="expectedPosition"/>
+		<result property="province" column="provinceCode" select="getProvinceByCode"/>
+		<result property="city" column="cityCode" select="getCityByCode"/>
+		<result property="area" column="areaCode" select="getAreaByCode"/>
+		<result property="jobType" column="jobTypeCode" select="getClassMasterByCode"/>
+		<result property="isAdvisor" column="isAdvisor"/>
+		<result property="submitDate" column="submitDate"/>
+		<result property="lastEditDate" column="lastEditDate"/>
+		<result property="expectedSalary" column="expectedSalaryCode" select="getClassMasterByCode"/>
+		<result property="recommendationType" column="recommendationType"/>
+		<result property="verifyStatus" column="verifyStatus"/>
+		<result property="interviewStatus" column="interviewStatus"/>
+	</resultMap>		
+	
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    添加线下推荐对象信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-7    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveRecommendation" parameterClass="recommendation">
+		insert into 
+		t_applyjobctr_recommendation
+			(userId,functionCode,expectedPosition,provinceCode,cityCode,areaCode,jobTypeCode,isAdvisor,submitDate,lastEditDate,
+			expectedSalaryCode,recommendationType,verifyStatus,interviewStatus)
+		values
+			(#userId#,#functionCode#,#expectedPosition#,#provinceCode#,#cityCode#,#areaCode#,#jobTypeCode#,#isAdvisor#,#submitDate#,
+			#lastEditDate#,#expectedSalaryCode#,#recommendationType#,#verifyStatus#,#interviewStatus#)
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    删除线下推荐对象信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-7    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteRecommendation" parameterClass="java.lang.Long">
+		delete from t_applyjobctr_recommendation where id = #id#
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    更新线下推荐对象信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-7    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateRecommendation" parameterClass="recommendation">
+		update t_applyjobctr_recommendation
+		set id = #id#
+			<dynamic>
+				<isNotEmpty prepend="," property="userId">
+					userId = #userId#
+				</isNotEmpty>
+				<isNotEmpty prepend="," property="functionCode">
+					functionCode = #functionCode#
+				</isNotEmpty>
+				<isNotEmpty prepend="," property="expectedPosition">
+					expectedPosition = #expectedPosition#
+				</isNotEmpty>
+				<isNotEmpty prepend="," property="provinceCode">
+					provinceCode = #provinceCode#
+				</isNotEmpty>
+				<isNotEmpty prepend="," property="cityCode">
+					cityCode = #cityCode#
+				</isNotEmpty>
+					,areaCode = #areaCode#
+				<isNotEmpty prepend="," property="jobTypeCode">
+					jobTypeCode = #jobTypeCode#
+				</isNotEmpty>
+				<isNotEmpty prepend="," property="isAdvisor">
+					isAdvisor = #isAdvisor#
+				</isNotEmpty>
+				<isNotEmpty prepend="," property="submitDate">
+					submitDate = #submitDate#
+				</isNotEmpty>
+				<isNotEmpty prepend="," property="lastEditDate">
+					lastEditDate = #lastEditDate#
+				</isNotEmpty>
+				<isNotEmpty prepend="," property="expectedSalaryCode">
+					expectedSalaryCode = #expectedSalaryCode#
+				</isNotEmpty>
+				<isNotEmpty prepend="," property="recommendationType">
+					recommendationType = #recommendationType#
+				</isNotEmpty>
+				<isNotEmpty prepend="," property="verifyStatus">
+					verifyStatus = #verifyStatus#
+				</isNotEmpty>
+				<isNotEmpty prepend="," property="interviewStatus">
+					interviewStatus = #interviewStatus#
+				</isNotEmpty>
+			</dynamic>
+		where id = #id#
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    查询推荐对象信息列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-7    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryRecommendationList" parameterClass="recommendation" resultMap="get-recommendation-result">
+		select recommendation.id,recommendation.userId,recommendation.functionCode,recommendation.expectedPosition,recommendation.provinceCode,
+		recommendation.cityCode,recommendation.areaCode,recommendation.jobTypeCode,recommendation.isAdvisor,recommendation.submitDate,
+		recommendation.lastEditDate,recommendation.expectedSalaryCode,recommendation.recommendationType,
+		recommendation.verifyStatus,recommendation.interviewStatus
+		from t_applyjobctr_recommendation recommendation, t_login_user loginUser, t_user_info userInfo
+		where
+			userInfo.userName = loginUser.userName
+		AND
+			recommendation.userId = loginUser.id
+		<dynamic>
+			<isNotEmpty prepend="and" property="id">
+				(recommendation.id = #id#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(recommendation.userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="functionCode">
+				(recommendation.functionCode =#functionCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedPosition">
+				(recommendation.expectedPosition like concat("%",#expectedPosition#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="provinceCode">
+				(recommendation.provinceCode =#provinceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="cityCode">
+				(recommendation.cityCode = #cityCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="areaCode">
+				(recommendation.areaCode = #areaCode# )
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="jobTypeCode">
+				(recommendation.jobTypeCode = #jobTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isAdvisor">
+				(recommendation.isAdvisor = #isAdvisor#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="submitDate">
+				(recommendation.submitDate = #submitDate#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="lastEditDate">
+				(recommendation.lastEditDate = #lastEditDate#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedSalaryCode">
+				(recommendation.expectedSalaryCode = #expectedSalaryCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="recommendationType">
+				(recommendation.recommendationType = #recommendationType#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="verifyStatus">
+				(recommendation.verifyStatus = #verifyStatus#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="interviewStatus">
+				(recommendation.interviewStatus = #interviewStatus#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userName">
+				(userInfo.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+		</dynamic>
+		order by submitDate desc
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    求职中心
+        功能:    计算查询推荐对象信息列表条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-1    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryRecommendationCount" parameterClass="recommendation" resultClass="java.lang.Integer">
+		select
+			count(*)
+		from t_applyjobctr_recommendation recommendation, t_login_user loginUser, t_user_info userInfo
+		where
+			userInfo.userName = loginUser.userName
+		AND
+			recommendation.userId = loginUser.id
+		<dynamic>
+			<isNotEmpty prepend="and" property="id">
+				(recommendation.id = #id#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(recommendation.userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="functionCode">
+				(recommendation.functionCode =#functionCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedPosition">
+				(recommendation.expectedPosition like concat("%",#expectedPosition#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="provinceCode">
+				(recommendation.provinceCode =#provinceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="cityCode">
+				(recommendation.cityCode = #cityCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="areaCode">
+				(recommendation.areaCode = #areaCode# )
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="jobTypeCode">
+				(recommendation.jobTypeCode = #jobTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isAdvisor">
+				(recommendation.isAdvisor = #isAdvisor#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="submitDate">
+				(recommendation.submitDate = #submitDate#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="lastEditDate">
+				(recommendation.lastEditDate = #lastEditDate#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expectedSalaryCode">
+				(recommendation.expectedSalaryCode = #expectedSalaryCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="recommendationType">
+				(recommendation.recommendationType = #recommendationType#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="verifyStatus">
+				(recommendation.verifyStatus = #verifyStatus#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="interviewStatus">
+				(recommendation.interviewStatus = #interviewStatus#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userName">
+				(userInfo.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+		</dynamic>
+	</select>
+<!-- ********************************************************************************** 
+        模块:   　	求职中心
+        功能:    查询推荐对象信息详细内容
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-7    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getRecommendationById" parameterClass="java.lang.Long" resultMap="get-recommendation-result">
+		select id,userId,functionCode,expectedPosition,provinceCode,cityCode,areaCode,jobTypeCode,isAdvisor,submitDate,lastEditDate,
+			expectedSalaryCode,recommendationType,verifyStatus,interviewStatus
+		from t_applyjobctr_recommendation
+		where id = #id#
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    人才挖掘
+        功能:    线下人才挖掘 数量统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-28    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+<select id="queryTalentCountOfBti" parameterClass="peopleExcavateVo" resultClass="java.lang.Integer">
+		<![CDATA[
+    	SELECT count(userInfo.userName)
+		  FROM t_user_info userInfo,
+		  	   t_login_user loginUser,
+		  	   t_applyjobctr_recommendation are
+		 WHERE loginUser.id=are.userId
+		   AND loginUser.userName=userInfo.userName
+    	   AND are.interviewStatus=1
+    	   AND userInfo.userType=0
+   		   AND loginUser.status=1
+		]]>
+	     <dynamic prepend="and">
+	    	<isNotEmpty prepend="and" property="industryType">
+			    (userInfo.industryType=#industryType#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="specializedType">
+	    		(userInfo.specializedType=#specializedType#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="competency">
+	    		<![CDATA[(userInfo.competency=#competency#)]]>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="provinceCode">
+	    		(userInfo.provinceCode=#provinceCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="cityCode">
+	    		(userInfo.cityCode=#cityCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="areaCode">
+	    		(userInfo.areaCode=#areaCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="metier">
+	    		<![CDATA[(userInfo.metier like concat("%",#metier#,"%"))]]>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="education">
+	    		<isNotEqual property="education" compareValue="0">
+	    			(userInfo.education=#education#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="workingLife">
+	    		<isNotEqual property="workingLife" compareValue="0-0">
+	    			<![CDATA[userInfo.workingLife>=$ltWorkingLife$ AND userInfo.workingLife<=$gtWorkingLife$]]>
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="age">
+	    		<isNotEqual property="age" compareValue="0-0">
+	    			<![CDATA[userInfo.age>$ltAge$ and userInfo.age<=$gtAge$]]> 
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	   		<isNotEmpty prepend="and" property="sex">
+	    		(userInfo.sex=#sex#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="langCapa">
+	    		<isNotEqual property="langCapa" compareValue="0">
+	    			(userInfo.langCapa=#langCapa#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="mastery">
+	    		<isNotEqual property="mastery" compareValue="0">
+	    			(userInfo.mastery=#mastery#)       
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="computerGrade">
+	    		<isNotEqual property="computerGrade" compareValue="0">
+	    			(userInfo.computerGrade=#computerGrade#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="isAdviser">      
+	    		(userInfo.isAdviser=#isAdviser#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="jobNature">   
+	    		(userInfo.jobNature=#jobNature#)
+	    	</isNotEmpty>
+	    	<isNotNull prepend="and" property="userInfoUpdateDate">
+	    		(DATE_FORMAT(userInfo.userInfoUpdateDate,'%Y-%m-%d')>DATE_FORMAT(#userInfoUpdateDate#,'%Y-%m-%d'))
+	    	</isNotNull>
+	    	<isNotEmpty prepend="and" property="categoryIndex">
+	    		(userInfo.categoryIndex=#categoryIndex#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="jobKeyWord">
+	    		(userInfo.expectedPosition like concat("%",#jobKeyWord#,"%"))
+	    	</isNotEmpty>
+		</dynamic>
+		AND NOT EXISTS(SELECT pf.id FROM t_personcenter_filtercompany pf 
+			WHERE pf.userid=loginUser.id AND #companyName# IN(pf.companyName1,pf.companyName2,pf.companyName3,pf.companyName4,pf.companyName5))
+</select>	
+
+<!-- ********************************************************************************** 
+        模块:    人才挖掘
+        功能:    线下人才挖掘（人才）
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-28    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+<select id="btiPeopleExcavate" parameterClass="peopleExcavateVo" resultClass="blogUserInfoDto">
+		<![CDATA[
+		 SELECT loginUser.id as userId,
+		 		userInfo.userName,
+		 		userInfo.companyName,
+				are.expectedPosition AS jobName,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.competency) AS competency,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.industryType) AS industryType,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.specializedType) AS specializedType,
+				userInfo.metier,
+				userInfo.categoryIndex,
+				userInfo.userInfoUpdateDate,
+     			(SELECT NAME FROM t_comm_province WHERE CODE = userInfo.provinceCode) AS provinceCode,
+				(SELECT NAME FROM t_comm_city WHERE CODE = userInfo.cityCode) AS cityCode,
+				(SELECT NAME FROM t_comm_area WHERE CODE = userInfo.areaCode) AS areaCode,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE =userInfo.education AND parentCode='007')AS education,
+				userInfo.workingLife,
+				userInfo.age,
+				userInfo.sex,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE =userInfo.langCapa AND parentCode='008')AS langCapa,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE =userInfo.mastery AND parentCode='009')AS mastery,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE =userInfo.computerGrade AND parentCode='011')AS computerGrade,
+				userInfo.isAdviser,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.jobNature) AS jobNature
+		  FROM t_user_info userInfo,
+		  	   t_login_user loginUser,
+		  	   t_applyjobctr_recommendation are
+		 WHERE loginUser.id=are.userId
+		   AND loginUser.userName=userInfo.userName
+    	   AND are.interviewStatus=1
+    	   AND userInfo.userType=0
+   		   AND loginUser.status=1
+		]]>
+	    <dynamic prepend="and">
+	    	<isNotEmpty prepend="and" property="industryType">
+			    (userInfo.industryType=#industryType#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="specializedType">
+	    		(userInfo.specializedType=#specializedType#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="competency">
+	    		<![CDATA[(userInfo.competency=#competency#)]]>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="provinceCode">
+	    		(userInfo.provinceCode=#provinceCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="cityCode">
+	    		(userInfo.cityCode=#cityCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="areaCode">
+	    		(userInfo.areaCode=#areaCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="metier">
+	    		<![CDATA[(userInfo.metier like concat("%",#metier#,"%"))]]>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="education">
+	    		<isNotEqual property="education" compareValue="0">
+	    			(userInfo.education=#education#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="workingLife">
+	    		<isNotEqual property="workingLife" compareValue="0-0">
+	    			<![CDATA[userInfo.workingLife>=$ltWorkingLife$ AND userInfo.workingLife<=$gtWorkingLife$]]>
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="age">
+	    		<isNotEqual property="age" compareValue="0-0">
+	    			<![CDATA[userInfo.age>$ltAge$ and userInfo.age<=$gtAge$]]> 
+	    		</isNotEqual>
+	    	</isNotEmpty>
+    		<isNotEmpty prepend="and" property="sex">
+	    		(userInfo.sex=#sex#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="langCapa">
+	    		<isNotEqual property="langCapa" compareValue="0">
+	    			(userInfo.langCapa=#langCapa#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="mastery">
+	    		<isNotEqual property="mastery" compareValue="0">
+	    			(userInfo.mastery=#mastery#)       
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="computerGrade">
+	    		<isNotEqual property="computerGrade" compareValue="0">
+	    			(userInfo.computerGrade=#computerGrade#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="isAdviser">      
+	    		(userInfo.isAdviser=#isAdviser#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="jobNature">   
+	    		(userInfo.jobNature=#jobNature#)
+	    	</isNotEmpty>
+	    	<isNotNull prepend="and" property="userInfoUpdateDate">
+	    		(DATE_FORMAT(userInfo.userInfoUpdateDate,'%Y-%m-%d')>DATE_FORMAT(#userInfoUpdateDate#,'%Y-%m-%d'))
+	    	</isNotNull>
+	    	<isNotEmpty prepend="and" property="categoryIndex">
+	    		(userInfo.categoryIndex=#categoryIndex#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="jobKeyWord">
+	    		(userInfo.expectedPosition like concat("%",#jobKeyWord#,"%"))
+	    	</isNotEmpty>
+		</dynamic>
+	    	AND NOT EXISTS(SELECT pf.id FROM t_personcenter_filtercompany pf WHERE pf.userid=loginUser.id AND #companyName# IN(pf.companyName1,pf.companyName2,pf.companyName3,pf.companyName4,pf.companyName5))
+	    	<isEqual prepend="order by" property="orderBy" compareValue="userInfoUpdateDate">
+	    		<![CDATA[userInfo.userInfoUpdateDate DESC]]>
+	    	</isEqual>
+	    	<isEqual prepend="order by" property="orderBy" compareValue="workingLife">
+	    		<![CDATA[userInfo.workingLife DESC]]>
+	    	</isEqual>
+	    	<isEqual prepend="order by" property="orderBy" compareValue="categoryIndex">
+	    		<![CDATA[userInfo.categoryIndex DESC]]>
+	    	</isEqual>
+	    	<isEqual prepend="order by" property="orderBy" compareValue="jobKeyWord">
+	    		<![CDATA[userInfo.expectedPosition DESC]]>
+	    	</isEqual>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理 
+        功能:    线下人才审核
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-23    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="examineAndVerify" parameterClass="java.util.Map">
+		UPDATE t_applyjobctr_recommendation 
+		   SET lastEditDate = #lastEditDate#, 
+			   verifyStatus = #verifyStatus#
+		 WHERE id IN ($id$)
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    批量删除线下人才
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-23    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="delLineTalent" parameterClass="java.lang.String">
+		DELETE FROM t_applyjobctr_recommendation 
+		 WHERE id IN ($id$)
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    更改线下推荐人才面试状态
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-03-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateRecommendationInterviewStatus" parameterClass="java.util.Map">
+		UPDATE
+			t_applyjobctr_recommendation
+		SET
+			interviewStatus = #interviewStatus#
+		WHERE
+			id in ($ids$)
+	</update>
+	
+</sqlMap>

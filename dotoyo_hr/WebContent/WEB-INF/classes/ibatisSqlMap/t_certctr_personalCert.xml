@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="personalCert" type="com.dotoyo.buildjob.certificateCenter.dto.PersonalCertDto"/>
+	<typeAlias alias="personalCertVo" type="com.dotoyo.buildjob.certificateCenter.vo.PersonalCertVo"/>
+	<typeAlias alias="certVerifyInfo" type="com.dotoyo.buildjob.certificateCenter.dto.CertVerifyInfoDto"/>
+	
+	<resultMap class="personalCertVo" id="get-personalCert-result">
+		<result property="id" column="id"/>
+		<result property="certType" column="certTypeCode" select="getClassMasterByCode"/>
+		<result property="cert" column="certCode" select="getClassMasterByCode"/>
+		<result property="userId" column="userId"/>
+		<result property="registerStatus" column="registerStatusCode" select="getClassMasterByCode"/>
+		<result property="specialField" column="specialFieldCode" select="getClassMasterByCode"/>
+		<result property="province" column="provinceCode" select="getProvinceByCode"/>
+		<result property="city" column="cityCode" select="getCityByCode"/>
+		<result property="area" column="areaCode" select="getAreaByCode"/>
+		<result property="descp" column="descp"/>
+		<result property="certStatus" column="certStatus"/>
+		<result property="submitDate" column="submitDate"/>
+		<result property="lastEditDate" column="lastEditDate"/>
+		<result property="contact" column="contact"/>
+		<result property="telephone" column="telephone"/>
+		<result property="cellPhone" column="cellPhone"/>
+		<result property="email" column="email"/>
+		<result property="fax" column="fax"/>
+	</resultMap>
+
+<!-- ********************************************************************************** 
+        模块:   　	猎证中心
+        功能:    添加个人证书信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-1    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="savePersonalCert" parameterClass="personalCert">
+		insert into
+		t_certctr_personalcert
+			(certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,descp,
+			certStatus,submitDate,lastEditDate,contact,telephone,cellPhone,email,fax)
+		values
+			(#certTypeCode#,#certCode#,#userId#,#registerStatusCode#,#specialFieldCode#,#provinceCode#,#cityCode#,#areaCode#,#descp#,
+			#certStatus#,#submitDate#,#lastEditDate#,#contact#,#telephone#,#cellPhone#,#email#,#fax#)
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:   　	猎证中心
+        功能:    查询个人证书列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-1    arthas.zou
+   Notes:     备注
+********************************************************************************** -->	
+	<select id="queryPersonalCertList" resultMap="get-personalCert-result">
+		select id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,descp,
+			certStatus,submitDate,lastEditDate,contact,telephone,cellPhone,email,fax 
+		from t_certctr_personalcert
+		where certStatus = '0' 
+		order by submitDate desc
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    猎证中心
+        功能:    分页查询个人证书列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-30    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryPersonalCertPaginatedList" parameterClass="personalCert" resultMap="get-personalCert-result">
+		select id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,descp,
+			certStatus,submitDate,lastEditDate,contact,telephone,cellPhone,email,fax 
+		from t_certctr_personalcert 
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="certTypeCode">
+				(certTypeCode = #certTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certCode">
+				(certCode = #certCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="registerStatusCode">
+				(registerStatusCode = #registerStatusCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="specialFieldCode">
+				(specialFieldCode = #specialFieldCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="provinceCode">
+				(provinceCode = #provinceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="cityCode">
+				(cityCode = #cityCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="areaCode">
+				(areaCode = #areaCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certStatus">
+				(certStatus = #certStatus#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="descp">
+				(descp like concat("%",#descp#,"%"))
+			</isNotEmpty>
+		</dynamic>
+		order by submitDate desc	
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    猎证中心
+        功能:    查询个人证书记录条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-18    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryPersonalCertCount" parameterClass="personalCert" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			t_certctr_personalcert
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="certTypeCode">
+				(certTypeCode = #certTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certCode">
+				(certCode = #certCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="registerStatusCode">
+				(registerStatusCode = #registerStatusCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="specialFieldCode">
+				(specialFieldCode = #specialFieldCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="provinceCode">
+				(provinceCode = #provinceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="cityCode">
+				(cityCode = #cityCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="areaCode">
+				(areaCode = #areaCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certStatus">
+				(certStatus = #certStatus#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="descp">
+				(descp like concat("%",#descp#,"%"))
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:   　	猎证中心
+        功能:    查询重复个人证书条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-03-12    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryDuplicatedPersonalCertCount" parameterClass="personalCert" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			t_certctr_personalcert
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="certTypeCode">
+				(certTypeCode = #certTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certCode">
+				(certCode = #certCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:   　	猎证中心
+        功能:    查询重复个人证书ID列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-03-12    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryDuplicatedPersonalCertIdList" parameterClass="personalCert" resultClass="java.lang.Long">
+		SELECT
+			id
+		FROM
+			t_certctr_personalcert
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="certTypeCode">
+				(certTypeCode = #certTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certCode">
+				(certCode = #certCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+		</dynamic>
+	</select>
+		
+
+<!-- ********************************************************************************** 
+        模块:   　	猎证中心
+        功能:    查询个人证书详细信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-2    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getPersonalCertById" parameterClass="java.lang.Long" resultMap="get-personalCert-result">
+		select id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,descp,
+			certStatus,submitDate,lastEditDate,contact,telephone,cellPhone,email,fax 
+		from t_certctr_personalcert 
+		where id=#id#
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:   　	猎证中心
+        功能:    删除个人证书信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-10    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deletePersonalCert" parameterClass="java.lang.String">
+		delete from t_certctr_personalcert where id in ($ids$)
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:   　	猎证中心	
+        功能:    更新个人证书信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-10    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updatePersonalCert" parameterClass="personalCert">
+		update t_certctr_personalcert
+		set certTypeCode = #certTypeCode#,certCode = #certCode#,registerStatusCode = #registerStatusCode#,specialFieldCode = #specialFieldCode#,
+			provinceCode = #provinceCode#,cityCode = #cityCode#,areaCode = #areaCode#,descp = #descp#,lastEditDate = #lastEditDate#,
+			contact = #contact#,telephone = #telephone#,cellPhone = #cellPhone#,email = #email#,fax = #fax#
+		where id = #id#
+	</update>
+
+<!-- ********************************************************************************** 
+        模块:    猎证中心
+        功能:    查询证书验证信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-18    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCertVerifyInfoList" resultClass="certVerifyInfo">
+		SELECT
+			v.id,v.certCode,m.name as certName,v.verifySite
+		FROM
+			t_certctr_verifyinfo v,t_comm_class_master m
+		WHERE
+			v.certCode = m.code
+		AND
+			v.verifySite != ''
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    个人用户后台
+        功能:    个人提交证书查询
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-27    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="searchCertList4PersonalCenter" parameterClass="java.util.Map" resultMap="get-personalCert-result">
+		SELECT
+			id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,descp,
+			certStatus,submitDate,lastEditDate,contact,telephone,cellPhone,email,fax
+		FROM
+		t_certctr_personalcert
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cellPhone">
+				(cellPhone like concat("%",#cellPhone#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="certName">
+				(certCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#certName#,"%") ))
+			</isNotEmpty>
+		</dynamic>
+		order by submitDate desc
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    个人用户后台
+        功能:    个人提交证书查询结果数量
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-27    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="searchCountCert4PersonalCenter" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+		t_certctr_personalcert
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cellPhone">
+				(cellPhone like concat("%",#cellPhone#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="certName">
+				(certCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#certName#,"%") ))
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    个人用户后台
+        功能:    修改证书挂靠状态
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-28    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="editCertAttachStatus" parameterClass="java.util.Map">
+		UPDATE
+			t_certctr_personalcert
+		SET
+			certStatus = #certStatus#,
+			lastEditdate = #lastEditDate#
+		WHERE
+			id in ($ids$)
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理后台-证书管理
+        功能:    加载个人证书列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-24    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryPersonalCertList4Admin" parameterClass="java.util.Map" resultClass="personalCert">
+		SELECT
+			personalCert.id, personalCert.certTypeCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = personalCert.certTypeCode)AS certTypeName,
+			personalCert.certCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = personalCert.certCode)AS certName,
+			personalCert.userId, userInfo.userName, userInfo.companyName AS userRealName, personalCert.registerStatusCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = personalCert.registerStatusCode)AS registerStatusName,
+			personalCert.specialFieldCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = personalCert.specialFieldCode)AS specialFieldName,
+			personalCert.provinceCode,
+			(SELECT name FROM T_COMM_PROVINCE WHERE code = personalCert.provinceCode)AS provinceName,
+			personalCert.cityCode,
+			(SELECT name FROM T_COMM_CITY WHERE code = personalCert.cityCode)AS cityName,
+			personalCert.areaCode,
+			(SELECT name FROM T_COMM_AREA WHERE code = personalCert.areaCode)AS areaName,
+			personalCert.descp, personalCert.contact,
+			personalCert.telephone, personalCert.cellPhone, personalCert.email, personalCert.fax,
+			personalCert.submitDate, personalCert.lastEditDate, personalCert.certStatus
+		FROM
+			T_CERTCTR_PERSONALCERT personalCert, T_LOGIN_USER loginUser, T_USER_INFO userInfo
+		WHERE
+			loginUser.userName = userInfo.userName
+		AND
+			personalCert.userId = loginUser.id
+		<dynamic>
+			<isNotEmpty prepend="and" property="userName">
+				(userInfo.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="companyName">
+				(userInfo.companyName like concat("%",#companyName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certName">
+				(personalCert.certCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#certName#,"%")))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certStatus">
+				(personalCert.certStatus = #certStatus#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="queryType">
+				<isEqual property="queryType" compareValue="6">
+					DATE_FORMAT(personalCert.submitDate,'%Y-%m-%d')= DATE_FORMAT(#currentDate#,'%Y-%m-%d')
+				</isEqual>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理后台-证书管理
+        功能:    计算加载个人证书列表条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-24    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryPersonalCertCount4Admin" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*) 
+		FROM
+			T_CERTCTR_PERSONALCERT personalCert, T_LOGIN_USER loginUser, T_USER_INFO userInfo
+		WHERE
+			loginUser.userName = userInfo.userName
+		AND
+			personalCert.userId = loginUser.id
+		<dynamic>
+			<isNotEmpty prepend="and" property="userName">
+				(userInfo.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="companyName">
+				(userInfo.companyName like concat("%",#companyName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certName">
+				(personalCert.certCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#certName#,"%") ))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certStatus">
+				(personalCert.certStatus = #certStatus#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="queryType">
+				<isEqual property="queryType" compareValue="6">
+						(DATE_FORMAT(personalCert.submitDate,'%Y-%m-%d') = DATE_FORMAT(#currentDate#,'%Y-%m-%d'))
+				</isEqual>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理后台-证书管理
+        功能:    根据个人证书ID加载个人证书详细信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-24    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getPersonalCertById4Admin" parameterClass="java.lang.Long" resultClass="personalCert">
+		select id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,descp,
+			certStatus,submitDate,lastEditDate,contact,telephone,cellPhone,email,fax 
+		from t_certctr_personalcert 
+		where id=#id#
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:    所有证书相关模块
+        功能:    查询个人证书数量
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-24    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getPersonalCertCount" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			T_CERTCTR_PERSONALCERT
+	</select>
+</sqlMap>

@@ -1,0 +1,433 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大太阳建筑猎头--创业沙龙</title>
+<link href="../../css/index-style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/salon.css" rel="stylesheet" type="text/css" />
+<script src="../../javascripts/common/jquery.js"></script>
+<script src="../../javascripts/common/select.js"></script>
+<script type="text/javascript">
+function changeMenu(obj)
+{
+	for(var i=1;i<=8;i++)
+	{
+		$("#menu0"+i).attr("class","nav-on");
+	}
+
+	$(obj).attr("class","nav-out");
+}
+</script>
+</head>
+<body>
+<div class="top">
+	<div class="logo1"><img src="../../images/logo.png" width="152" height="88" alt="中国建筑平台"/></div>
+    <div class="logo2"><a href="#"><img src="../../images/logo2.png" width="147" height="55" alt="猎头，甄别模下的人才交流"/></a></div>
+    <div class="top-right">
+    	<div class="top-add"><a href="#"><img src="../../pic/top-add.jpg" width="612" height="82" /></a></div>
+        <div class="top-font">
+        	<ul>
+            	<li><a href="#">大太阳公益</a></li>
+                <li><a href="#">在线培训</a></li>
+                <li><a href="#">在线客服</a></li>
+                <li><a href="#">在线帮助</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<div class="nav">
+	<ul>
+    	<li class="nav-on" id="menu01" onmouseover="changeMenu(this)"><a href="../../index.html">首页</a></li>
+        <li class="nav-on" id="menu02" onmouseover="changeMenu(this)"><a href="../headhunterCenter/head.html">猎头中心</a></li>
+        <li class="nav-on" id="menu03" onmouseover="changeMenu(this)"><a href="../applyJobCenter/people.html">人才中心</a></li>
+        <li class="nav-on" id="menu04" onmouseover="changeMenu(this)"><a href="../peopleExcavate/excavate.html">人才挖掘</a></li>
+        <li class="nav-on" id="menu05" onmouseover="changeMenu(this)"><a href="../certificateCenter/certificate.html">猎证中心</a></li>
+        <li class="nav-on" id="menu06" onmouseover="changeMenu(this)"><a href="../innovationPark/park.html">创业园</a></li>
+        <li class="nav-on" id="menu07" onmouseover="changeMenu(this)"><a href="../wisdomChina/china.html">智慧中国</a></li>
+        <li class="nav-out" id="menu08" onmouseover="changeMenu(this)"><a href="../innovationSalon/salon.html">创业沙龙</a></li>
+    </ul>
+</div>
+<!--以上为头部分-->
+<div class="salon-banner">
+	<div class="salon-select">
+         <ul>
+             <li class="se0">沙龙主题：</li>
+             <li class="se1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border1', '#searchDown1')" /><input id="border1" name="" type="text" value="请选择"/></li>
+             <li class="se0">起止时间：</li>
+             <li class="se2"><input name="" type="text" value="开始日期"/></li>
+             <li class="se2"><input id="border3" name="" type="text" value="2010-12-30"/></li>
+         </ul>
+         <ul>
+             <li class="se0">搜索内容：</li>
+             <li class="se1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border4', '#searchDown4')" /><input id="border4" name="" type="text" value="请选择"/></li>
+             <li class="se3"><input name="" type="text" value="输入关键字"/></li>
+             <li><a href="results-list.html"><img src="../../images/salon-botton1.png" width="77" height="27" /></a></li>
+         </ul>
+  </div>
+    
+    <div class="salon-botton"><a href="salon-offline.html"><img src="../../images/salon-botton2.png" width="107" height="34" alt="发起沙龙"/></a></div>
+</div>
+
+<!--搜索下拉菜单~绝对定位~-->
+<div class="salon-down" id="showMenuID">
+    <div class="salon-down1" id="searchDown1" onmouseleave="menuHide(this)" style="display:none;" onmouseout="menuHide(this)">
+        <ul>
+            <li><a href="#">最近想出手的小物</a></li>
+            <li><a href="#">「总有一部电影的某个瞬间，让我们泪流满面」</a></li>
+            <li><a href="#">2010你最好的一张相片</a></li>
+            <li><a href="#">我卖闲置我有淘宝店</a></li>
+            <li><a href="#">敢不敢晒出2010对你最重要的人~</a></li>
+            <li><a href="#">把你们弟弟妹妹哥哥姐姐的照片不道德的爆出来吧！！ </a></li>
+            <li><a href="#">你一定有黑白照片的对麽对麽对麽！！！ </a></li>
+            <li><a href="#">最近想出手的小物</a></li>
+            <li><a href="#">「总有一部电影的某个瞬间，让我们泪流满面」</a></li>
+            <li><a href="#">2010你最好的一张相片</a></li>
+            <li><a href="#">我卖闲置我有淘宝店</a></li>
+            <li><a href="#">敢不敢晒出2010对你最重要的人~</a></li>
+            <li><a href="#">把你们弟弟妹妹哥哥姐姐的照片不道德的爆出来吧！！ </a></li>
+            <li><a href="#">你一定有黑白照片的对麽对麽对麽！！！ </a></li>
+        </ul>
+    </div>
+    <div class="salon-down2" id="searchDown2" onmouseleave="menuHide(this)" style="display:none;" onmouseout="menuHide(this)">
+        <ul>
+            <li><a href="#">2010-12-28</a></li>
+            <li><a href="#">2010-12-12</a></li>
+            <li><a href="#">2010-12-15</a></li>
+            <li><a href="#">2010-12-03</a></li>
+            <li><a href="#">2010-12-20</a></li>
+            <li><a href="#">2010-12-31</a></li>
+            <li><a href="#">2010-12-28</a></li>
+            <li><a href="#">2010-12-15</a></li>
+            <li><a href="#">2010-12-09</a></li>
+            <li><a href="#">2010-12-06</a></li>
+            <li><a href="#">2010-12-23</a></li>
+            <li><a href="#">2010-12-27</a></li>
+        </ul>
+    </div>
+    <div class="salon-down2" id="searchDown3" onmouseleave="menuHide(this)" style="display:none;" onmouseout="menuHide(this)">
+        <ul>
+            <li><a href="#">2010-12-28</a></li>
+            <li><a href="#">2010-12-12</a></li>
+            <li><a href="#">2010-12-15</a></li>
+            <li><a href="#">2010-12-03</a></li>
+            <li><a href="#">2010-12-20</a></li>
+            <li><a href="#">2010-12-31</a></li>
+            <li><a href="#">2010-12-28</a></li>
+            <li><a href="#">2010-12-15</a></li>
+            <li><a href="#">2010-12-09</a></li>
+            <li><a href="#">2010-12-06</a></li>
+            <li><a href="#">2010-12-23</a></li>
+            <li><a href="#">2010-12-27</a></li>
+        </ul>
+    </div>
+    <div class="salon-down3" id="searchDown4" onmouseleave="menuHide(this)" style="display:none;" onmouseout="menuHide(this)">
+        <ul>
+            <li><a href="#">最近想出手的小物</a></li>
+            <li><a href="#">「总有一部电影的某个瞬间，让我们泪流满面」</a></li>
+            <li><a href="#">2010你最好的一张相片</a></li>
+            <li><a href="#">我卖闲置我有淘宝店</a></li>
+            <li><a href="#">敢不敢晒出2010对你最重要的人~</a></li>
+            <li><a href="#">把你们弟弟妹妹哥哥姐姐的照片不道德的爆出来吧！！ </a></li>
+            <li><a href="#">你一定有黑白照片的对麽对麽对麽！！！ </a></li>
+            <li><a href="#">最近想出手的小物</a></li>
+            <li><a href="#">「总有一部电影的某个瞬间，让我们泪流满面」</a></li>
+            <li><a href="#">2010你最好的一张相片</a></li>
+            <li><a href="#">我卖闲置我有淘宝店</a></li>
+            <li><a href="#">敢不敢晒出2010对你最重要的人~</a></li>
+            <li><a href="#">把你们弟弟妹妹哥哥姐姐的照片不道德的爆出来吧！！ </a></li>
+            <li><a href="#">你一定有黑白照片的对麽对麽对麽！！！ </a></li>
+        </ul>
+    </div>
+</div>
+<!--中间部分-->
+<div class="salon-content">
+	<div class="salon-left">
+    	<!--线上沙龙-->
+    	<div class="salon-title title1"><strong>线下沙龙</strong><a href="results-list.html">更多>></a></div>
+        <div class="on-salon">
+        	<div class="on-salon-left">
+            	<div class="on-salon-pic"><a href="#"><img src="../../pic/on-salon-big-pic1.jpg" width="212" height="159" alt="激情燃烧的岁月"/></a></div>
+                <div class="on-salon-font font-links">
+                	<ul>
+                    	<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">激情燃烧的岁月</a></li>
+                        <li><img src="../../images/china-zjjj-icon.png" width="12" height="12" />发起者：陈蝶倩</li>
+                        <li><img src="../../images/china-zjjj-icon.png" width="12" height="12" />参加总人数：464646人</li>
+                        <li><img src="../../images/china-zjjj-icon.png" width="12" height="12" />开始日期：2012-12-02</li>
+                        <li><img src="../../images/china-zjjj-icon.png" width="12" height="12" />截止日期：2012-12-30</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="on-salon-right">
+            	<div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic6.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links">
+                	<a href="salon-line.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic2.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links">
+                	<a href="salon-line.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic3.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links">
+                	<a href="salon-line.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic1.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links">
+                	<a href="salon-line.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic4.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links">
+                	<a href="salon-line.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic5.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links">
+                	<a href="salon-line.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic7.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links">
+                	<a href="salon-line.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic8.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links">
+                	<a href="salon-online.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+            </div>
+        </div>
+        <!--线下沙龙-->
+        <div class="salon-title title2"><strong>线上沙龙</strong><a href="results-list.html">更多>></a></div>
+        <div class="on-salon">
+        	<div class="on-salon-left">
+            	<div class="on-salon-pic"><a href="#"><img src="../../images/wt3.png" width="212" height="159" alt="激情燃烧的岁月"/></a></div>
+                <div class="on-salon-font font-links2">
+                	<ul>
+                    	<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">历经六十年的沧桑与岁月</a></li>
+                        <li><img src="../../images/china-zjjj-icon.png" width="12" height="12" />发起者：李子年</li>
+                        <li><img src="../../images/china-zjjj-icon.png" width="12" height="12" />参加总人数：464646人</li>
+                        <li><img src="../../images/china-zjjj-icon.png" width="12" height="12" />开始日期：2012-12-02</li>
+                        <li><img src="../../images/china-zjjj-icon.png" width="12" height="12" />截止日期：2012-12-30</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="on-salon-right">
+            	<div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../images/wt4.png" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links2">
+                	<a href="salon-online.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic2.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links2">
+                	<a href="salon-online.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic3.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links2">
+                	<a href="salon-online.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic1.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links2">
+                	<a href="salon-online.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic4.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links2">
+                	<a href="salon-online.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic5.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links2">
+                	<a href="salon-online.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic7.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links2">
+                	<a href="salon-online.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+                <div class="small-pic-box">
+                	<div class="small-pic"><a href="#"><img src="../../pic/on-salon-small-pic8.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+                    <div class="small-pic-font small-links2">
+                	<a href="salon-online.html">App Store 创业之路</a><br />
+                    开始日期：2012-12-12<br />
+                    截止日期：2011-01-20
+                </div>
+                </div>
+            </div>
+        </div>
+        <!--主办单位-->
+        <div class="salon-title title3"><strong>主办单位</strong><a href="#">更多>></a></div>
+        <div class="danwei-box">
+        	<div class="danwei">
+            	<div class="danwei-pic"><a href="#"><img src="../../pic/salon-dw1.jpg" width="100" height="75" alt="大太阳建筑猎头平台"/></a></div>
+                <div class="danwei-font"><a href="#">大太阳建筑猎头平台</a><br />在资本主义社会获得高度发展。我国在建国后对私营公司进行了社会主义改造。国营工、商、建筑、运输等部门中实行独立经济核算的经营管理组织和某些城市中按行业划分的专业管...</div>
+            </div>
+            <div class="danwei">
+            	<div class="danwei-pic"><a href="#"><img src="../../pic/salon-dw2.jpg" width="100" height="75" alt="大太阳建筑猎头平台"/></a></div>
+                <div class="danwei-font"><a href="#">大太阳建筑猎头平台</a><br />在资本主义社会获得高度发展。我国在建国后对私营公司进行了社会主义改造。国营工、商、建筑、运输等部门中实行独立经济核算的经营管理组织和某些城市中按行业划分的专业管...</div>
+            </div>
+            <div class="danwei">
+            	<div class="danwei-pic"><a href="#"><img src="../../pic/salon-dw3.jpg" width="100" height="75" alt="大太阳建筑猎头平台"/></a></div>
+                <div class="danwei-font"><a href="#">大太阳建筑猎头平台</a><br />在资本主义社会获得高度发展。我国在建国后对私营公司进行了社会主义改造。国营工、商、建筑、运输等部门中实行独立经济核算的经营管理组织和某些城市中按行业划分的专业管...</div>
+            </div>
+            <div class="danwei">
+            	<div class="danwei-pic"><a href="#"><img src="../../pic/salon-dw4.jpg" width="100" height="75" alt="大太阳建筑猎头平台"/></a></div>
+                <div class="danwei-font"><a href="#">大太阳建筑猎头平台</a><br />在资本主义社会获得高度发展。我国在建国后对私营公司进行了社会主义改造。国营工、商、建筑、运输等部门中实行独立经济核算的经营管理组织和某些城市中按行业划分的专业管...</div>
+            </div>
+            <div class="danwei">
+            	<div class="danwei-pic"><a href="#"><img src="../../pic/salon-dw1.jpg" width="100" height="75" alt="大太阳建筑猎头平台"/></a></div>
+                <div class="danwei-font"><a href="#">大太阳建筑猎头平台</a><br />在资本主义社会获得高度发展。我国在建国后对私营公司进行了社会主义改造。国营工、商、建筑、运输等部门中实行独立经济核算的经营管理组织和某些城市中按行业划分的专业管...</div>
+            </div>
+        </div>
+    </div>
+    <div class="salon-right">
+    	<div class="salon-right-pic"><a href="#"><img src="../../pic/salon-right-pic.jpg" width="268" height="211" /></a></div>
+        <div class="salon-title title4"><strong>经典沙龙</strong><a href="results-list.html">更多>></a></div>
+        <div class="jindian">
+        	<ul>
+                <li><a href="#"><img src="../../pic/on-salon-small-pic6.jpg" width="76" height="57" alt="经典沙龙名称"/><br />经典沙龙名称</a></li>
+                <li><a href="#"><img src="../../pic/on-salon-small-pic2.jpg" width="76" height="57" alt="经典沙龙名称"/><br />经典沙龙名称</a></li>
+                <li><a href="#"><img src="../../pic/on-salon-small-pic3.jpg" width="76" height="57" alt="经典沙龙名称"/><br />经典沙龙名称</a></li>
+                <li><a href="#"><img src="../../pic/on-salon-small-pic5.jpg" width="76" height="57" alt="经典沙龙名称"/><br />经典沙龙名称</a></li>
+                <li><a href="#"><img src="../../pic/on-salon-small-pic7.jpg" width="76" height="57" alt="经典沙龙名称"/><br />经典沙龙名称</a></li>
+                <li><a href="#"><img src="../../pic/on-salon-small-pic4.jpg" width="76" height="57" alt="经典沙龙名称"/><br />经典沙龙名称</a></li>
+            </ul>
+        </div>
+
+        <div class="salon-title title5"><strong>经典文章</strong><a href="classic-articles-more.html">更多>></a></div>
+        <div class="wenzhang-text">
+        	<ul>
+                <li><span>dsa作者：李伟业</span><img src="../../images/salon-dian.png" width="12" height="12" /><a href="view-details.html">创业的艰辛和快乐</a></li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人气：456446人&nbsp;&nbsp;&nbsp;&nbsp;回应：465464次</li>
+        	</ul>
+        </div>
+        <div class="wenzhang-text">
+        	<ul>
+                <li><span>fasd作者：李伟业</span><img src="../../images/salon-dian.png" width="12" height="12" /><a href="">创业的艰辛和快乐</a></li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人气：456446人&nbsp;&nbsp;&nbsp;&nbsp;回应：465464次</li>
+        	</ul>
+        </div>
+        <div class="wenzhang-text">
+        	<ul>
+                <li><span>sa作者：李伟业</span><img src="../../images/salon-dian.png" width="12" height="12" /><a href="view-details.html">创业的艰辛和快乐</a></li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人气：456446人&nbsp;&nbsp;&nbsp;&nbsp;回应：465464次</li>
+        	</ul>
+        </div>
+
+        <div class="wenzhang-text">
+        	<ul>
+                <li><span>作者：李伟业</span><img src="../../images/salon-dian.png" width="12" height="12" /><a href="view-details.html">创业的艰辛和快乐</a></li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人气：456446人&nbsp;&nbsp;&nbsp;&nbsp;回应：465464次</li>
+        	</ul>
+        </div>
+        <div class="wenzhang-text">
+        	<ul>
+                <li><span>作者：李伟业</span><img src="../../images/salon-dian.png" width="12" height="12" /><a href="view-details.html">创业的艰辛和快乐</a></li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人气：456446人&nbsp;&nbsp;&nbsp;&nbsp;回应：465464次</li>
+        	</ul>
+        </div>
+        <div class="wenzhang-text">
+        	<ul>
+                <li><span>作者：李伟业</span><img src="../../images/salon-dian.png" width="12" height="12" /><a href="view-details.html">创业的艰辛和快乐</a></li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人气：456446人&nbsp;&nbsp;&nbsp;&nbsp;回应：465464次</li>
+        	</ul>
+        </div>
+        <div class="salon-title title6"><strong>往届沙龙</strong><a href="results-list.html">更多>></a></div>
+      	<div class="wangjie-box">
+             <div class="wangjie-pic"><a href="#"><img src="../../pic/on-salon-small-pic6.jpg" width="76" height="57" alt="App Store 创业之路"/></a></div>
+             <div class="wangjie-pic-font small-links">
+                  <a href="#">创业的艰辛和快乐</a><br />
+                  发起时间：2012-12-12
+             </div>
+      	</div>
+        <div class="wangjie-text">
+        	<dl>
+        		<dt><a href="#">创业的艰辛和快乐创业的艰辛和快乐</a></dt>
+        		<dd>2012-12-20</dd>
+        	</dl>
+        	<dl>
+        		<dt><a href="#">创业的艰辛和快乐创业的艰辛和快乐</a></dt>
+        		<dd>2012-12-20</dd>
+        	</dl>
+        	<dl>
+        		<dt><a href="#">创业的艰辛和快乐创业的艰辛和快乐</a></dt>
+        		<dd>2012-12-20</dd>
+        	</dl>
+        	<dl>
+        		<dt><a href="#">创业的艰辛和快乐创业的艰辛和快乐</a></dt>
+        		<dd>2012-12-20</dd>
+        	</dl>
+        </div>
+    </div>
+</div>
+<!--优秀创业团队-->
+
+
+<!--底部分-->
+<div class="add"><a href="#"><img src="../../pic/bottom-add.png" width="980" height="77" /></a></div>
+<div class="bottom">
+	<a href="#">关于我们</a>|
+    <a href="#">免费注册</a>|
+    <a href="#">用户中心</a>|
+    <a href="#">法律声明</a>|
+    <a href="#">意见反馈</a>|
+    <a href="#">设为首页</a><br />
+    深圳大太阳网络科技有限公司&nbsp;&nbsp;&nbsp;&nbsp;粤ICP证号：888888号&nbsp;&nbsp;&nbsp;&nbsp;网络安全证书：4403100920657
+</div>
+<div class="bottom-links"><a href="#"><img src="../../images/bottom-logo1.png" width="108" height="42" alt="公共信息安全网络监察"/></a><a href="#"><img src="../../images/bottom-logo2.png" width="108" height="42"  alt="经营性网站备案信息"/></a><a href="#"><img src="../../images/bottom-logo3.png" width="108" height="42" alt="不良信息举报中心"/></a></div>
+</body>
+</html>

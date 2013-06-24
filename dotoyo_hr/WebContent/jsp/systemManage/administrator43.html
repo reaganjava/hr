@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大太阳建筑猎头--系统管理--即将到期的证书需求列表</title>
+<link href="../../css/system-manage.css" rel="stylesheet" type="text/css" />
+<script src="../../javascripts/common/jquery.js"></script>
+<script src="../../javascripts/common/jquery-ui-1.7.2.custom.min.js"></script>
+<script src="../../javascripts/common/accordion.js"></script>
+<script src="../../javascripts/common/jquery.cookie.js"></script>
+<script src="../../javascripts/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+
+$(function(){
+			//Main menu
+			$(".nav li").mouseover(function(){
+				$(".nav li").attr("class","nav-on");
+				$(this).addClass("nav-out");
+			});
+		
+			// Accordion
+            $("#leftNav").accordion({
+                header: "h3",
+                collapsible: true,
+				autoHeight: false,
+                active: false,
+				multipleMode: true
+            });
+			
+			//Init active array
+			var activeArr;
+			if($.cookie("active_left_nav")!=null){
+				activeArr = $.cookie("active_left_nav").replace(/(^\,*)|(\,*$)/g, "").split(",");
+			}
+			else{
+				activeArr = new Array();
+			}
+			//Init left nav
+			var activeA = $.cookie("active_left_nav_a");
+			if(activeA != null){
+				$("#leftNav a").removeClass("active");
+				$("#leftNav a").eq(activeA).addClass("active");
+			}
+			if(activeArr.length>0)
+			{
+				$.each(activeArr,function(key,val){
+					if(val!=""){
+						$("#leftNav h3").eq(val).addClass("ui-state-active").next().addClass("ui-accordion-content-active").show();
+					}
+				});
+			}
+			//Set active array when click
+			$("#leftNav h3").click(function(){
+				var index = $("#leftNav h3").index($(this)[0]);
+				if($(this).hasClass("ui-state-active")){
+					//Add to array
+					if($.inArray(index, activeArr)){
+						activeArr.push(index);
+					}
+				}
+				else{
+					//Remove from array
+					$.grep(activeArr,function(val,key){
+						if(val==index){
+							activeArr.splice(key, 1);
+						}
+					});
+				}
+				$.cookie("active_left_nav", activeArr.join(","));
+			});
+			
+			$("#leftNav a").click(function(){
+				$("#leftNav a").removeClass("active");
+				var index = $("#leftNav a").index($(this)[0]);
+				$(this).addClass("active");
+				$.cookie("active_left_nav_a", index);
+			});
+        });
+</script>
+</head>
+<body>
+<div class="top">
+	<div class="top-left"><img src="../../images/logo.png" width="152" height="88" alt="中国建筑平台"/></div>
+    <div class="top-right">arthas&nbsp;&nbsp;中国建筑猎头平台欢迎您！</div>
+</div>
+<div class="nav">
+	<ul>
+    	<li class="nav-on" id="menu01" onmouseover="changeMenu(this)"><a href="../../index.html">首页</a></li>
+        <li class="nav-on" id="menu02" onmouseover="changeMenu(this)"><a href="../headhunterCenter/head.html">猎头中心</a></li>
+        <li class="nav-on" id="menu03" onmouseover="changeMenu(this)"><a href="../applyJobCenter/people.html">人才中心</a></li>
+        <li class="nav-on" id="menu04" onmouseover="changeMenu(this)"><a href="../peopleExcavate/excavate.html">人才挖掘</a></li>
+        <li class="nav-out" id="menu05" onmouseover="changeMenu(this)"><a href="../certificateCenter/certificate.html">猎证中心</a></li>
+        <li class="nav-on" id="menu08" onmouseover="changeMenu(this)"><a href="../innovationSalon/salon.html">创业沙龙</a></li>
+    </ul>
+</div>
+<!--以上为头部分-->
+<!--中间部分-->
+<div class="content">
+	<div id="leftNav">
+    	<ul>
+            <li>
+                <h3>增值服务设置</h3>
+                <ul>
+                    <li><a href="administrator1.html">服务名称维护</a></li>
+                    <li><a href="administrator2.html">人才挖掘字段设置</a></li>
+                    <li><a href="administrator3.html">挂证服务设置</a></li>
+                    <li><a href="administrator4.html">猎证服务设置</a></li>
+                    <li><a href="administrator5.html">招聘服务设置</a></li>
+                    <li><a href="administrator6.html">广告位服务设置</a></li>
+                </ul>
+            </li>
+            <li> 
+                <h3>权限管理</h3>
+                <ul>
+                    <li><a href="administrator7.html">角色管理</a></li>
+                    <li><a href="administrator8.html">权限设置</a></li>
+                </ul>
+            </li>
+			<li>
+                <h3><a tabindex="-1" href="administrator9.html">功能点维护</a></h3>
+            </li>
+        	<li>
+                <h3>会员管理</h3>
+                <ul>
+                    <li><a href="administrator10.html">会员管理</a></li>
+                    <li><a href="administrator12.html">密码重置</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>数据统计</h3>
+                <ul>
+                    <li><a href="administrator13.html">招聘应聘人数</a></li>
+                    <li><a href="administrator14.html">猎证统计</a></li>
+                </ul>
+            </li>
+			<li>
+                <h3><a tabindex="-1" href="administrator15.html">过滤词汇管理</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="administrator16.html">线下人才库</a></h3>
+            </li>
+
+            <li>
+                <h3>线下人才匹配</h3>
+                <ul>
+                    <li><a href="administrator17.html">个人线下求职意向信息列表</a></li>
+                    <li><a href="administrator18.html">企业线下人才需求信息列表</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>招聘管理</h3>
+                <ul>
+                    <li><a href="administrator19.html">招聘方管理</a></li>
+                    <li><a href="administrator20.html">招聘职位管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>求职管理</h3>
+                <ul>
+                    <li><a href="administrator21.html">求职方管理</a></li>
+                    <li><a href="administrator22.html">求职意向管理</a></li>
+                </ul>
+            </li> 
+ 			<li>
+                <h3><a tabindex="-1" href="administrator23.html">猎证需求管理</a></h3>
+            </li>
+            <li>
+                <h3>证书管理</h3>
+                <ul>   
+                    <li><a href="administrator40.html">新增证书需求</a></li>
+                    <li><a href="administrator41.html">已发布的证书需求</a></li>
+                    <li><a href="administrator42.html">暂停的证书需求管理</a></li>
+                    <li><a href="administrator43.html">即将到期的证书需求管理</a></li>
+                    <li><a href="administrator44.html">已结束证书需求管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>线上沙龙的管理</h3>
+                <ul>
+                    <li><a href="administrator25.html">沙龙审核</a></li>
+                    <li><a href="administrator26.html">经典沙龙设置</a></li>
+                    <li><a href="administrator27.html">经典文章设置</a></li>
+                    <li><a href="administrator28.html">主办单位管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>线下沙龙图片库</h3>
+                <ul>
+                    <li><a href="administrator29.html">上传审核设置</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>线下沙龙视频库</h3>
+                <ul>
+                    <li><a href="administrator30.html">上传审核设置</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="administrator31.html">文章管理</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="administrator32.html">评论管理</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="order-management.html">订单管理</a></h3>
+            </li>
+            <li>
+                <h3>广告管理</h3>
+                <ul>
+                    <li><a href="administrator33.html">广告管理</a></li>
+                    <li><a href="administrator34.html">广告位设置</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="administrator35.html">增值服务管理</a></h3>
+            </li>
+            <li>
+                <h3>积分管理</h3>
+                <ul>
+                    <li><a href="administrator36.html">积分设置</a></li>
+                    <li><a href="administrator37.html">积分调整</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="administrator38.html">系统日志</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="#">退出系统</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="administrator39.html">修改密码</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="administrator.html">返回首页</a></h3>
+            </li>
+        </ul>
+    </div>
+    <div class="content-right">
+    	<div class="administrator-title"><strong>即将到期的证书需求</strong></div>
+        <div class="inside-search">
+        	<ul>
+            	<li>证书名称：<input name="" type="text" size="2"/></li>
+                <li>证书类型：<input name="" type="text" size="2"/></li>
+                <li>专业：<input name="" type="text" size="2"/></li>
+                <li>需求状态：<select name=""><option>全部</option></select></li>
+                <li>证书状态：<select name=""><option>全部</option></select></li>
+                <li><a href="#"><img src="../../images/inside-botton.png" width="68" height="25" /></a></li>
+            </ul>
+        </div>
+        <div class="inside-tab">
+   	    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="3%" align="center"><input name="" type="checkbox" value="" /></td>
+                <td width="10%" align="left"><strong>证书名称</strong></td>
+                <td width="10%" height="40" align="left"><strong>证书类型</strong></td>
+                <td width="12%" align="left"><strong>挂证地区</strong></td>
+                <td width="10%" align="left"><strong>注册状况</strong></td>
+                <td width="8%" align="left"><strong>专业</strong></td>
+                <td width="9%" align="left"><strong>需求状态</strong></td>
+                <td width="9%" align="left"><strong>证书状态</strong></td>
+                <td width="9%" align="left"><strong>剩余天数</strong></td>
+                <td width="11%" align="left"><strong>提交日期</strong></td>
+                <td width="5%" align="left"><strong>操作</strong></td>
+                <td width="4%" align="left">&nbsp;</td>
+              </tr>
+              <tr>
+                <td width="3%" align="center" valign="middle"><input name="" type="checkbox" value="" /></td>
+                <td width="10%" align="left">助理工程师</td>
+                <td width="10%" height="40" align="left">职称证书</td>
+                <td width="12%" align="left">深圳市-南山区</td>
+                <td width="10%" align="left">初始注册</td>
+                <td width="8%" align="left">建筑行业</td>
+                <td width="9%" align="left">打开</td>
+                <td width="9%" align="left" class="inside-links">已猎证</td>
+                <td width="9%" align="left" class="inside-links">55</td>
+                <td width="11%" align="left" class="inside-links">2010-12-12</td>
+                <td width="5%" align="left" class="inside-links"><a href="administrator3-1.html">修改</a></td>
+                <td width="4%" align="left"><a href="administrator41-1.html">查看</a></td>
+              </tr>
+            </table>
+</div>
+		<div class="system-botton3">
+        	<ul>
+                <li class="botton1"><a href="#" title="删除">删除</a></li>
+                <li class="botton2"><a href="#" title="延长发布时间">延长发布时间</a></li>
+            </ul>
+		</div>
+  </div>
+</div>
+
+</body>
+</html>

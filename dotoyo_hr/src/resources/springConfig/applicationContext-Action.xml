@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/tx
+                    http://www.springframework.org/schema/tx/spring-tx.xsd
+                    http://www.springframework.org/schema/aop
+                    http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="authLoginInterceptor" class="com.dotoyo.buildjob.common.interceptor.AuthLoginInterceptor" scope="prototype"/>
+    <bean id="authFunctionInterceptor" class="com.dotoyo.buildjob.common.interceptor.AuthFunctionInterceptor" scope="prototype">
+    	<property name="sysFunctionRoleService" ref="sysFunctionRoleService"/>
+    </bean>
+	<bean id="authPersonalLoginInterceptor" class="com.dotoyo.buildjob.common.interceptor.AuthPersonalLoginInterceptor" scope="prototype"/>
+	<bean id="authEnterpriseLoginInterceptor" class="com.dotoyo.buildjob.common.interceptor.AuthEnterpriseLoginInterceptor" scope="prototype"/>
+
+    <!-- 验证码，验证 -->
+    <bean id="logonAction" class="com.dotoyo.buildjob.common.logon.action.LogonAction" scope="prototype">
+		<property name="captchaService" ref="captchaService"/>
+		<property name="userService" ref="userService"/>
+		<property name="sysLogService" ref="sysLogService"/>
+		<property name="casLoginService" ref="casLoginService"/>
+	</bean>
+	<bean id="shortMsgManageAction" class="com.dotoyo.buildjob.common.action.ShortMsgManageAction" scope="prototype">
+		<property name="shortMessageService" ref="shortMessageService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean id="userAction" class="com.dotoyo.buildjob.common.user.action.UserAction" scope="prototype">
+		<property name="captchaService" ref="captchaService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean id="applyJobAction" class="com.dotoyo.buildjob.applyJobCenter.action.ApplyJobAction" scope="prototype">
+		<property name="applyJobService" ref="applyJobService"/>
+		<property name="peopleExcavateService" ref="peopleExcavateService"/>
+	</bean>
+	<bean id="headhunterCenterAction" class="com.dotoyo.buildjob.headhunterCenter.action.HeadhunterCenterAction" scope="prototype">
+		<property name="jobInfoService" ref="jobInfoService"/>
+		<property name="sysAdService" ref="sysAdService"/>
+		<property name="sysOrderService" ref="sysOrderService"/>
+	</bean>
+	<bean id="certificateAction" class="com.dotoyo.buildjob.certificateCenter.action.CertificateAction" scope="prototype">
+		<property name="certificateService" ref="certificateService"/>
+		<property name="certAccessHistoryService" ref="certAccessHistoryService"/>
+		<property name="certNeedsAccessHistoryService" ref="certNeedsAccessHistoryService"/>
+		<property name="sysOrderService" ref="sysOrderService"/>
+	</bean>
+	<bean id="buildJobAction" class="com.dotoyo.buildjob.common.action.BuildJobAction" scope="prototype" >
+	</bean>
+
+	<bean id="salonAction" class="com.dotoyo.buildjob.innovationSalon.action.SalonAction" scope="prototype">
+		<property name="salonService" ref="salonService"/>
+		<property name="userService" ref="userService"/>
+		<property name="sysAdService" ref="sysAdService"></property>
+		<property name="sysFilterWordService" ref="sysFilterWordService"/>
+	</bean>
+	<bean id="salonSearchAction" class="com.dotoyo.buildjob.innovationSalon.action.SalonSearchAction" scope="prototype">
+		<property name="salonSearchService" ref="salonSearchService"/>
+		<property name="salonService" ref="salonService"/>
+		<property name="salonAdminService" ref="salonAdminService"/>
+	</bean>
+     <bean id="salonManageAction" class="com.dotoyo.buildjob.innovationSalon.action.SalonManageAction" scope="prototype">
+		<property name="salonManageService" ref="salonManageService"/>
+		<property name="salonService" ref="salonService"/>
+		<property name="salonSearchService" ref="salonSearchService"/>
+		<property name="dataOperationService" ref="dataOperationService"></property>
+	</bean>
+
+	<bean id="homePageAction" class="com.dotoyo.buildjob.homePage.action.HomePageAction" scope="prototype">
+		<property name="jobInfoService" ref="jobInfoService"/>
+		<property name="applyJobService" ref="applyJobService"/>
+		<property name="sysAdService" ref="sysAdService"/>
+		<property name="passwordEncoder" ref="passwordEncoder"/>
+	</bean>
+	<!-- administrator main -->
+	<!-- System manager increment -->
+	<!-- PeopleExcavate deploy start-->
+	<bean id="peopleExcavateAction" class="com.dotoyo.buildjob.peopleExcavate.action.PeopleExcavateAction" scope="prototype">
+		<property name="peopleExcavateService" ref="peopleExcavateService"/>
+		<property name="applyJobService" ref="applyJobService"/>
+		<property name="offlineSearchResultService" ref="offlineSearchResultService"/>
+		<property name="sysOrderService" ref="sysOrderService"/>
+		<property name="sysAdService" ref="sysAdService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	<!-- PeopleExcavate deploy end-->
+	<bean id="personalCenterAction" class="com.dotoyo.buildjob.personalCenter.action.PersonalCenterAction" scope="prototype">
+		<property name="applyJobService" ref="applyJobService"/>
+		<property name="jobInfoService" ref="jobInfoService"/>
+		<property name="userService" ref="userService"/>
+		<property name="certificateService" ref="certificateService"/>
+		<property name="sysOrderService" ref="sysOrderService"/>
+	</bean>
+
+	<bean id="enterpriseCenterAction" class="com.dotoyo.buildjob.enterpriseCenter.action.EnterpriseCenterAction" scope="prototype">
+		<property name="jobInfoService" ref="jobInfoService"/>
+		<property name="userService" ref="userService"/>
+		<property name="certificateService" ref="certificateService"/>
+		<property name="sysOrderService" ref="sysOrderService"/>
+	</bean>
+	<bean id="offlineSearchResultAction" class="com.dotoyo.buildjob.enterpriseCenter.action.OfflineSearchResultAction" scope="prototype">
+		<property name="offlineSearchResultService" ref="offlineSearchResultService"/>
+		<property name="peopleExcavateService" ref="peopleExcavateService"/>
+	</bean>
+	<!-- 招聘管理 收到的申请 -->
+	<bean id="applicationsReceivedAction" class="com.dotoyo.buildjob.enterpriseCenter.action.ApplicationsReceivedAction" scope="prototype">
+		<property name="jobInfoService" ref="jobInfoService"/>
+		<property name="userService" ref="userService"/>
+		<property name="applyJobService" ref="applyJobService"/>
+		<property name="sysOrderService" ref="sysOrderService"/>
+	</bean>
+
+	<bean id="sendInterviewNoticeManageAction" class="com.dotoyo.buildjob.enterpriseCenter.action.SendInterviewNoticeManageAction" scope="prototype">
+		<property name="applyJobService" ref="applyJobService"></property>
+	</bean>
+	<bean id="certNeedsManageAction" class="com.dotoyo.buildjob.enterpriseCenter.action.CertNeedsManageAction" scope="prototype">
+		<property name="certificateService" ref="certificateService"/>
+		<property name="sysOrderService" ref="sysOrderService"/>
+	</bean>
+	<!-- ###############个人用户后台开始 ##################-->
+	<bean id="filterCompanyAction" class="com.dotoyo.buildjob.personalCenter.action.FilterCompanyAction" scope="prototype">
+		<property name="filterCompanyService" ref="filterCompanyService"/>
+	</bean>
+	<bean id="certAccessHistoryAction" class="com.dotoyo.buildjob.certificateCenter.action.CertAccessHistoryAction" scope="prototype">
+		<property name="certAccessHistoryService" ref="certAccessHistoryService"/>
+	</bean>
+	<bean id="personalCertManageAction" class="com.dotoyo.buildjob.personalCenter.action.PersonalCertManageAction" scope="prototype">
+		<property name="certificateService" ref="certificateService"/>
+		<property name="sysOrderService" ref="sysOrderService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean id="receiveInterviewNoticeManageAction" class="com.dotoyo.buildjob.personalCenter.action.ReceiveInterviewNoticeManageAction" scope="prototype">
+		<property name="applyJobService" ref="applyJobService"></property>
+	</bean>
+	<bean id="headHuntServiceManageAction" class="com.dotoyo.buildjob.personalCenter.action.HeadHuntServiceManageAction" scope="session">
+		<property name="sysIncrementServiceNameMaintainanceService" ref="sysIncrementServiceNameMaintainanceService"/>
+		<property name="sysIncrementTalentsFoundSettingService" ref="sysIncrementTalentsFoundSettingService"/>
+		<property name="sysIncrementHangCardSettingService" ref="sysIncrementHangCardSettingService"/>
+		<property name="sysIncrementHuntCardSettingService" ref="sysIncrementHuntCardSettingService"/>
+		<property name="sysIncrementRecruitSettingService" ref="sysIncrementRecruitSettingService"/>
+		<property name="sysIncrementAdvertSettingService" ref="sysIncrementAdvertSettingService"/>
+		<property name="sysOrderService" ref="sysOrderService"/>
+		<property name="sysParameterService" ref="sysParameterService"/>
+		<property name="sysIncrementTalentsFoundOfflineSettingService" ref="sysIncrementTalentsFoundOfflineSettingService"/>
+	</bean>
+	<!-- ####### ########个人用户后台结束 ##################-->
+	
+	
+	<!-- #################### 完善博站资料，仅供测试使用 ########################## -->
+	<bean id="blogUserAction" class="com.dotoyo.buildjob.blogUser.action.BlogUserAction" scope="prototype">
+		<property name="blogUserService" ref="blogUserService"/>
+	</bean>
+	<bean id="advertisementManageAction" class="com.dotoyo.buildjob.advertisement.action.AdvertisementManageAction" scope="prototype">
+		<property name="sysAdService" ref="sysAdService"/>
+	</bean>
+	<bean id="uploadAction" class="com.dotoyo.buildjob.upload.action.UploadAction" scope="prototype">
+	</bean>
+
+</beans>

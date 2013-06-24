@@ -1,0 +1,29 @@
+如静态页面html有错，css样式文件由我负责修改，自己不可做修改或调整，谢谢!
+
+以下文件：ie6/7/8/ff都可以正常浏览。
+
+	index.html                         首页
+
+	headhunterCenter/head.html         猎头中心
+
+	applyJobCenter/people.html         人才中心
+
+	peopleExcavate/excavate.html       人才挖掘
+
+	certificateCenter/certificate.html 猎证中心
+
+	innovationPark/park.html           创业园
+
+	wisdomChina/china.html             智慧中国
+
+	innovationSalon/salon.html         创业沙龙
+
+
+
+客户后台系统(进入相关栏目都有子栏目的链接)
+
+systemManage\administrator.html 系统管理
+
+systemManage\company.html 系统(企业)
+
+systemManage\personal.html 系统(个人)

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="hostUnitDto" type="com.dotoyo.buildjob.innovationSalon.dto.HostUnitDto"/>
+  
+  <!-- ********************************************************************************** 
+   Module:  Salon 
+   Function: get host unit information list for salon home page
+   Date：2011-01-06        
+   Author Bill Xu     
+  ********************************************************************************** -->
+ 	<select id="queryHostUnitList" resultClass="hostUnitDto" >
+ 		select   
+ 		     id,
+ 		     unitName,
+ 		     pictureName,
+             introduction,
+             intOrder,
+             linkURL
+ 		  FROM T_COMM_HOST_UNIT  order by intOrder
+ 	</select>
+ 	
+  <!-- ********************************************************************************** 
+   Module:  Salon(Administrator) 
+   Function: add salon host unit information
+   Date：2011-02-18        
+   Author Bill Xu     
+  ********************************************************************************** -->
+ 	<insert id="addHostUnitInfo" parameterClass="hostUnitDto">
+ 		     insert into T_COMM_HOST_UNIT( 
+ 		       unitName,
+ 		       pictureName,
+               introduction,
+               intOrder,
+               linkURL) values(
+               #unitName#,
+ 		       #pictureName#,
+               #introduction#,
+               #intOrder#,
+               #linkURL#)	    
+ 	</insert>
+ 	
+  <!-- ********************************************************************************** 
+   Module:  Salon(Administrator) 
+   Function: update salon host unit information
+   Date：2011-02-18        
+   Author Bill Xu     
+  ********************************************************************************** -->
+ 	
+ 	<update id="modifyHostUnitInfo" parameterClass="hostUnitDto">
+		UPDATE T_COMM_HOST_UNIT
+		set unitName = #unitName#,introduction = #introduction#,intOrder=#intOrder#,linkURL=#linkURL#
+		where id = #id#
+	</update>
+	
+  <!-- ********************************************************************************** 
+   Module:  Salon(Administrator) 
+   Function: update salon host unit information
+   Date：2011-02-18        
+   Author Bill Xu     
+  ********************************************************************************** -->
+ 	
+	<delete id="deleteHostUnitInfo" parameterClass="java.lang.String">
+		DELETE FROM T_COMM_HOST_UNIT WHERE id in($id$)
+	</delete>
+	
+<!-- ********************************************************************************** 
+   Module:  Salon(Administrator) 
+   Function: get salon host unit information list for administrator
+   Date：2011-02-18        
+   Author Bill Xu     
+  ********************************************************************************** -->
+ 	<select id="queryAllHostUnitList" resultClass="hostUnitDto">
+ 		select   
+ 		     id,
+ 		     unitName,
+ 		     pictureName,
+             introduction,
+             intOrder,
+             linkURL
+ 		  FROM T_COMM_HOST_UNIT  order by intOrder
+ 	</select>
+ 	<select id="queryAllHostUnitListCount" resultClass="java.lang.Integer" >
+ 		select count(*)  
+ 		  FROM T_COMM_HOST_UNIT
+ 	</select>
+ 	
+ <!-- ********************************************************************************** 
+   Module:  Salon 
+   Function: get host unit detail information  
+   Date：2011-02-18        
+   Author Bill Xu     
+  ********************************************************************************** -->
+ 
+ 	<select id="getHostUnitById" parameterClass="java.lang.Long" resultClass="hostUnitDto">
+		select   
+ 		     id,
+ 		     unitName,
+ 		     pictureName,
+             introduction,
+             intOrder,
+             linkURL
+ 		  from T_COMM_HOST_UNIT where id=#id#
+	</select>	
+ </sqlMap>

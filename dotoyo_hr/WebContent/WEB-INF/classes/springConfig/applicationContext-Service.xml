@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/tx
+                    http://www.springframework.org/schema/tx/spring-tx.xsd
+                    http://www.springframework.org/schema/aop
+                    http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- 将filter交给spring来管理，需要配置 -->                
+	<bean id="AutoSetUserAdapterFilter" class="com.dotoyo.buildjob.common.servlet.AutoSetUserAdapterFilter">
+    	<property name="userService" ref="userService"/>
+    </bean>
+    
+    <bean id="certificateService" class="com.dotoyo.buildjob.certificateCenter.service.impl.CertificateServiceImpl">
+    	<property name="certificateDao" ref="certificateDao"/>
+    	<property name="certAccessHistoryDao" ref="certAccessHistoryDao"/>
+    	<property name="sysOrderService" ref="sysOrderService"/>
+    </bean>
+    <bean id="userService" class="com.dotoyo.buildjob.common.user.service.impl.UserServiceImpl">
+    	<property name="userDao" ref="userDao"/>
+    </bean>
+    <bean id="shortMessageService" class="com.dotoyo.buildjob.common.service.impl.ShortMessageServiceImpl">
+    	<property name="shortMessageDao" ref="shortMessageDao"/>
+    	<property name="userService" ref="userService"/>
+    </bean>
+	<bean id="filterWordsService" class="com.dotoyo.buildjob.systemManage.service.impl.FilterWordsServiceImpl">
+		<property name="filterWordsDao" ref="filterWordsDao"/>
+	</bean>
+	<bean id="applyJobService" class="com.dotoyo.buildjob.applyJobCenter.service.impl.ApplyJobServiceImpl">
+		<property name="applyJobDao" ref="applyJobDao"/>
+		<property name="sysOrderService" ref="sysOrderService"/>
+		<property name="shortMessageService" ref="shortMessageService"/>
+	</bean>
+	<bean id="classMasterService" class="com.dotoyo.buildjob.systemManage.service.impl.ClassMasterServiceImpl">
+		<property name="classMasterDao" ref="classMasterDao"/>
+	</bean>
+	<bean id="sysParameterService" class="com.dotoyo.buildjob.systemManage.service.impl.SysParameterServiceImpl">
+		<property name="sysParameterDao" ref="sysParameterDao"/>
+	</bean>
+	<bean id="backGroupMusicService" class="com.dotoyo.buildjob.systemManage.service.impl.BackgroupMusicServiceImpl">
+		<property name="backGroupMusicDao" ref="backGroupMusicDao"/>
+	</bean>
+	<bean id="jobInfoService" class="com.dotoyo.buildjob.headhunterCenter.service.impl.JobInfoServiceImpl">
+		<property name="jobInfoDao" ref="jobInfoDao"/>
+		<property name="shortMessageService" ref="shortMessageService"/>
+	</bean>
+
+	<bean id="salonService" class="com.dotoyo.buildjob.innovationSalon.service.impl.SalonServiceImpl">
+		<property name="salonDao" ref="salonDao"/>
+		<property name="sysPointService" ref="sysPointService"/>
+		<property name="sysParameterService" ref="sysParameterService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean id="salonSearchService" class="com.dotoyo.buildjob.innovationSalon.service.impl.SalonSearchServiceImpl">
+		<property name="salonSearchDao" ref="salonSearchDao"/>
+		<property name="salonService" ref="salonService"/>
+	</bean>
+	<bean id="salonManageService" class="com.dotoyo.buildjob.innovationSalon.service.impl.SalonManageServiceImpl">
+		<property name="salonManageDao" ref="salonManageDao"/>
+		<property name="salonService" ref="salonService"/>
+	</bean>
+	<!-- PeopleExcavate deploy start -->
+	<bean id="peopleExcavateService" class="com.dotoyo.buildjob.peopleExcavate.service.impl.PeopleExcavateServiceImpl">
+		<property name="peopleExcavateDao" ref="peopleExcavateDao"/>
+	</bean>
+	<!-- PeopleExcavate deploy end -->
+
+	<!--###################个人用户后台开始  ####################-->
+
+	<bean id="filterCompanyService" class="com.dotoyo.buildjob.personalCenter.service.impl.FilterCompanyServiceImpl">
+		<property name="filterCompanyDao" ref="filterCompanyDao"/>
+	</bean>
+	<bean id="certAccessHistoryService" class="com.dotoyo.buildjob.certificateCenter.service.impl.CertAccessHistoryServiceImpl">
+		<property name="certAccessHistoryDao" ref="certAccessHistoryDao"/>
+		<property name="certificateService" ref="certificateService"/>
+		<property name="shortMessageService" ref="shortMessageService"/>
+		<property name="userService" ref="userService"/>
+		<property name="sysOrderService" ref="sysOrderService"/>
+	</bean>
+	<bean id="certNeedsAccessHistoryService" class="com.dotoyo.buildjob.certificateCenter.service.impl.CertNeedsAccessHistoryServiceImpl">
+		<property name="certNeedsAccessHistoryDao" ref="certNeedsAccessHistoryDao"/>
+		<property name="certificateService" ref="certificateService"/>
+		<property name="shortMessageService" ref="shortMessageService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	<!--###################个人用户后台结束  ####################-->
+	<!--###################系统日志  ####################-->
+	<bean id="sysLogService" class="com.dotoyo.buildjob.systemManage.service.impl.SysLogServiceImpl">
+		<property name="sysLogDao" ref="sysLogDao"/>
+	</bean>
+	<bean id="offlineSearchResultService" class="com.dotoyo.buildjob.common.service.impl.OfflineSearchResultServiceImpl">
+		<property name="offlineSearchResultDao" ref="offlineSearchResultDao"/>
+	</bean>
+	<bean id="dataOperationService" class="com.dotoyo.buildjob.common.service.impl.DataOperationServiceImpl">
+		<property name="salonSearchService" ref="salonSearchService"/>
+		<property name="salonService" ref="salonService"/>
+		<property name="salonAdminService" ref="salonAdminService"/>
+		<property name="salonManageService" ref="salonManageService"/>
+		<property name="sysParameterService" ref="sysParameterService"/>
+	</bean>
+
+
+<!-- #################### 完善博站资料，仅供测试使用 ########################## -->
+	<bean id="blogUserService" class="com.dotoyo.buildjob.blogUser.service.impl.BlogUserServiceImpl">
+		<property name="blogUserDao" ref="blogUserDao"/>
+	</bean>
+	
+	<bean id="casLoginService" class="com.dotoyo.buildjob.common.user.service.impl.CasLoginServiceImpl">
+	</bean>
+	
+	<!-- 用户的密码加密或解密 -->
+	<bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+			
+</beans>

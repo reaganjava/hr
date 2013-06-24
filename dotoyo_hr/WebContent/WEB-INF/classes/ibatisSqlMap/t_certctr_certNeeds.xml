@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="certNeeds" type="com.dotoyo.buildjob.certificateCenter.dto.CertNeedsDto" />
+	<typeAlias alias="certNeedsVo" type="com.dotoyo.buildjob.certificateCenter.vo.CertNeedsVo"/>
+	
+	<resultMap class="certNeedsVo" id="get-certNeeds-result">
+		<result property="id" column="id"/>
+		<result property="certType" column="certTypeCode" select="getClassMasterByCode"/>
+		<result property="cert" column="certCode" select="getClassMasterByCode"/>
+		<result property="userId" column="userId"/>
+		<result property="registerStatus" column="registerStatusCode" select="getClassMasterByCode"/>
+		<result property="specialField" column="specialFieldCode" select="getClassMasterByCode"/>
+		<result property="province" column="provinceCode" select="getProvinceByCode"/>
+		<result property="city" column="cityCode" select="getCityByCode"/>
+		<result property="area" column="areaCode" select="getAreaByCode"/>
+		<result property="certNeedsAmount" column="certNeedsAmount"/>
+		<result property="effDate" column="effDate"/>
+		<result property="expDate" column="expDate"/>
+		<result property="descp" column="descp"/>
+		<result property="contact" column="contact"/>
+		<result property="telephone" column="telephone"/>
+		<result property="cellPhone" column="cellPhone"/>
+		<result property="email" column="email"/>
+		<result property="fax" column="fax"/>
+		<result property="isIndeed" column="isIndeed"/>
+		<result property="submitDate" column="submitDate"/>
+		<result property="lastEditDate" column="lastEditDate"/>
+		<result property="certNeedsStatus" column="certNeedsStatus"/>
+		<result property="companySize" column="companySizeCode" select="getClassMasterByCode"/>
+	</resultMap>
+	
+	<resultMap class="certNeedsVo" id="get-certNeeds-result-enterpriseCenter">
+		<result property="id" column="id"/>
+		<result property="certType" column="certTypeCode" select="getClassMasterByCode"/>
+		<result property="cert" column="certCode" select="getClassMasterByCode"/>
+		<result property="userId" column="userId"/>
+		<result property="registerStatus" column="registerStatusCode" select="getClassMasterByCode"/>
+		<result property="specialField" column="specialFieldCode" select="getClassMasterByCode"/>
+		<result property="province" column="provinceCode" select="getProvinceByCode"/>
+		<result property="city" column="cityCode" select="getCityByCode"/>
+		<result property="area" column="areaCode" select="getAreaByCode"/>
+		<result property="certNeedsAmount" column="certNeedsAmount"/>
+		<result property="effDate" column="effDate"/>
+		<result property="expDate" column="expDate"/>
+		<result property="descp" column="descp"/>
+		<result property="contact" column="contact"/>
+		<result property="telephone" column="telephone"/>
+		<result property="cellPhone" column="cellPhone"/>
+		<result property="email" column="email"/>
+		<result property="fax" column="fax"/>
+		<result property="isIndeed" column="isIndeed"/>
+		<result property="submitDate" column="submitDate"/>
+		<result property="lastEditDate" column="lastEditDate"/>
+		<result property="certNeedsStatus" column="certNeedsStatus"/>
+		<result property="companySize" column="companySizeCode" select="getClassMasterByCode"/>
+		<result property="remainsDays" column="remainsDays"/>
+	</resultMap>
+		
+<!-- ********************************************************************************** 
+        模块:   　	猎证中心
+        功能:    添加证书需求信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveCertNeeds" parameterClass="certNeeds">
+		INSERT INTO
+		t_certctr_certneeds
+			(certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,certNeedsAmount,effDate
+			,expDate,descp,contact,telephone,cellPhone,email,fax,isIndeed,submitDate,lastEditDate,
+			certNeedsStatus,companySizeCode)
+		values
+			(#certTypeCode#,#certCode#,#userId#,#registerStatusCode#,#specialFieldCode#,#provinceCode#,#cityCode#,#areaCode#,#certNeedsAmount#
+			,#effDate#,#expDate#,#descp#,#contact#,#telephone#,#cellPhone#,#email#,#fax#,#isIndeed#,
+			#submitDate#,#lastEditDate#,#certNeedsStatus#,#companySizeCode#)
+	</insert>
+
+<!-- ********************************************************************************** 
+        模块:   　	猎证中心
+        功能:    查询证书需求列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-1    arthas.zou
+   Notes:     备注
+********************************************************************************** -->	
+	<select id="queryCertNeedsList" parameterClass="java.lang.String" resultMap="get-certNeeds-result">
+		select id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,certNeedsAmount,effDate,expDate,
+			descp,contact,telephone,cellPhone,email,fax,isIndeed,submitDate,lastEditDate,certNeedsStatus,companySizeCode
+		from t_certctr_certneeds
+		where expDate >= CURDATE()
+			and CURDATE() >= effDate
+			and certNeedsStatus = '0'
+		<dynamic prepend="and">
+			<isNotNull>
+				(isIndeed=#isIndeed#)
+			</isNotNull>
+		</dynamic>
+		order by effDate desc,submitDate desc
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:    猎证中心
+        功能:    分页查询证书需求列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-29    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCertNeedsPaginatedList" parameterClass="certNeeds" resultMap="get-certNeeds-result">
+		select id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,certNeedsAmount,effDate,expDate,
+			descp,contact,telephone,cellPhone,email,fax,isIndeed,submitDate,lastEditDate,certNeedsStatus,companySizeCode
+		from t_certctr_certneeds
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="isIndeed">
+				(isIndeed = #isIndeed#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certTypeCode">
+				(certTypeCode = #certTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certCode">
+				(certCode = #certCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="registerStatusCode">
+				(registerStatusCode = #registerStatusCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="specialFieldCode">
+				(specialFieldCode = #specialFieldCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="provinceCode">
+				(provinceCode = #provinceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="cityCode">
+				(cityCode = #cityCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="areaCode">
+				(areaCode = #areaCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="companySizeCode">
+				(companySizeCode = #companySizeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certNeedsStatus">
+				(certNeedsStatus in ($certNeedsStatus$))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="descp">
+				(descp like concat("%",#descp#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="effDate">
+				(CURDATE() >= effDate)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expDate">
+				(expDate >= CURDATE())
+			</isNotEmpty>
+		</dynamic>
+		order by effDate desc,submitDate desc
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:    猎证中心
+        功能:    查询证书需求信息条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-18    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCertNeedsCount" parameterClass="certNeeds" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(*)
+		FROM
+			t_certctr_certneeds
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="isIndeed">
+				(isIndeed = #isIndeed#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certTypeCode">
+				(certTypeCode = #certTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certCode">
+				(certCode = #certCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="registerStatusCode">
+				(registerStatusCode = #registerStatusCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="specialFieldCode">
+				(specialFieldCode = #specialFieldCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="provinceCode">
+				(provinceCode = #provinceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="cityCode">
+				(cityCode = #cityCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="areaCode">
+				(areaCode = #areaCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="companySizeCode">
+				(companySizeCode = #companySizeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certNeedsStatus">
+				(certNeedsStatus in ($certNeedsStatus$))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="descp">
+				(descp like concat("%",#descp#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="effDate">
+				(CURDATE() >= effDate)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="expDate">
+				(expDate >= CURDATE())
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:   　猎证中心	
+        功能:    查询重复证书需求ID列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-03-12    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryDuplicatedCertNeedsIdList" parameterClass="certNeeds" resultClass="java.lang.Long">
+		SELECT 
+			id
+		FROM
+			t_certctr_certneeds
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="certTypeCode">
+				(certTypeCode = #certTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certCode">
+				(certCode = #certCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:   　猎证中心	
+        功能:    查询重复证书需求条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-03-12    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryDuplicatedCertNeedsCount" parameterClass="certNeeds" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(*)
+		FROM
+			t_certctr_certneeds
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="certTypeCode">
+				(certTypeCode = #certTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certCode">
+				(certCode = #certCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:   　猎证中心	
+        功能:    查询证书需求详细信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-2    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getCertNeedsById" parameterClass="java.lang.Long" resultMap="get-certNeeds-result">
+		select id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,certNeedsAmount,effDate,expDate,
+			descp,contact,telephone,cellPhone,email,fax,isIndeed,submitDate,lastEditDate,certNeedsStatus,companySizeCode
+		from t_certctr_certneeds
+		where id=#id#		
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:   　	猎证中心
+        功能:    删除证书需求信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-9    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteCertNeeds" parameterClass="java.lang.String">
+		delete from t_certctr_certneeds where id in ($ids$)
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:   　	猎证中心
+        功能:    更新证书需求信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-9    arthas.zou
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateCertNeeds" parameterClass="certNeeds">
+		update t_certctr_certneeds
+		set certTypeCode = #certTypeCode#,certCode = #certCode#,userId = #userId#,registerStatusCode = #registerStatusCode#,specialFieldCode = #specialFieldCode#,
+			provinceCode = #provinceCode#,cityCode = #cityCode#,areaCode = #areaCode#,certNeedsAmount = #certNeedsAmount#,
+			effDate = #effDate#,expDate = #expDate#,descp = #descp#,contact = #contact#,telephone = #telephone#,cellPhone = #cellPhone#,
+			email = #email#,fax = #fax#,isIndeed = #isIndeed#,submitDate = #submitDate#,lastEditDate = #lastEditDate#,
+			certNeedsStatus = #certNeedsStatus#,companySizeCode = #companySizeCode#
+		where id = #id#
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    猎证中心
+        功能:    根据用户id查找证书需求列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-14    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCertNeedsListByUserId" parameterClass="java.lang.Long" resultMap="get-certNeeds-result">
+		select id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,certNeedsAmount,effDate,expDate,
+			descp,contact,telephone,cellPhone,email,fax,isIndeed,submitDate,lastEditDate,certNeedsStatus,companySizeCode
+		from t_certctr_certneeds
+		where userId=#userId#
+		order by submitDate desc		
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    企业后台证书需求管理
+        功能:    修改证书需求状态
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-15    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="editCertNeedsStatus" parameterClass="java.util.Map">
+		UPDATE
+			t_certctr_certneeds
+		SET
+			certNeedsStatus = #certNeedsStatus#,
+			lastEditdate = #lastEditDate#
+		WHERE
+			id in ($ids$)
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    企业后台证书需求管理
+        功能:    证书需求搜索
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-15    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="searchCertNeedsList4EnterpriseCenter" parameterClass="java.util.Map" resultMap="get-certNeeds-result-enterpriseCenter">
+		select id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,certNeedsAmount,effDate,expDate,
+			descp,contact,telephone,cellPhone,email,fax,isIndeed,submitDate,lastEditDate,certNeedsStatus,companySizeCode,TIMESTAMPDIFF(DAY ,#currentDate#,expDate) as remainsDays
+		from t_certctr_certneeds
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certTypeName">
+				(certTypeCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#certTypeName#,"%") ))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certName">
+				(certCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#certName#,"%")))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certNeedsStatus">
+				(certNeedsStatus in ($certNeedsStatus$))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="specialFieldName">
+				(specialFieldCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#specialFieldName#,"%") ))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certTypeCode">
+				(certTypeCode = #certTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="provinceCode">
+				(provinceCode = #provinceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="cityCode">
+				(cityCode = #cityCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="areaCode">
+				(areaCode = #areaCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="registerStatusCode">
+				(registerStatusCode = #registerStatusCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="specialFieldCode">
+				(specialFieldCode = #specialFieldCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="effDate">
+				( STR_TO_DATE(effDate,'%Y-%m-%d')= STR_TO_DATE(#effDate#,'%Y-%m-%d'))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certNeedsType">
+				<isEqual property="certNeedsType" compareValue="3">
+					7>=TIMESTAMPDIFF(DAY ,#currentDate#,expDate) AND TIMESTAMPDIFF(DAY ,#currentDate#,expDate)>=0
+				</isEqual>
+				<isEqual property="certNeedsType" compareValue="4">
+					(TIMESTAMPDIFF(DAY ,expDate,#currentDate#)>0 OR certNeedsStatus = '1')
+				</isEqual>
+			</isNotEmpty>
+		</dynamic>
+		order by submitDate desc
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    企业后台证书需求管理
+        功能:    证书需求搜索结果数量
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-15    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="searchCertNeedsCount4EnterpriseCenter" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		select count(*)
+		from t_certctr_certneeds
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="userId">
+				(userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certTypeName">
+				(certTypeCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#certTypeName#,"%") ))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certName">
+				(certCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#certName#,"%") ))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certNeedsStatus">
+				(certNeedsStatus in ($certNeedsStatus$))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="specialFieldName">
+				(specialFieldCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#specialFieldName#,"%") ))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certTypeCode">
+				(certTypeCode = #certTypeCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="provinceCode">
+				(provinceCode = #provinceCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="cityCode">
+				(cityCode = #cityCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="areaCode">
+				(areaCode = #areaCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="registerStatusCode">
+				(registerStatusCode = #registerStatusCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="specialFieldCode">
+				(specialFieldCode = #specialFieldCode#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="effDate">
+				( STR_TO_DATE(effDate,'%Y-%m-%d')= STR_TO_DATE(#effDate#,'%Y-%m-%d'))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certNeedsType">
+				<isEqual property="certNeedsType" compareValue="3">
+					7>=TIMESTAMPDIFF(DAY ,#currentDate#,expDate) AND TIMESTAMPDIFF(DAY ,#currentDate#,expDate)>=0
+				</isEqual>
+				<isEqual property="certNeedsType" compareValue="4">
+					TIMESTAMPDIFF(DAY ,expDate,#currentDate#)>0
+				</isEqual>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    企业后台证书需求管理
+        功能:    延长发布时间
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-17    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="extendsExpDate" parameterClass="java.util.Map">
+		UPDATE T_CERTCTR_CERTNEEDS
+		SET expDate = #expDate#
+		WHERE id in ($ids$)
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    企业后台证书需求管理
+        功能:    重新发布证书需求
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-17    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="republishCertNeeds" parameterClass="java.util.Map">
+		UPDATE T_CERTCTR_CERTNEEDS
+		SET effDate = #effDate#, expDate = #expDate#,certNeedsStatus = '0'
+		WHERE id in ($ids$)
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理后台-证书需求管理
+        功能:    加载证书需求列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-22    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCertNeedsList4Admin" parameterClass="java.util.Map" resultClass="certNeeds">
+		SELECT
+			certNeeds.id, certNeeds.certTypeCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = certNeeds.certTypeCode)AS certTypeName,
+			certNeeds.certCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = certNeeds.certCode)AS certName,
+			certNeeds.userId, userInfo.userName, userInfo.companyName AS userRealName, certNeeds.registerStatusCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = certNeeds.registerStatusCode)AS registerStatusName,
+			certNeeds.specialFieldCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = certNeeds.specialFieldCode)AS specialFieldName,
+			certNeeds.provinceCode,
+			(SELECT name FROM T_COMM_PROVINCE WHERE code = certNeeds.provinceCode)AS provinceName,
+			certNeeds.cityCode,
+			(SELECT name FROM T_COMM_CITY WHERE code = certNeeds.cityCode)AS cityName,
+			certNeeds.areaCode,
+			(SELECT name FROM T_COMM_AREA WHERE code = certNeeds.areaCode)AS areaName,
+			certNeeds.certNeedsAmount, certNeeds.effDate, certNeeds.expDate, certNeeds.descp, certNeeds.contact,
+			certNeeds.telephone, certNeeds.cellPhone, certNeeds.email, certNeeds.fax, certNeeds.isIndeed,
+			certNeeds.submitDate, certNeeds.lastEditDate, certNeeds.certNeedsStatus, certNeeds.companySizeCode,
+			(SELECT name FROM T_COMM_CLASS_MASTER WHERE code = certNeeds.companySizeCode)AS companySizeName,
+			TIMESTAMPDIFF(DAY ,#currentDate#,certNeeds.expDate) as remainsDays	
+		FROM
+			T_CERTCTR_CERTNEEDS certNeeds, T_LOGIN_USER loginUser, T_USER_INFO userInfo
+		WHERE
+			loginUser.userName = userInfo.userName
+		AND
+			certNeeds.userId = loginUser.id
+		<dynamic>
+			<isNotEmpty prepend="and" property="userName">
+				(userInfo.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="companyName">
+				(userInfo.companyName like concat("%",#companyName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certName">
+				(certNeeds.certCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#certName#,"%") ))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="queryType">
+				<isEqual property="queryType" compareValue="0">
+					(certNeeds.certNeedsStatus = 0)
+				</isEqual>
+				<isEqual property="queryType" compareValue="1">
+					(certNeeds.certNeedsStatus = 1)
+				</isEqual>
+				<isEqual property="queryType" compareValue="2">
+					(certNeeds.certNeedsStatus = 2)
+				</isEqual>
+				<isEqual property="queryType" compareValue="3">
+					(TIMESTAMPDIFF(DAY ,#currentDate#,expDate)>7)
+				</isEqual>
+				<isEqual property="queryType" compareValue="4">
+					(TIMESTAMPDIFF(DAY ,#currentDate#,expDate)>=0 AND 7>=TIMESTAMPDIFF(DAY ,#currentDate#,expDate))
+				</isEqual>
+				<isEqual property="queryType" compareValue="5">
+					(0>TIMESTAMPDIFF(DAY ,#currentDate#,expDate))
+				</isEqual>
+				<isEqual property="queryType" compareValue="6">
+					(certNeeds.effDate = #currentDate#)
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isNew">
+				DATE_FORMAT(certNeeds.submitDate,'%Y-%m-%d')= DATE_FORMAT(#currentDate#,'%Y-%m-%d')
+			</isNotEmpty>
+		</dynamic>
+		
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理后台-证书需求管理
+        功能:    计算加载证书需求列表条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-22    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCertNeedsCount4Admin" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			T_CERTCTR_CERTNEEDS certNeeds, T_LOGIN_USER loginUser, T_USER_INFO userInfo
+		WHERE
+			loginUser.userName = userInfo.userName
+		AND
+			certNeeds.userId = loginUser.id
+		<dynamic>
+			<isNotEmpty prepend="and" property="userName">
+				(userInfo.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="companyName">
+				(userInfo.companyName like concat("%",#companyName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="certName">
+				(certNeeds.certCode in (SELECT code FROM t_comm_class_master m where m.name like concat("%",#certName#,"%") ))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="queryType">
+				<isEqual property="queryType" compareValue="0">
+					(certNeeds.certNeedsStatus = 0)
+				</isEqual>
+				<isEqual property="queryType" compareValue="1">
+					(certNeeds.certNeedsStatus = 1)
+				</isEqual>
+				<isEqual property="queryType" compareValue="2">
+					(certNeeds.certNeedsStatus = 2)
+				</isEqual>
+				<isEqual property="queryType" compareValue="3">
+					(TIMESTAMPDIFF(DAY ,#currentDate#,expDate)>7)
+				</isEqual>
+				<isEqual property="queryType" compareValue="4">
+					(TIMESTAMPDIFF(DAY ,#currentDate#,expDate)>=0 AND 7>=TIMESTAMPDIFF(DAY ,#currentDate#,expDate))
+				</isEqual>
+				<isEqual property="queryType" compareValue="5">
+					(0>TIMESTAMPDIFF(DAY ,#currentDate#,expDate))
+				</isEqual>
+				<isEqual property="queryType" compareValue="6">
+					DATE_FORMAT(certNeeds.submitDate,'%Y-%m-%d')= DATE_FORMAT(#currentDate#,'%Y-%m-%d')
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isNew">
+				DATE_FORMAT(certNeeds.submitDate,'%Y-%m-%d')= DATE_FORMAT(#currentDate#,'%Y-%m-%d')
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理后台-证书需求管理
+        功能:    根据证书需求ID加载证书需求详细信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-23    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getCertNeedsById4Admin" parameterClass="java.lang.Long" resultClass="certNeeds">
+		select id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,certNeedsAmount,effDate,expDate,
+			descp,contact,telephone,cellPhone,email,fax,isIndeed,submitDate,lastEditDate,certNeedsStatus,companySizeCode
+		from t_certctr_certneeds
+		where id=#id#		
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理后台-证书需求管理
+        功能:    设置（取消）急需证书信息状态
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-23    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="editIndeedStatus" parameterClass="java.util.Map">
+		UPDATE
+			T_CERTCTR_CERTNEEDS
+		SET
+			isIndeed = #indeedStatus#
+		WHERE
+			id in ($certNeedsIds$)
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    所有证书相关模块
+        功能:    查询证书需求数量
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-24    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getCertNeedsCount" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			T_CERTCTR_CERTNEEDS
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    个人管理后台首页
+        功能:    今日最新证书需求统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-4    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getCountOfCertNeedsToday" parameterClass="java.util.Date" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(cc.id)
+		  FROM
+			t_certctr_certneeds cc WHERE DATE_FORMAT(cc.effDate,'%Y-%m-%d')=DATE_FORMAT(#today#,'%Y-%m-%d')
+		  AND
+		    cc.certNeedsStatus = '0'
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:    猎证中心
+        功能:    查看相关证书需求列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-03-15    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryRelatedCertNeedsList" parameterClass="certNeeds" resultMap="get-certNeeds-result">
+		select id,certTypeCode,certCode,userId,registerStatusCode,specialFieldCode,provinceCode,cityCode,areaCode,certNeedsAmount,effDate,expDate,
+			descp,contact,telephone,cellPhone,email,fax,isIndeed,submitDate,lastEditDate,certNeedsStatus,companySizeCode
+		from t_certctr_certneeds
+		where userId = #userId#
+			and expDate >= CURDATE()
+			and CURDATE() >= effDate
+			and certNeedsStatus = '0'
+		and id != #id#
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    猎证中心
+        功能:    查看相关证书需求列表条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-03-15    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryRelatedCertNeedsCount" parameterClass="certNeeds" resultClass="java.lang.Integer" >
+		select 
+			count(*)
+		from t_certctr_certneeds
+		where userId = #userId#
+			and expDate >= CURDATE()
+			and CURDATE() >= effDate
+			and certNeedsStatus = '0'
+		and id != #id#
+	</select>
+
+	
+</sqlMap>

@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="salonMediaDto" type="com.dotoyo.buildjob.innovationSalon.dto.SalonMediaDto"/>
+ 	<typeAlias alias="salonInfoDto" type="com.dotoyo.buildjob.innovationSalon.dto.SalonInfoDto"/>
+ 		<typeAlias alias="salonSearchVo" type="com.dotoyo.buildjob.innovationSalon.vo.SalonSearchVo"/>
+ <!-- **********************************************************************************
+   Module:  Salon
+   Function: add salon media information
+   Date：2011-01-11
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<insert id="addSalonMediaInfo" parameterClass="salonMediaDto">
+ 		  insert into T_SALON_MEDIA(
+ 		  salonId,
+          author,
+          subject,
+	      mediaType,
+	      mediaName,
+	      status,
+	      submitDate,
+	      videoCoverPic,
+	      isExcellent) values(
+          #salonId#,
+          #author#,
+          #subject#,
+	      #mediaType#,
+	      #MediaName#,
+	      #status#,
+	      #submitDate#,
+	      #videoCoverPic#,
+	      0)
+ 	</insert>
+
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon media information list
+   Date：2011-01-11
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="querySalonMediaInfoList" resultClass="salonMediaDto" parameterClass="java.util.Map">
+ 		select
+ 		  a.id,
+ 		  a.salonId,
+          a.author,
+          a.subject,
+	      a.mediaType,
+	      a.mediaName,
+	      a.status,
+	      a.submitDate,
+	      u.userName,
+	      a.isExcellent,
+	      a.videoCoverPic
+ 		  from T_SALON_MEDIA a,T_LOGIN_USER u where a.author = u.id
+ 	    <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="status">
+				(a.status = #status#)
+			</isNotEmpty>
+ 		  	<isNotEmpty prepend="and" property="author">
+				(a.author = #author#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="mediaType">
+				(a.mediaType = #mediaType#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="mediaName">
+				(a.MediaName like concat("%",#mediaName#,"%"))
+			</isNotEmpty>
+		    <isNotEmpty prepend="and" property="salonId">
+				(a.salonId = #salonId#)
+			</isNotEmpty>
+		    <isNotEmpty prepend="and" property="isExcellent">
+				(a.isExcellent = #isExcellent#)
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by a.submitDate desc
+ 	</select>
+
+ 	 <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon media information list for search
+   Date：2011-01-20
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="searchSalonMediaInfoList" resultClass="salonMediaDto" parameterClass="salonSearchVo">
+ 		select
+ 		  a.id,
+ 		  a.salonId,
+          a.author,
+          a.subject,
+	      a.mediaType,
+	      a.mediaName,
+	      a.status,
+	      a.submitDate,
+	      u.userName,
+	      a.isExcellent,
+	      a.videoCoverPic
+ 		  from T_SALON_MEDIA a,T_LOGIN_USER u where a.author = u.id
+ 	    <dynamic prepend="and">
+ 		   	<isNotEmpty prepend="and" property="subject">
+				(a.subject like concat("%",#subject#,"%"))
+			</isNotEmpty>
+ 		  	<isNotEmpty prepend="and" property="author">
+				(u.userName like concat("%",#author#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="mediaType">
+				(a.mediaType = #mediaType#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(a.status = #status#)
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by a.submitDate desc
+ 	</select>
+
+ 	 <select id="searchSalonMediaInfoListCount" resultClass="java.lang.Integer" parameterClass="salonSearchVo">
+ 		select
+ 		  count(*)
+ 		  from T_SALON_MEDIA a,T_LOGIN_USER u where a.author = u.id
+ 	    <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="subject">
+				(a.subject like concat("%",#subject#,"%"))
+			</isNotEmpty>
+ 		  	<isNotEmpty prepend="and" property="author">
+				(u.userName like concat("%",#author#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="mediaType">
+				(a.mediaType = #mediaType#)
+			</isNotEmpty>
+ 			<isNotEmpty prepend="and" property="status">
+				(a.status = #status#)
+			</isNotEmpty>
+	   </dynamic>
+ 	</select>
+
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon media detail information
+   Date：2011-01-20
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	<select id="getSalonMediaById" parameterClass="java.lang.Long" resultClass="salonMediaDto">
+		select
+ 		  a.id,
+ 		  a.salonId,
+          a.author,
+          a.subject,
+	      a.mediaType,
+	      a.mediaName,
+	      a.status,
+	      a.submitDate,
+	      u.userName,
+	      a.isExcellent,
+	      a.videoCoverPic
+ 		  from T_SALON_MEDIA a,T_LOGIN_USER u where a.author = u.id
+          and a.id=#id#
+	</select>
+
+ <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon media information list by salon Id
+   Date：2011-01-24
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="querySalonMediaInfoListBySalonId" resultClass="salonMediaDto" parameterClass="java.util.Map">
+ 		select
+ 		  a.id,
+ 		  a.salonId,
+          a.author,
+          a.subject,
+	      a.mediaType,
+	      a.mediaName,
+	      a.status,
+	      a.submitDate,
+	      u.userName,
+	      a.isExcellent,
+	      a.videoCoverPic
+ 		  from T_SALON_MEDIA a,T_LOGIN_USER u where a.author = u.id
+ 	    <dynamic prepend="and">
+ 		   	<isNotEmpty prepend="and" property="salonId">
+				(a.salonId = #salonId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="mediaType">
+				(a.mediaType = #mediaType#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(a.status = #status#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(a.author = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isExcellent">
+				(a.isExcellent = #isExcellent#)
+			</isNotEmpty>
+	    </dynamic>
+ 		  order by a.submitDate desc
+ 	</select>
+
+ 	 <select id="querySalonMediaInfoListBySalonIdCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+ 		  count(*)
+ 		  from T_SALON_MEDIA a,T_LOGIN_USER u where a.author = u.id
+ 	   <dynamic prepend="and">
+ 		   	<isNotEmpty prepend="and" property="salonId">
+				(a.salonId = #salonId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="mediaType">
+				(a.mediaType = #mediaType#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(a.status = #status#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(a.author = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isExcellent">
+				(a.isExcellent = #isExcellent#)
+			</isNotEmpty>
+	    </dynamic>
+ 	</select>
+
+ 	<!-- **********************************************************************************
+   Module:  personal center
+   Function: get media count by salon
+   Date：2011-01-27
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="getMediaCountBySalonId" parameterClass="java.util.Map" resultClass="java.lang.Long">
+		select count(*)  from T_SALON_MEDIA a where 1=1 and a.salonId = #salonId# and a.mediaType = #mediaType#
+		<isNotEmpty property="userId">
+			and a.author = #userId#
+		</isNotEmpty>
+	</select>
+
+  <!-- **********************************************************************************
+   Module:  personal center
+   Function: get salon media information list by salon type
+   Date：2011-01-27
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="querySalonListBySalonType4Media" resultClass="salonInfoDto" parameterClass="java.util.Map">
+ 	select
+	     s.id,
+	     s.subject,
+         s.content,
+         s.startDate,
+         s.endDate,
+         s.compere,
+		 s.sponsor,
+		 s.location,
+		 s.isExcellent,
+		 s.subjectPic,
+         s.audiFlag,
+         s.browseCount,
+         s.reputationCount,
+	     s.schlussgruppeCount
+           FROM T_SALON_SALONINFO s,t_salon_attend d WHERE s.id=d.salonid
+           <isNotEmpty property="userId">
+           	and d.userid=#userId#
+           </isNotEmpty>
+           <isNotEmpty property="salonType">
+           	AND s.salonType = #salonType#
+           </isNotEmpty>
+           and exists(SELECT SALONID FROM T_SALON_MEDIA a  WHERE
+           a.salonid=s.id and
+           <isNotEmpty property="mediaType">
+           	a.MEDIATYPE = #mediaType#
+           </isNotEmpty>
+           <isNotEmpty property="userId">
+           	and a.author=#userId#
+           </isNotEmpty>
+           )
+	     order by s.startDate desc
+
+ 	</select>
+
+ 	 <select id="querySalonListBySalonType4MediaCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+ 		  count(*)
+           FROM T_SALON_SALONINFO s,t_salon_attend d WHERE s.id=d.salonid
+           <isNotEmpty property="userId">
+           	and d.userid=#userId#
+           </isNotEmpty>
+           <isNotEmpty property="salonType">
+           	AND s.salonType = #salonType#
+           </isNotEmpty>
+           and exists(SELECT SALONID FROM T_SALON_MEDIA a  WHERE
+           a.salonid=s.id and
+           <isNotEmpty property="mediaType">
+           	a.MEDIATYPE = #mediaType#
+           </isNotEmpty>
+           <isNotEmpty property="userId">
+           	and a.author=#userId#
+           </isNotEmpty>
+           )
+ 	</select>
+
+  <!-- **********************************************************************************
+   Module:  personal center
+   Function: delete media information
+   Date：2011-01-27
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	<delete id="deleteMedia" parameterClass="java.lang.String">
+		DELETE FROM T_SALON_MEDIA WHERE id in($id$)
+	</delete>
+
+
+  <!-- **********************************************************************************
+   Module:  personal center
+   Function: search salon media information list by search vo
+   Date：2011-01-27
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="searchSalonListBySalonType4Media" resultClass="salonInfoDto" parameterClass="salonSearchVo">
+ 	select
+	     s.id,
+	     s.subject,
+         s.content,
+         s.startDate,
+         s.endDate,
+         s.compere,
+		 s.sponsor,
+		 s.location,
+		 s.isExcellent,
+		 s.subjectPic,
+         s.audiFlag,
+         s.browseCount,
+         s.reputationCount,
+	     s.schlussgruppeCount
+           FROM T_SALON_SALONINFO s,t_salon_attend d WHERE s.id=d.salonid
+           <isNotEmpty property="userId">
+           	and d.userid=#userId#
+           </isNotEmpty>
+           <isNotEmpty property="salonType">
+           	AND s.salonType = #salonType#
+           </isNotEmpty>
+           <dynamic prepend="and">
+ 		   	<isNotEmpty prepend="and" property="subject">
+				(s.subject like concat("%",#subject#,"%"))
+			</isNotEmpty>
+	   	   </dynamic>
+           and exists(SELECT SALONID FROM T_SALON_MEDIA a  WHERE
+           a.salonid=s.id and
+           <isNotEmpty property="mediaType">
+           	a.MEDIATYPE = #mediaType#
+           </isNotEmpty>
+           <isNotEmpty property="userId">
+           	and a.author=#userId#
+           </isNotEmpty>
+           )
+	     order by s.startDate desc
+ 	</select>
+
+ 	 <select id="searchSalonListBySalonType4MediaCount" resultClass="java.lang.Integer" parameterClass="salonSearchVo">
+ 		select
+ 		  count(*)
+          FROM T_SALON_SALONINFO s,t_salon_attend d WHERE s.id=d.salonid
+           <isNotEmpty property="userId">
+           	and d.userid=#userId#
+           </isNotEmpty>
+           <isNotEmpty property="salonType">
+           	AND s.salonType = #salonType#
+           </isNotEmpty>
+           <dynamic prepend="and">
+ 		   	<isNotEmpty prepend="and" property="subject">
+				(s.subject like concat("%",#subject#,"%"))
+			</isNotEmpty>
+	   	   </dynamic>
+           and exists(SELECT SALONID FROM T_SALON_MEDIA a  WHERE
+           a.salonid=s.id and
+           <isNotEmpty property="mediaType">
+           	a.MEDIATYPE = #mediaType#
+           </isNotEmpty>
+           <isNotEmpty property="userId">
+           	and a.author=#userId#
+           </isNotEmpty>
+           )
+ 	</select>
+
+ <!-- **********************************************************************************
+   Module:  administration
+   Function: get salon media information list for administrator
+   Date：2011-02-22
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="querySalonMediaList4Admin" resultClass="salonInfoDto" parameterClass="salonSearchVo">
+ 	select
+ 		     s.id,
+ 		     s.subject,
+ 		     s.salonType,
+             s.content,
+             s.startDate,
+             s.endDate,
+             s.compere,
+ 			 s.sponsor,
+ 			 s.location,
+ 			 s.isExcellent,
+ 			 s.subjectPic,
+             s.audiFlag,
+             s.browseCount,
+             s.reputationCount,
+			 s.schlussgruppeCount,
+			 m.mediaCount
+             FROM T_SALON_SALONINFO s ,
+             (SELECT m.salonId AS salonid,COUNT(*)AS mediaCount FROM t_salon_media m WHERE m.mediaType = #mediaType# GROUP BY m.salonId) m
+             WHERE s.id = m.salonid
+            <dynamic prepend="and">
+ 		    	<isNotEmpty prepend="and" property="subject">
+				(s.subject like concat("%",#subject#,"%"))
+			    </isNotEmpty>
+				<isNotEmpty prepend="and" property="status">
+				(s.audiFlag = #status#)
+			   </isNotEmpty>
+			   	<isNotEmpty prepend="and" property="salonType">
+				(s.salonType = #salonType#)
+			    </isNotEmpty>
+	        </dynamic>
+ 	</select>
+
+ 	 <select id="querySalonMediaList4AdminCount" resultClass="java.lang.Integer" parameterClass="salonSearchVo">
+ 		select
+ 		  count(*)
+ 		     FROM T_SALON_SALONINFO s ,
+             (SELECT m.salonId AS salonid,COUNT(*)AS mediaCount FROM t_salon_media m WHERE m.mediaType = #mediaType# GROUP BY m.salonId) m
+             WHERE s.id = m.salonid
+            <dynamic prepend="and">
+ 		    	<isNotEmpty prepend="and" property="subject">
+				(s.subject like concat("%",#subject#,"%"))
+			    </isNotEmpty>
+				<isNotEmpty prepend="and" property="status">
+				(s.audiFlag = #status#)
+			   </isNotEmpty>
+			    <isNotEmpty prepend="and" property="salonType">
+				(s.salonType = #salonType#)
+			    </isNotEmpty>
+	        </dynamic>
+ 	</select>
+  <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: audition salon media
+   Date：2011-03-29
+   Author wisdy xiao
+  ********************************************************************************** -->
+	<update id="autiMediaByArticleId" parameterClass="java.util.Map">
+		UPDATE t_salon_media m SET m.status=#status# where m.mediaName in(select pictureName from t_salon_article where id in ($ids$)) or m.mediaName in (select videoName from t_salon_article where id in ($ids$))
+	</update>
+   <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: delete salon media by article ids
+   Date：2011-03-29
+   Author wisdy xiao
+  ********************************************************************************** -->
+	<delete id="deleteMediaByArticleId" parameterClass="java.util.Map">
+		DELETE  FROM t_salon_media where mediaName in(select pictureName from t_salon_article where id in ($ids$)) or mediaName in (select videoName from t_salon_article where id in ($ids$))
+	</delete>
+  <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: audition salon media
+   Date：2011-02-17
+   Author Bill Xu
+  ********************************************************************************** -->
+	<update id="autiMedia" parameterClass="java.util.Map">
+		UPDATE t_salon_media m SET m.status=#status# where m.id in($ids$)
+	</update>
+  <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: audition salon media by salon ids
+   Date：2011-02-23
+   Author Bill Xu
+  ********************************************************************************** -->
+	<update id="autiMediaBySalon" parameterClass="java.util.Map">
+		UPDATE t_salon_media m SET m.status=#status# where m.salonId in($ids$) and m.mediaType=#mediaType#
+	</update>
+   <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: delete salon media by salon ids
+   Date：2011-02-23
+   Author Bill Xu
+  ********************************************************************************** -->
+	<delete id="deleteMediaBySalon" parameterClass="java.util.Map">
+		DELETE  FROM t_salon_media  where salonId in($ids$) and mediaType=#mediaType#
+	</delete>
+
+ <!-- **********************************************************************************
+   Module:  Salon
+   Function: get classic media
+   Date：2011-02-28
+   Author Bill Xu
+  ********************************************************************************** -->
+	<delete id="queryClassMediaList" parameterClass="java.util.Map">
+		DELETE  FROM t_salon_media  where salonId in($ids$) and mediaType=#mediaType#
+	</delete>
+  <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: set media classic
+   Date：2011-02-28
+   Author Bill Xu
+  ********************************************************************************** -->
+	<update id="setExcellentMedia" parameterClass="java.util.Map">
+		UPDATE t_salon_media s SET s.isExcellent=#isExcellent# where s.id in($ids$)
+	</update>
+
+ <!-- **********************************************************************************
+   Module:  Salon
+   Function: get media count
+   Date：2011-03-01
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	 <select id="getMediaCountBySalon" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+ 		  count(*)
+ 		     FROM t_salon_media s where s.salonId=#salonId# and s.mediaType=#mediaType#
+ 	</select>
+
+ <!-- **********************************************************************************
+   Module:  salon
+   Function: 获取没有通过的记录数 by ids
+   Date：2011-03-10
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="getNoPassMediaCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(*) FROM t_salon_media  WHERE (status=2 or status=0) and id in($ids$)
+	</select>
+
+ <!-- **********************************************************************************
+   Module:  administration
+   Function: delete salon media information by salon ids
+   Date：2011-03-11
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<delete id="delSalonMediaBySalonIds" parameterClass="java.lang.String">
+		DELETE FROM t_salon_media  where salonId in ($ids$)
+	</delete>
+ </sqlMap>

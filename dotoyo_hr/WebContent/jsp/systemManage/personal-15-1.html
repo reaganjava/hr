@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大太阳建筑猎头--系统管理--沙龙视频</title>
+<link href="../../css/system-manage.css" rel="stylesheet" type="text/css" />
+<script src="../../javascripts/common/jquery.js"></script>
+<script src="../../javascripts/common/jquery-ui-1.7.2.custom.min.js"></script>
+<script src="../../javascripts/common/accordion.js"></script>
+<script src="../../javascripts/common/jquery.cookie.js"></script>
+<script type="text/javascript">
+
+$(function(){
+			//Main menu
+			$(".nav li").mouseover(function(){
+				$(".nav li").attr("class","nav-on");
+				$(this).addClass("nav-out");
+			});
+		
+			// Accordion
+            $("#leftNav").accordion({
+                header: "h3",
+                collapsible: true,
+				autoHeight: false,
+                active: false,
+				multipleMode: true
+            });
+			
+			//Init active array
+			var activeArr;
+			if($.cookie("active_left_nav")!=null){
+				activeArr = $.cookie("active_left_nav").replace(/(^\,*)|(\,*$)/g, "").split(",");
+			}
+			else{
+				activeArr = new Array();
+			}
+			//Init left nav
+			var activeA = $.cookie("active_left_nav_a");
+			if(activeA != null){
+				$("#leftNav a").removeClass("active");
+				$("#leftNav a").eq(activeA).addClass("active");
+			}
+			if(activeArr.length>0)
+			{
+				$.each(activeArr,function(key,val){
+					if(val!=""){
+						$("#leftNav h3").eq(val).addClass("ui-state-active").next().addClass("ui-accordion-content-active").show();
+					}
+				});
+			}
+			//Set active array when click
+			$("#leftNav h3").click(function(){
+				var index = $("#leftNav h3").index($(this)[0]);
+				if($(this).hasClass("ui-state-active")){
+					//Add to array
+					if($.inArray(index, activeArr)){
+						activeArr.push(index);
+					}
+				}
+				else{
+					//Remove from array
+					$.grep(activeArr,function(val,key){
+						if(val==index){
+							activeArr.splice(key, 1);
+						}
+					});
+				}
+				$.cookie("active_left_nav", activeArr.join(","));
+			});
+			
+			$("#leftNav a").click(function(){
+				$("#leftNav a").removeClass("active");
+				var index = $("#leftNav a").index($(this)[0]);
+				$(this).addClass("active");
+				$.cookie("active_left_nav_a", index);
+			});
+        });
+</script>
+</head>
+<body>
+<div class="top">
+	<div class="top-left"><img src="../../images/logo.png" width="152" height="88" alt="中国建筑平台"/></div>
+    <div class="top-right">arthas&nbsp;&nbsp;中国建筑猎头平台欢迎您！</div>
+</div>
+<div class="nav">
+	<ul>
+    	<li class="nav-on" id="menu01" onmouseover="changeMenu(this)"><a href="../../index.html">首页</a></li>
+        <li class="nav-on" id="menu02" onmouseover="changeMenu(this)"><a href="../headhunterCenter/head.html">猎头中心</a></li>
+        <li class="nav-on" id="menu03" onmouseover="changeMenu(this)"><a href="../applyJobCenter/people.html">人才中心</a></li>
+        <li class="nav-on" id="menu04" onmouseover="changeMenu(this)"><a href="../peopleExcavate/excavate.html">人才挖掘</a></li>
+        <li class="nav-out" id="menu05" onmouseover="changeMenu(this)"><a href="../certificateCenter/certificate.html">猎证中心</a></li>
+        <li class="nav-on" id="menu06" onmouseover="changeMenu(this)"><a href="../innovationPark/park.html">创业园</a></li>
+        <li class="nav-on" id="menu07" onmouseover="changeMenu(this)"><a href="../wisdomChina/china.html">智慧中国</a></li>
+        <li class="nav-on" id="menu08" onmouseover="changeMenu(this)"><a href="../innovationSalon/salon.html">创业沙龙</a></li>
+    </ul>
+</div>
+<!--以上为头部分-->
+<!--中间部分-->
+<div class="content">
+	<div id="leftNav">
+    	<ul>
+            <li>
+                <h3>求职管理</h3>
+                <div>
+                      <a class="second-nav" tabindex="-1" href="personal-1.html">已申请的职位</a><span></span>
+                      <a class="second-nav" tabindex="-1" href="personal-2.html">求职意向管理</a><span></span>
+                      <a class="second-nav" tabindex="-1" href="personal-3.html">成为线下推荐对象</a><span></span>
+                      <a class="second-nav" tabindex="-1" href="personal-4.html">公司屏蔽</a><span></span>
+                      <h3>站内信管理</h3>
+                      <ul>
+                          <li><a href="personal-5.html">-&nbsp;&nbsp;收件箱</a></li>
+                          <li><a href="personal-6.html">-&nbsp;&nbsp;写邮件</a></li>
+                          <li><a href="personal-7.html">-&nbsp;&nbsp;自动回复邮件设置</a></li>
+                      </ul>
+                      <a class="second-nav" tabindex="-1" href="personal-8.html">面试通知</a><span></span>
+              </div>
+            </li>
+            <li>
+                <h3>证书管理</h3>
+                <ul>
+                    <li><a href="personal-9.html">已提交证书管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>发起的沙龙</h3>
+                <ul>
+                    <li><a href="personal-10.html">线上沙龙</a></li>
+                    <li><a href="personal-11.html">线下沙龙</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>参与的沙龙</h3>
+                <ul>
+                    <li><a href="personal-12.html">线上沙龙</a></li>
+                    <li><a href="personal-13.html">线下沙龙</a></li>
+                </ul>
+            </li>
+   			<li>
+                <h3><a tabindex="-1" href="personal-14.html">线下沙龙图片库</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="personal-15.html">线下沙龙视频库</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="personal-16.html">文章管理</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="personal-17.html">评论管理</a></h3>
+            </li>
+           	<li>
+                <h3>积分管理</h3>
+                <ul>
+                    <li><a href="personal-18.html">积分情况</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>猎头服务管理</h3>
+                <ul>
+                    <li><a href="personal-19.html">购买服务</a></li>
+                    <li><a href="personal-20.html">已购买的服务</a></li>
+                    <li><a href="personal-21.html">已过期的服务</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="personal-22.html">修改密码</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="#">退出系统</a></h3>
+            </li>
+        </ul>
+    </div>
+    <div class="content-right">
+    	<div class="administrator-title"><strong>沙龙上传视频</strong></div>
+        <div class="inside-tab">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="inside-tab">
+              <tr>
+                <td width="35%" height="40" align="right">沙龙图片名称：</td>
+                <td align="left" class="tab-input">激情燃烧的岁月</td>
+              </tr>
+              <tr>
+                <td width="35%" height="40" align="right">视&nbsp;&nbsp;&nbsp;&nbsp;频：</td>
+                <td align="left" class="tab-input"><form id="form1" name="form1" enctype="multipart/form-data" method="post" action="">
+                  <label>
+                    <input type="file" name="fileField" id="fileField" />
+                  </label>
+                </form></td>
+              </tr>
+              <tr>
+                <td width="35%" height="40" align="right">视频封面：</td>
+                <td align="left" class="tab-input"><form id="form1" name="form1" enctype="multipart/form-data" method="post" action="">
+                  <label>
+                    <input type="file" name="fileField" id="fileField" />
+                  </label>
+                </form></td>
+              </tr>
+            </table>
+</div>
+       	<div class="shanchu"><a href="#" title="保存">上传</a></div>
+  </div>
+</div>
+
+</body>
+</html>

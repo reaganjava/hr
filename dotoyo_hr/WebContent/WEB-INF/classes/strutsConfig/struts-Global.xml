@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>	
+
+	<package name="global" extends="json-default">
+	
+		<!-- System Interceptor Configuration -->
+		<interceptors>			
+			<interceptor name="authLoginInterceptor" class="authLoginInterceptor" />
+			<interceptor name="authFunctionInterceptor" class="authFunctionInterceptor" />
+			<interceptor name="authPersonalLoginInterceptor" class="authPersonalLoginInterceptor" />
+			<interceptor name="authEnterpriseLoginInterceptor" class="authEnterpriseLoginInterceptor"/>
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="authLoginInterceptor"/>
+			</interceptor-stack>	
+		</interceptors>
+		
+		<!-- System Result Configuration -->
+		<global-results>
+			<result name="logonPage" type="redirectAction">
+				<param name="namespace">/homePage</param>
+				<param name="actionName">homePageAction!init.action?goFrom=1</param>
+			</result>
+			<result name="userTypeAuthorizeFailed">
+				/jsp/error/userTypeAuthorizeFailed.jsp
+			</result>		   
+			<result name="serviceExpiredClose">
+				/jsp/error/serviceExpiredClose.jsp
+			</result>
+			<result name="serviceExpiredReturn">
+				/jsp/error/serviceExpiredReturn.jsp
+			</result>
+			<result name="gotoBlogWeb">
+				/jsp/common/gotoBlogWeb.jsp
+			</result>
+			<result name="closeWindow">
+				/jsp/common/closeWindow.jsp
+			</result>
+			<result name="backToPreviousWindow">
+				/jsp/common/backToPreviousWindow.jsp
+			</result>
+			<result name="error">
+				/jsp/error/serviceError.jsp
+			</result>
+			<result name="accessDenied">
+				/jsp/error/accessDenied.jsp
+			</result>
+		</global-results>	
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"/>
+		</global-exception-mappings>
+
+	</package>
+	 
+</struts>

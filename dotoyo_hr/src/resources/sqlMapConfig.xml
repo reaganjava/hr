@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings
+		enhancementEnabled="true"
+		lazyLoadingEnabled="true"
+		useStatementNamespaces="false"
+	/>
+	<sqlMap resource="ibatisSqlMap/t_certctr_certNeeds.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_login_user.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_comm_payment.xml"/>
+	<sqlMap resource="ibatisSqlMap/region.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_comm_filter_words.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_applyJobctr_applyJobInfo.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_comm_class_master.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_comm_sys_parameter.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_comm_backgroup_music.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_applyJobctr_recommendation.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_certctr_personalCert.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_hhc_jobinfotemplate.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_certctr_hotCert.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_hhc_jobinfo.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_comm_interview_send_notice.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_comm_interview_receive_notice.xml"/>
+	<sqlMap resource="ibatisSqlMap/t_hhc_applicationjobrecord.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_salon_salonInfo.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_comm_host_Unit.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_salon_article.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_comm_comment.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_salon_media.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_salon_attend.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_blog_user.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_hhc_receipt_of_applications_for_jobs.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_personCenter_filterCompany.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_certctr_certaccesshistory.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_certctr_certneedsaccesshistory.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_sys_log.xml"/>
+    <sqlMap resource="ibatisSqlMap/shortMessage.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_salon_homePageDisplay.xml"/>
+    <sqlMap resource="ibatisSqlMap/t_comm_offlinesearchresult.xml"/>
+</sqlMapConfig>

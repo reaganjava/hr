@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="commentDto" type="com.dotoyo.buildjob.innovationSalon.dto.CommentDto"/>
+ 	<typeAlias alias="salonSearchVo" type="com.dotoyo.buildjob.innovationSalon.vo.SalonSearchVo"/>
+
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: get comment information list
+   Date：2011-01-11
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="queryCommentList" resultClass="commentDto" parameterClass="java.util.Map">
+ 		select
+ 		       a.id,
+ 		       a.subjectId    ,
+ 		       a.subjectType  ,
+			   a.author       ,
+			   a.content      ,
+			   a.status       ,
+			   a.submitDate   ,
+			   u.userName
+ 		       from T_COMM_COMMENT a ,T_LOGIN_USER u where a.author = u.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="subjectId">
+				(a.subjectId = #subjectId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="subjectType">
+				(a.subjectType = #subjectType#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="author">
+				(a.author = #author#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(a.status = #status#)
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by a.submitDate desc
+ 	</select>
+
+
+ 	<select id="queryCommentCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+ 		       count(*)
+ 		       from T_COMM_COMMENT a ,T_LOGIN_USER u where a.author = u.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="subjectId">
+				(a.subjectId = #subjectId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="subjectType">
+				(a.subjectType = #subjectType#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="author">
+				(a.author = #iscream#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(a.status = #status#)
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+
+<!-- **********************************************************************************
+   Module:  Salon
+   Function: add comment information
+   Date：2011-01-11
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<insert id="addCommentInfo" parameterClass="commentDto">
+ 		     insert into T_COMM_COMMENT(
+ 		       subjectId    ,
+ 		       subjectType  ,
+			   author       ,
+			   content      ,
+			   status       ,
+			   submitDate) values(
+               #subjectId#    ,
+ 		       #subjectType#  ,
+			   #author#      ,
+			   #content#      ,
+			   #status#       ,
+			   #submitDate#)
+ 	</insert>
+
+
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon or article or picture or video comment count
+   Date：2011-01-11
+   Author Bill Xu
+  ********************************************************************************** -->
+	<select id="getCommentCount" resultClass="java.lang.Long" parameterClass="java.util.Map">
+ 		select count(*)  from T_COMM_COMMENT a
+ 		  <dynamic prepend="where">
+			<isNotEmpty prepend="and" property="subjectId">
+				(subjectId = #subjectId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="subjectType">
+				(subjectType = #subjectType#)
+			</isNotEmpty>
+		</dynamic>
+ 	</select>
+
+ <!-- **********************************************************************************
+   Module:  personal center
+   Function: get all comment information list
+   Date：2011-01-28
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="queryAllCommentList" resultClass="commentDto" parameterClass="salonSearchVo">
+ 		SELECT
+ 		       id,
+ 		       subjectId    ,
+ 		       subjectType  ,
+			   author       ,
+			   content      ,
+			   status       ,
+			   submitDate   ,
+			   subjectName,
+			   salonName,
+			   userName
+	     FROM
+ 		(SELECT
+               c.id,
+ 		       c.subjectId    ,
+ 		       c.subjectType  ,
+			   c.author       ,
+			   c.content      ,
+			   c.status       ,
+			   c.submitDate   ,
+			   s.subject as subjectName,
+			   s.subject as salonName,
+			   u.userName
+           FROM t_comm_comment c, t_salon_saloninfo s,t_login_user u WHERE c.subjectType = 3 AND c.subjectId = s.id AND c.author = u.id
+         UNION ALL
+         SELECT
+               c.id,
+ 		       c.subjectId    ,
+ 		       c.subjectType  ,
+			   c.author       ,
+			   c.content      ,
+			   c.status       ,
+			   c.submitDate   ,
+			   a.subject as subjectName,
+			   s.subject as salonName,
+			   u.userName
+           FROM t_comm_comment c,t_salon_article a,t_salon_saloninfo s,t_login_user u 
+           WHERE c.subjectType = 0 AND c.subjectId = a.id AND a.salonId = s.id AND c.author = u.id
+         UNION ALL
+         SELECT
+               c.id,
+ 		       c.subjectId    ,
+ 		       c.subjectType  ,
+			   c.author       ,
+			   c.content      ,
+			   c.status       ,
+			   c.submitDate   ,
+			   m.subject as subjectName,
+			   s.subject as salonName,
+			   u.userName
+           FROM t_comm_comment c,t_salon_media m,t_salon_saloninfo s,t_login_user u
+           WHERE (c.subjectType = 1 OR c.subjectType = 2)
+           AND c.subjectId = m.id AND m.salonId = s.id
+           AND c.author = u.id
+           ) as comment
+ 		   <dynamic prepend="where">
+		   <isNotEmpty prepend="and" property="status">
+				(status = #status#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(author = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="content">
+				(content like concat("%",#content#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="startDate">
+		         <![CDATA[DATE_FORMAT(submitDate,'%Y-%m-%d') >= DATE_FORMAT(#startDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[DATE_FORMAT(submitDate,'%Y-%m-%d') <= DATE_FORMAT(#endDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+		   </dynamic>
+		   order by submitDate desc
+ 	</select>
+
+
+ 	<select id="queryAllCommentListCount" resultClass="java.lang.Integer" parameterClass="salonSearchVo">
+ 	   SELECT
+ 		       count(*)
+	     FROM
+ 		(SELECT
+               c.id,
+ 		       c.subjectId    ,
+ 		       c.subjectType  ,
+			   c.author       ,
+			   c.content      ,
+			   c.status       ,
+			   c.submitDate
+           FROM t_comm_comment c, t_salon_saloninfo s WHERE c.subjectType = 3 AND c.subjectId = s.id
+         UNION ALL
+         SELECT
+               c.id,
+ 		       c.subjectId    ,
+ 		       c.subjectType  ,
+			   c.author       ,
+			   c.content      ,
+			   c.status       ,
+			   c.submitDate
+           FROM t_comm_comment c,t_salon_article a WHERE c.subjectType = 0 AND c.subjectId = a.id
+         UNION ALL
+         SELECT
+               c.id,
+ 		       c.subjectId    ,
+ 		       c.subjectType  ,
+			   c.author       ,
+			   c.content      ,
+			   c.status       ,
+			   c.submitDate
+           FROM t_comm_comment c,t_salon_media m WHERE (c.subjectType = 1 OR c.subjectType = 2)
+           AND c.subjectId = m.id) as comment
+              <dynamic prepend="where">
+		   <isNotEmpty prepend="and" property="status">
+				(status = #status#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(author = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="content">
+				(content like concat("%",#content#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="startDate">
+		         <![CDATA[DATE_FORMAT(submitDate,'%Y-%m-%d') >= DATE_FORMAT(#startDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[DATE_FORMAT(submitDate,'%Y-%m-%d') <= DATE_FORMAT(#endDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+
+  <!-- **********************************************************************************
+   Module:  personal center
+   Function: delete comment information
+   Date：2011-01-26
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	<delete id="deleteComment" parameterClass="java.lang.String">
+		DELETE FROM T_COMM_COMMENT WHERE id in($id$)
+	</delete>
+
+
+ <!-- **********************************************************************************
+   Module:  personal center
+   Function: get comment information by id
+   Date：2011-01-30
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	<select id="getCommentById" parameterClass="java.lang.Long" resultClass="commentDto">
+		SELECT
+ 		       id,
+ 		       subjectId    ,
+ 		       subjectType  ,
+			   author       ,
+			   content      ,
+			   status       ,
+			   submitDate
+	     FROM  T_COMM_COMMENT WHERE id=#id#
+	</select>
+
+
+  <!-- **********************************************************************************
+   Module:   personal center
+   Function: update comment information
+   Date：2011-01-30
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	<update id="modifyComment" parameterClass="commentDto">
+		UPDATE T_COMM_COMMENT
+		set content = #content#,submitDate = #submitDate#
+		where id = #id#
+	</update>
+
+<!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: set salon article (audition)
+   Date：2011-02-17
+   Author Bill Xu
+  ********************************************************************************** -->
+	<update id="audiComment" parameterClass="java.util.Map">
+		UPDATE T_COMM_COMMENT  SET status=#status# where id in($ids$)
+	</update>
+
+	 <!-- **********************************************************************************
+   Module:  administration
+   Function: delete salon comment information by salon ids
+   Date：2011-03-11
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<delete id="delCommentBySalonIds" parameterClass="java.lang.String">
+		DELETE FROM T_COMM_COMMENT  where subjectId in ($ids$) and subjectType='3'
+	</delete>
+ </sqlMap>

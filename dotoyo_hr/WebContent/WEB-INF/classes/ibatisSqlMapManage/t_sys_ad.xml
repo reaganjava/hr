@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysAdDto" type="com.dotoyo.buildjob.sys.dto.SysAdDto"/>
+	<resultMap class="sysAdDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="company" column="company"/>
+		<result property="city" column="city"/>
+		<result property="province" column="province"/>
+		<result property="position" column="position"/>
+		<result property="startDate" column="startDate"/>
+		<result property="stopDate" column="stopDate"/>
+		<result property="start" column="start"/>
+		<result property="endDate" column="endDate"/>
+		<result property="end" column="end"/>
+		<result property="status" column="status"/>
+		<result property="type" column="type"/>
+		<result property="typeContent" column="typeContent"/>
+		<result property="url" column="url"/>
+		<result property="width" column="width"/>
+		<result property="height" column="height"/>
+		<result property="imgName" column="imgName"/>
+		<result property="description" column="description"/>
+		<result property="adindex" column="adindex"/>
+	</resultMap>
+<!-- **********************************************************************************
+        模块:    广告
+        功能:    图片/文字/flash广告加载
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-18    tyler.qu
+   Notes:     备注
+********************************************************************************** -->
+	<select id="loadingAds" parameterClass="sysAdDto" resultClass="sysAdDto">
+		SELECT ad.title,
+			   ad.typeContent,
+			   ad.url,
+			   ad.width,
+			   ad.height,
+			   ad.imgName,
+			   ad.adindex,
+			   company,
+			   ad.startDate,
+			   ad.endDate
+		  FROM t_sys_ad ad
+		 WHERE ad.status=1
+		   AND ad.position=#position#
+		   <dynamic prepend="and">
+		   	<isNotEmpty prepend="and" property="type">
+		   		<isEqual property="type" compareValue="4">
+		   			ad.type in (0,2)
+		   		</isEqual>
+		   		<isNotEqual property="type" compareValue="4">
+		   			ad.type=#type#
+		   		</isNotEqual>
+		   	</isNotEmpty>
+		   	<isNotEmpty prepend="and" property="city">
+		   		 ad.city=#city#
+		   	</isNotEmpty>
+		   	<isNotEmpty prepend="and" property="currentDate">
+		   		 DATE_FORMAT(ad.endDate,'%Y-%m-%d %H:%i')&gt;=DATE_FORMAT(#currentDate#,'%Y-%m-%d %H:%i')
+		   	</isNotEmpty>
+		    <isNotEmpty prepend="and" property="currentDate">
+		   		 DATE_FORMAT(ad.startDate,'%Y-%m-%d %H:%i')&lt;= DATE_FORMAT(#currentDate#,'%Y-%m-%d %H:%i')
+		   	</isNotEmpty>
+		   </dynamic>
+		   order by adindex asc 
+		 LIMIT #limitNumber#
+	</select>
+
+
+<!-- **********************************************************************************
+        模块:    广告
+        功能:    城市站点 热门企业列表加载
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-20    tyler.qu
+   Notes:     备注
+********************************************************************************** -->
+	<select id="loadCitySiteHotEnterprises" parameterClass="sysAdDto" resultClass="sysAdDto">
+		SELECT ad.title,
+			   ad.typeContent,
+			   ad.url,
+			   ad.width,
+			   ad.height,
+			   ad.imgName,
+			   ad.adindex
+		  FROM t_sys_ad ad
+		 WHERE ad.status=1
+		   AND ad.type=1
+		   AND ad.city=#city#
+           AND ad.position = #position#
+           AND DATE_FORMAT(ad.endDate,'%Y-%m-%d %H:%i')>=DATE_FORMAT(#currentDate#,'%Y-%m-%d %H:%i')
+           order by adindex asc 
+		 LIMIT #limitNumber#
+	</select>
+
+ <!-- **********************************************************************************
+   Module:  System manager, advertising
+   Function: add  advertising
+   Date：2011-01-30
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addSysAd" parameterClass="sysAdDto">
+ 		     insert into T_SYS_AD(
+			 title,
+			 company,
+			 city,
+			 province,
+			 position,
+			 startDate,
+			 endDate,
+			 status,
+			 type,
+			 typeContent,
+			 url,
+			 width,
+             height,
+             imgName,
+             description,
+             adindex
+             ) values(
+			 #title#,
+			 #company#,
+			 #city#,
+			 #province#,
+			 #position#,
+			 #startDate#,
+			 #endDate#,
+			 #status#,
+			 #type#,
+			 #typeContent#,
+			 #url#,
+			 #width#,
+             #height#,
+             #imgName#,
+             #description#,
+             #adindex#
+ 			 )
+ 	</insert>
+ <!-- **********************************************************************************
+   Module:  System manager,advertising maintain
+   Function: get advertising list
+   Date：2011-01-30
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysAdsList" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+ 			 id,
+			 title,
+			 company,
+			 city,
+			 province,
+			 position,
+			 startDate,
+			 null start,
+			 endDate,
+			 null end,
+			 status,
+			 type,
+			 typeContent,
+			 url,
+			 width,
+             height,
+             stopDate,
+             imgName,
+             description,
+             adindex
+			from T_SYS_AD
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="startDate">
+				(to_days(startDate) &gt;= to_days(#startDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				(to_days(endDate) &lt;= to_days(#endDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="company">
+				(company like concat("%",#company#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="position">
+				(position like concat("%",#position#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		   ORDER BY adindex asc,startDate DESC
+ 	</select>
+ 	<select id="querySysAdsCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(*)
+			from T_SYS_AD
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="startDate">
+				(to_days(startDate) &gt;= to_days(#startDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				(to_days(endDate) &lt;= to_days(#endDate#))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="company">
+				(company like concat("%",#company#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="position">
+				(position like concat("%",#position#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,role maintain
+   Function: get Role
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysAd" resultMap="result_dto" parameterClass="sysAdDto">
+ 		select
+ 		     id,
+			 title,
+			 company,
+			 city,
+			 province,
+			 position,
+			 startDate,
+			 null start,
+			 endDate,
+			 null end,
+			 status,
+			 type,
+			 typeContent,
+			 url,
+			 width,
+             height,
+             stopDate,
+             imgName,
+             description,
+             adindex
+			from T_SYS_AD
+			where 1=1
+ 		   <dynamic prepend="and">
+				<isNotEmpty prepend="and" property="id">
+					(id = #id#)
+				</isNotEmpty>
+				<isNotEmpty prepend="and" property="title">
+					(title = #title#)
+				</isNotEmpty>
+		   </dynamic>
+		   ORDER BY adindex asc,startDate DESC
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,role maintain
+   Function: update Role
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateSysAd" parameterClass="sysAdDto">
+ 		update T_SYS_AD
+ 		set
+			 title = #title#,
+			 company = #company#,
+			 city = #city#,
+			 province = #province#,
+			 position = #position#,
+			 startDate = #startDate#,
+			 endDate = #endDate#,
+			 status  = #status#,
+			 type  = #type#,
+			 typeContent = #typeContent#,
+			 url  = #url#,
+			 width  = #width#,
+             height  = #height#,
+             stopDate = #stopDate#,
+             imgName = #imgName#,
+             description = #description#,
+             adindex=#adindex#
+ 		where id = #id#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager,role maintain
+   Function: remove Role
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeSysAd" parameterClass="sysAdDto">
+ 		delete from T_SYS_AD
+ 		where id = #id#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager,role maintain
+   Function: remove Role
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateSysAdForStatus" parameterClass="sysAdDto">
+ 		update T_SYS_AD
+ 		set
+ 		status = #status#
+ 		<isNotEmpty property="stopDate">
+ 			,stopDate = #stopDate#
+ 		</isNotEmpty>
+ 		where id = #id#
+ 	</statement>
+ </sqlMap>

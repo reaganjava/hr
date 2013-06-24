@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysUserRoleDto" type="com.dotoyo.buildjob.sys.dto.SysUserRoleDto"/>
+	<resultMap class="sysUserRoleDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="userid" column="userid"/>
+		<result property="roleid" column="roleid"/>
+	</resultMap>
+	<typeAlias alias="sysUserDto" type="com.dotoyo.buildjob.sys.dto.SysUserDto"/>
+	<resultMap class="sysUserDto" id="user_result_dto">
+		<result property="id" column="id"/>
+		<result property="userName" column="userName"/>
+		<result property="password" column="password"/>
+		<result property="point" column="point"/>
+		<result property="status" column="status"/>
+		<result property="registerDate" column="registerDate"/>
+		<result property="lastLoginDate" column="lastLoginDate"/>
+		<result property="roleid" column="roleid"/>
+		<result property="rolenames" column="rolenames"/>
+	</resultMap>
+ 	<typeAlias alias="sysRoleDto" type="com.dotoyo.buildjob.sys.dto.SysRoleDto"/>
+	<resultMap class="sysRoleDto" id="role_result_dto">
+		<result property="id" column="id"/>
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+		<result property="assignCounts" column="assignCounts"/>
+	</resultMap>
+ <!-- **********************************************************************************
+   Module:  System manager, user role maintain
+   Function: add  user and role mapping
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addSysUserRoleAdmin" parameterClass="sysUserRoleDto">
+ 		     insert into T_COMM_USER_ROLE_ADMIN(
+			 userid,
+             roleid) values(
+             #userid#,
+ 			 #roleid#)
+ 	</insert>
+ <!-- **********************************************************************************
+   Module:  System manager,user and role maintain
+   Function: get user list
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysUsersListAdmin" resultMap="user_result_dto" parameterClass="java.util.Map">
+ 		select
+			user.id,
+			user.userName,
+			user.password,
+			user.point,
+			user.status,
+			user.registerDate,
+			user.lastLoginDate,
+			(select group_concat(userrole.roleid) from T_COMM_USER_ROLE_ADMIN userrole where userrole.userid=user.id
+			<dynamic prepend="and">
+				<isNotEmpty prepend="and" property="roleid">
+					userrole.roleid=#roleid#
+				</isNotEmpty>
+			</dynamic>
+			) roleid,
+			null rolenames
+			 from t_login_user_admin user
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="username">
+				(user.username like concat("%",#username#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				user.status=#status#
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by user.userName
+ 	</select>
+ 	<select id="querySysUsersCountAdmin" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(*)
+			from t_login_user_admin
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="username">
+				(username like concat("%",#username#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				status=#status#
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+<!-- **********************************************************************************
+   Module:  System manager,user and role maintain
+   Function: get member list
+   Date：2011-01-24
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysMembersListAdmin" resultMap="user_result_dto" parameterClass="java.util.Map">
+ 	select
+			tmp.id,
+			tmp.userName,
+			tmp.password,
+			tmp.point,
+			tmp.status,
+			tmp.registerDate,
+			tmp.lastLoginDate,
+			tmp.rolenames,
+			tmp.roleid
+		from
+ 		(select
+			user.id,
+			user.userName,
+			user.password,
+			user.point,
+			user.status,
+			user.registerDate,
+			user.lastLoginDate,
+			(select group_concat(role.name) from T_COMM_USER_ROLE_ADMIN userrole,T_COMM_ROLE_ADMIN role where role.id=userrole.roleid and userrole.userid=user.id
+			) rolenames,
+			null roleid from t_login_user_admin user) tmp
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="username">
+				(tmp.username like concat("%",#username#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				tmp.status=#status#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="rolenames">
+				tmp.rolenames  like concat("%",#rolenames#,"%")
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="defaultUserName">
+				tmp.username != #defaultUserName#
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by tmp.userName
+ 	</select>
+ 	<select id="querySysMembersCountAdmin" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		select
+		count(*)
+		from
+ 		(select
+			user.id,
+			user.userName,
+			user.password,
+			user.point,
+			user.status,
+			user.registerDate,
+			user.lastLoginDate,
+			(select group_concat(role.name) from T_COMM_USER_ROLE_ADMIN userrole,T_COMM_ROLE_ADMIN role where role.id=userrole.roleid and userrole.userid=user.id
+			) rolenames,
+			null roleid from t_login_user_admin user) tmp
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="username">
+				(tmp.username like concat("%",#username#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				tmp.status=#status#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="rolenames">
+				tmp.rolenames  like concat("%",#rolenames#,"%")
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="defaultUserName">
+				tmp.username != #defaultUserName#
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,user and role maintain
+   Function: get user and role mapping
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysUserRoleAdmin" resultMap="result_dto" parameterClass="sysUserRoleDto">
+ 		select
+			id,
+			userid,
+			roleid
+			from T_COMM_USER_ROLE_ADMIN
+			where 1=1
+ 		   <dynamic prepend="and">
+ 		   	<isNotEmpty prepend="and" property="id">
+				id = #id#
+			</isNotEmpty>
+ 		   	<isNotEmpty prepend="and" property="userid">
+				userid = #userid#
+			</isNotEmpty>
+ 		   	<isNotEmpty prepend="and" property="roleid">
+				roleid = #roleid#
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,user and role maintain
+   Function: update user and role
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateSysUserRoleAdmin" parameterClass="sysUserRoleDto">
+ 		update T_COMM_USER_ROLE_ADMIN
+ 		set
+			 userid = #userid#,
+			 roleid = #roleid#
+ 		where id = #id#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager,role maintain
+   Function: remove Role
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeSysUserRoleAdmin" parameterClass="sysUserRoleDto">
+ 		delete from T_COMM_USER_ROLE_ADMIN
+ 		where 1=1
+		<dynamic prepend="and">
+		   	<isNotEmpty prepend="and" property="id">
+			id = #id#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="userid">
+			userid = #userid#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="roleid">
+			roleid = #roleid#
+		</isNotEmpty>
+	   </dynamic>
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager,user and role maintain
+   Function: get user
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysUserAdmin" resultMap="user_result_dto" parameterClass="sysUserDto">
+ 		select
+			id,
+			userName,
+			password,
+			point,
+			status,
+			lastLoginDate,
+			registerDate,
+			null roleid,
+			null rolenames
+			from t_login_user_admin
+			where 1=1
+ 		   <dynamic prepend="and">
+ 		   	<isNotEmpty prepend="and" property="id">
+				id = #id#
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,user and role maintain
+   Function: update user
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateSysUserAdmin" parameterClass="sysUserDto">
+ 		update t_login_user_admin
+ 		set
+			 point = #point#,
+			 status = #status#
+ 		where id = #id#
+ 	</statement>
+ 	<statement id="removeSysUserAdmin" parameterClass="sysUserDto">
+ 		delete from t_login_user_admin
+ 		where id = #id#
+ 	</statement>
+	<insert id="addUserAdmin" parameterClass="sysUserDto">
+		INSERT INTO t_login_user_admin(userName,PASSWORD,registerDate,status) VALUES(#userName#,#password#,#registerDate#,#status#)
+	</insert>
+	<select id="getUserByUserNameAndPasswordAdmin" parameterClass="sysUserDto" resultClass="sysUserDto">
+		SELECT t.id,t.userName,t.password,t.point,t.status,t.registerDate,t.lastLoginDate
+          FROM t_login_user_admin t
+         WHERE 1=1
+	   <dynamic prepend="and">
+		<isNotEmpty prepend="and" property="userName">
+			t.userName =#userName#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="password">
+			t.password =#password#
+		</isNotEmpty>
+	   </dynamic>
+	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,user and role maintain
+   Function: reset user's password
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updatePasswordBySysUserAdmin" parameterClass="sysUserDto">
+ 		update t_login_user_admin
+ 		set
+			 password = #password#
+ 		where id = #id#
+ 	</statement>
+<!-- **********************************************************************************
+   Module:  System manager,user and role maintain
+   Function: get roles by user list
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysRolesByUserListAdmin" resultMap="role_result_dto" parameterClass="java.util.Map">
+ 		select
+			role.id,
+			role.code,
+			role.name,
+			(select count(*) from T_COMM_USER_ROLE_ADMIN userrole where userrole.roleid=role.id and userid=#id#)
+			 assignCounts
+			 from T_COMM_ROLE_ADMIN role
+ 		  order by role.code
+ 	</select>
+ 	<select id="querySysRolesByUserCountAdmin" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(*)
+			from T_COMM_ROLE_ADMIN
+			where 1=1
+ 	</select>
+ </sqlMap>

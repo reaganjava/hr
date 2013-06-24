@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+ 	<typeAlias alias="applicationJobRecord" type="com.dotoyo.buildjob.headhunterCenter.dto.ApplicationJobRecordDto"/>
+<!-- ********************************************************************************** 
+        模块:    猎头中心
+        功能:    新增用户职位申请记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-29    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="addReceiptOfApplicationsForJobs" parameterClass="applicationJobRecord" >
+		INSERT INTO t_hhc_receipt_of_applications_for_jobs(userId,
+			   jobId,
+			   recruitLtdId,
+			   status)
+		VALUES(#userId#,
+			#jobId#,
+			#recruitLtdId#,
+			#status#);
+		<selectKey resultClass="Long" keyProperty="id">  
+		  <![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>   
+        </selectKey>  
+	</insert>
+
+
+</sqlMap>

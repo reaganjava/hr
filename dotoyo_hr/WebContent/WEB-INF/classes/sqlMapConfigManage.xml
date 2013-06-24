@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings
+		enhancementEnabled="true"
+		lazyLoadingEnabled="true"
+		useStatementNamespaces="false"
+	/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_increment_servicename_maintainance.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_increment_talents_setting.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_increment_hangcard_setting.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_increment_huntcard_setting.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_increment_recruit_setting.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_increment_advert_setting.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_order.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_function.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_role.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_user_role.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_function_role.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_role_admin.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_user_role_admin.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_function_role_admin.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_filter_word.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_point.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_ad.xml"/>
+    <sqlMap resource="ibatisSqlMapManage/t_sys_increment_talents_offline_setting.xml"/>
+</sqlMapConfig>

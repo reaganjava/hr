@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+ 	<typeAlias alias="loginUserInfoDto" type="com.dotoyo.buildjob.common.user.dto.LoginUserInfoDto"/>
+ 	
+<!-- ********************************************************************************** 
+        模块:    用户管理
+        功能:    用户注册
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-29    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+	<insert id="registerUserInfo" parameterClass="loginUserInfoDto">
+		INSERT INTO t_login_user(userName,PASSWORD,registerDate) VALUES(#userName#,#password#,#registerDate#)
+	</insert> 
+	
+<!-- ********************************************************************************** 
+        模块:    用户管理
+        功能:    根据用户名与密码查询用户
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getUserByUserNameAndPassword" parameterClass="java.util.Map" resultClass="loginUserInfoDto">
+		SELECT t.id,t.userName,t.password,t.point,t.status,t.registerDate,t.lastLoginDate 
+          FROM t_login_user t
+         WHERE t.userName =#userName# and t.password=#password#
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    用户管理 
+        功能:    根据用户ID查询用户信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getUserById" parameterClass="java.lang.Long" resultClass="loginUserInfoDto">
+		SELECT t.id,t.userName,t.password,t.point,t.status,t.registerDate,t.lastLoginDate 
+          FROM t_login_user t
+         WHERE t.id=#id#
+	</select>	
+	
+<!-- ********************************************************************************** 
+        模块:    用户管理
+        功能:    加载用户列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+	<select id="queryMemberForList" resultClass="loginUserInfoDto">
+		SELECT t.id,t.userName,t.password,t.point,t.status,t.registerDate,t.lastLoginDate 
+          FROM t_login_user t
+	</select>
+<!-- ********************************************************************************** 
+        模块:    用户管理
+        功能:    更新用户资料
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateUser" parameterClass="java.util.Map">
+		UPDATE t_login_user t 
+		   SET 
+		   <dynamic prepend="">
+		   	<isNotEmpty property="password">
+		   		t.password=#password#
+		   	</isNotEmpty>
+		   	<isNotEmpty property="lastLoginDate">
+		   		t.lastLoginDate=#lastLoginDate#
+		   	</isNotEmpty>
+		   </dynamic>
+		 where t.id=#userId#
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    用户管理
+        功能:    根据用户名（email）加载用户信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-11-30    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getUserByUserName" parameterClass="java.lang.String" resultClass="loginUserInfoDto">
+		SELECT t.id,t.userName,t.password,t.point,t.status,t.registerDate,t.lastLoginDate 
+          FROM t_login_user t
+         WHERE t.userName = #userName#
+	</select>
+		
+		
+ <!-- ********************************************************************************** 
+   Module:  Salon 
+   Function: get jion salon user list information
+   Date：2011-01-11        
+   Author Bill Xu     
+  ********************************************************************************** -->
+	<select id="queryJoinSalonUserList" parameterClass="java.util.Map" resultClass="loginUserInfoDto">
+		SELECT u.id,u.userName,s.joinDate registerDate
+          FROM T_LOGIN_USER u,T_SALON_ATTEND s
+         WHERE u.id = s.userId and s.salonId =#salonId# order by s.joinDate
+	</select>
+	
+	<select id="queryJoinSalonUserCount" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT COUNT(*)
+          FROM T_LOGIN_USER u,T_SALON_ATTEND s
+         WHERE u.id = s.userId and s.salonId =#salonId# order by s.joinDate
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    加载所有普通用户信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-21    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryAllCommonLoginUserList" resultClass="loginUserInfoDto">
+		SELECT
+			id,userName,status,lastLoginDate
+		FROM
+			T_LOGIN_USER
+		ORDER BY
+			userName
+	</select>
+	
+	
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    加载联系人列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-21    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryContactList" parameterClass="java.lang.Long" resultClass="loginUserInfoDto">
+		SELECT
+			id,userName,status,lastLoginDate
+		FROM
+			T_LOGIN_USER
+		WHERE
+			(
+				id IN (SELECT senderId FROM t_comm_receive_msg msg WHERE msg.receiverId = #userId#)
+			OR
+				id IN (SELECT receiverId FROM t_comm_receive_msg msg WHERE msg.senderId = #userId#)
+			)
+		ORDER BY
+			userName
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    加载联系人列表条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-21    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryContactCount" parameterClass="java.lang.Long" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			T_LOGIN_USER
+		WHERE
+			(
+				id IN (SELECT senderId FROM t_comm_receive_msg msg WHERE msg.receiverId = #userId#)
+			OR
+				id IN (SELECT receiverId FROM t_comm_receive_msg msg WHERE msg.senderId = #userId#)
+			)
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    获得加载所有普通用户信息数量
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-21    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryAllCommonLoginUserCount" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			T_LOGIN_USER
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    根据用户名列表加载用户ID列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-22    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryLoginUserIdListByUserNameList" parameterClass="java.lang.String" resultClass="java.lang.Long">
+		SELECT
+			id
+		FROM
+			T_LOGIN_USER
+		WHERE
+			userName in ($userNames$)
+	</select>
+<!-- ********************************************************************************** 
+        模块:    首页
+        功能:    用户注册信息同步到 博站用户表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-13   tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="synUserInfoToBlog" parameterClass="loginUserInfoDto">
+		INSERT INTO t_user_info (userName) VALUES (#userName#)
+	</insert>			
+		
+</sqlMap>

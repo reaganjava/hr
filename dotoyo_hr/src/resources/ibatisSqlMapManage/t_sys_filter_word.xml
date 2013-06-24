@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysFilterWordDto" type="com.dotoyo.buildjob.sys.dto.SysFilterWordDto"/>
+	<resultMap class="sysFilterWordDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="words" column="words"/>
+		<result property="notes" column="notes"/>
+		<result property="operator" column="operator"/>
+		<result property="operatorName" column="operatorName"/>
+		<result property="last_edit_date" column="last_edit_date"/>
+	</resultMap>
+
+ <!-- **********************************************************************************
+   Module:  System manager,filter words manage
+   Function: add  filter words
+   Date：2011-01-22
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addSysFilterWord" parameterClass="sysFilterWordDto">
+ 		     insert into T_COMM_FILTER_WORDS(
+			 words,
+             notes,
+             operator,
+             last_edit_date) values(
+             #words#,
+ 			 #notes#,
+ 			 #operator#,
+ 			 #last_edit_date#)
+ 	</insert>
+ <!-- **********************************************************************************
+   Module:  System manager,filter words manage
+   Function: get filter words list
+   Date：2011-01-22
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysFilterWordsList" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+ 			 word.id,
+			 word.words,
+             word.notes,
+             word.operator,
+             user.userName operatorName,
+			 last_edit_date
+			from T_COMM_FILTER_WORDS word,T_LOGIN_USER_ADMIN user
+			where word.operator = user.id
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="words">
+				(word.words like concat("%",#words#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by word.last_edit_date desc
+ 	</select>
+ 	<select id="querySysFilterWordsCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+	        count(*)
+			from T_COMM_FILTER_WORDS
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="words">
+				(words like concat("%",#words#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,filter words manage
+   Function: get filter words
+   Date：2011-01-22
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysFilterWord" resultMap="result_dto" parameterClass="sysFilterWordDto">
+ 		select
+ 			 word.id,
+			 word.words,
+             word.notes,
+             word.operator,
+             user.userName operatorName,
+			 word.last_edit_date
+			from T_COMM_FILTER_WORDS word,T_LOGIN_USER_ADMIN user
+			where word.operator = user.id
+ 		   <dynamic prepend="and">
+				word.id=#id#
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,filter words manage
+   Function: update filter words
+   Date：2011-01-22
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateSysFilterWord" parameterClass="sysFilterWordDto">
+ 		update T_COMM_FILTER_WORDS
+ 		set
+			 words = #words#,
+             notes = #notes#,
+             operator = #operator#,
+			 last_edit_date = #last_edit_date#
+ 		where id = #id#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager,filter words manage
+   Function: remove filter words
+   Date：2011-01-22
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeSysFilterWord" parameterClass="sysFilterWordDto">
+ 		delete from T_COMM_FILTER_WORDS
+ 		where id = #id#
+ 	</statement>
+ </sqlMap>

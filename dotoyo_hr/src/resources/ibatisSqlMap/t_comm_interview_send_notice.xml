@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="interviewNoticeDto" type="com.dotoyo.buildjob.common.dto.InterviewNoticeDto"/>
+
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    添加发送面试通知信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-5    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveInterviewSendNotice" parameterClass="interviewNoticeDto">
+		INSERT INTO
+		T_COMM_INTERVIEW_SEND_NOTICE
+			(senderId,receiverId,title,message,noticeDate,status,jobName)
+		VALUES
+			(#senderId#,#receiverId#,#title#,#message#,#noticeDate#,#status#,#jobName#)
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    批量删除发送面试通知信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-5    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteInterviewSendNotice" parameterClass="java.lang.String">
+		DELETE FROM
+		T_COMM_INTERVIEW_SEND_NOTICE
+		WHERE id in ($ids$)
+	</delete>
+
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    根据发送者ID查找发送面试通知列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-5    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryInterviewSendNoticeListBySenderId" parameterClass="java.lang.Long" resultClass="interviewNoticeDto">
+		SELECT 
+			notice.id,notice.senderId,notice.receiverId,notice.title,notice.message,notice.noticeDate,notice.status,
+			userInfo.userName AS receiverUserName,userInfo.companyName AS receiverRealName,notice.jobName
+		FROM
+			T_COMM_INTERVIEW_SEND_NOTICE notice,t_login_user loginUser,t_user_info userInfo
+		WHERE
+			notice.senderId = #senderId#
+			AND
+				loginUser.userName = userInfo.userName
+			AND loginUser.id = notice.receiverId
+		ORDER BY
+			notice.noticeDate DESC
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    根据发送者ID查找发送面试通知条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-11    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryInterviewSendNoticeCountBySenderId" parameterClass="java.lang.Long" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			T_COMM_INTERVIEW_SEND_NOTICE notice,t_login_user loginUser,t_user_info userInfo
+		WHERE
+			notice.senderId = #senderId#
+		AND
+			loginUser.userName = userInfo.userName
+		AND loginUser.id = notice.receiverId
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    面试通知管理
+        功能:    查询发送面试通知详细信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-5    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	 <select id="getInterviewSendNoticeById" parameterClass="java.lang.Long" resultClass="interviewNoticeDto">
+	 	SELECT 
+			notice.id,notice.senderId,notice.receiverId,notice.title,notice.message,notice.noticeDate,notice.status,
+			userInfo.userName AS receiverUserName,userInfo.companyName AS receiverRealName,notice.jobName
+		FROM
+			T_COMM_INTERVIEW_SEND_NOTICE notice,t_login_user loginUser,t_user_info userInfo
+		WHERE
+			notice.id = #id#
+		AND
+			loginUser.userName = userInfo.userName
+		AND loginUser.id = notice.receiverId
+	 </select>
+</sqlMap>

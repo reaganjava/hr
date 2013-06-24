@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysFunctionRoleDto" type="com.dotoyo.buildjob.sys.dto.SysFunctionRoleDto"/>
+	<resultMap class="sysFunctionRoleDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="functionid" column="functionid"/>
+		<result property="roleid" column="roleid"/>
+		<result property="userid" column="userid"/>
+	</resultMap>
+	<typeAlias alias="sysFunctionMappingDto" type="com.dotoyo.buildjob.sys.dto.SysFunctionDto"/>
+	<resultMap class="sysFunctionMappingDto" id="function_result_dto">
+		<result property="id" column="id"/>
+		<result property="code" column="code"></result>
+		<result property="name" column="name"></result>
+		<result property="roleid" column="roleid"></result>
+		<result property="userid" column="userid"></result>
+	</resultMap>
+ <!-- **********************************************************************************
+   Module:  System manager, function role maintain
+   Function: add  function and role mapping
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addSysFunctionRoleAdmin" parameterClass="sysFunctionRoleDto">
+ 		     insert into T_COMM_FUNCTION_ROLE_ADMIN(
+			 functionid,
+             roleid,
+             userid) values(
+             #functionid#,
+ 			 #roleid#,
+ 			 #userid#)
+ 	</insert>
+ <!-- **********************************************************************************
+   Module:  System manager,function and role maintain
+   Function: get function list
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysFunctionRolesListAdmin" resultMap="function_result_dto" parameterClass="java.util.Map">
+ 		select
+			fun.id,
+			fun.code,
+			fun.name,
+			(select funrole.roleid from T_COMM_FUNCTION_ROLE_ADMIN funrole where funrole.functionid=fun.id AND funrole.roleid IN (SELECT roleid FROM t_comm_user_role_admin WHERE userid = #userid#)GROUP BY funrole.functionid) editable,
+			(select funrole.roleid from T_COMM_FUNCTION_ROLE_ADMIN funrole where funrole.roleid=#roleid# and funrole.functionid=fun.id) roleid,
+			(select funrole.userid from T_COMM_FUNCTION_ROLE_ADMIN funrole where funrole.userid=#userid# and funrole.functionid=fun.id) userid
+			from T_COMM_FUNCTION fun
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="code">
+				(fun.code like concat("%",#code#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="name">
+				fun.name like concat("%",#name#,"%")
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by fun.code asc
+ 	</select>
+ 	<select id="querySysFunctionRolesCountAdmin" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(*)
+			from T_COMM_FUNCTION
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="code">
+				(code like concat("%",#code#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="name">
+				name like concat("%",#name#,"%")
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,function and role maintain
+   Function: get function and role mapping
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="querySysFunctionRoleAdmin" resultMap="result_dto" parameterClass="sysFunctionRoleDto">
+ 		select
+			id,
+			functionid,
+			roleid,
+			userid
+			from T_COMM_FUNCTION_ROLE_ADMIN
+			where 1=1
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="id">
+				id = #id#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="functionid">
+				functionid = #functionid#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="roleid">
+				roleid = #roleid#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userid">
+				userid = #userid#
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager,user and role maintain
+   Function: update function and role
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateSysFunctionRoleAdmin" parameterClass="sysFunctionRoleDto">
+ 		update T_COMM_FUNCTION_ROLE_ADMIN
+ 		set
+			 functionid = #functionid#,
+			 roleid = #roleid#,
+			 userid = #userid#
+ 		where id = #id#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager,role maintain
+   Function: remove function
+   Date：2011-01-20
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeSysFunctionRoleAdmin" parameterClass="sysFunctionRoleDto">
+ 		delete from T_COMM_FUNCTION_ROLE_ADMIN
+ 		where 1=1
+		<isNotEmpty prepend="and" property="id">
+			id = #id#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="functionid">
+			functionid = #functionid#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="userid">
+			userid = #userid#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="roleid">
+			roleid = #roleid#
+		</isNotEmpty>
+ 	</statement>
+ </sqlMap>

@@ -1,0 +1,290 @@
+﻿/*创业沙龙样式表*/
+/*banner*/
+.salon-banner{width:980px;height:92px;margin-bottom:10px;background:url(../images/banner-inside.png) center top no-repeat; background-position:0px -382px;}
+/*select*/
+.salon-select{float:left;width:547px;padding:12px 0 0 80px;}
+.salon-select ul{margin:0px auto 12px auto;}
+.salon-select li{float:left;font-size:14px;color:#555; text-align:left;}
+.se1 img,.se2 img{float:right; cursor:pointer;}
+.salon-select li input{font-size:14px;color:#666;border:none;background:none;}
+.se0 input,.se1 input,.se2 input,.se3 input{padding-top:4px;}
+.se0{margin-top:5px;}
+.se1,.se2,.se3{background:url(../images/select-common.gif) right center no-repeat;}
+.se1{ display:block;width:120px;height:23px;padding:3px 4px 2px 5px;background-position:0px 0px;margin-right:20px;}
+.se1 input{width:95px;}
+.se2{display:block;width:105px;height:23px;padding:3px 4px 2px 5px;background-position:-134px -200px;margin-right:15px;}
+.se2 input{width:100px;}
+.se3{width:218px;height:24px;margin-right:8px;background-position:0px -30px;padding:2px 5px;}
+.se3 input{width:215px;}
+.se-botton{float:right;width:170px;margin-top:12px;}
+.se-right{float:right;width:122px;height:40px;padding:52px 0px 0px 80px;background:url(../images/head-common.png) no-repeat; background-position:0px -35px;}
+/*botton*/
+.salon-botton{float:right;width:250px;padding-left:100px; text-align:left;margin-top:30px;}
+/*---------------------------------------以上为seclect定义----------------------------------------------------------------------------*/
+
+/*标题定义*/
+.salon-title{text-align:left;font-size:14px;}
+.title1 strong,.title2 strong,.title3 strong,.title4 strong,.title5 strong,.title6 strong,.title7 strong,.title7 strong{float:left; display:block;padding:6px 10px 3px 10px;margin-right:16px;color:#fff;}
+.title1,.title2,.title3{width:678px;}
+.title4,.title5,.title6{width:268px;margin-top:10px;}
+.title7{width:268px;}
+.title1,.title4,.title7{border-bottom:1px solid #f60;}
+.title2,.title5{border-bottom:1px solid #5B6D83;}
+.title3,.title6{border-bottom:1px solid #8a8a8a;}
+.title1 strong,.title4 strong,.title7 strong,.title8 strong{background:#f60;}
+.title2 strong,.title5 strong{background:#5B6D83;}
+.title3 strong,.title6 strong{background:#8a8a8a;}
+
+.title1 a,.title4 a,.title7 a,.title8 a{float:left;line-height:29px;color:#f60; text-decoration:none;}
+.title1 a:hover,.title4 a:hover,.title7 a:hover,.title8 a:hover{color:#f60; text-decoration:underline;}
+.title2 a,.title5 a,.title9 a{float:left;line-height:29px;color:#5B6D83; text-decoration:none;}
+.title2 a:hover,.title5 a:hover,.title9 a:hover{color:#5B6D83; text-decoration:underline;}
+.title3 a,.title6 a,.title10 a{float:left;line-height:29px;color:#8a8a8a; text-decoration:none;}
+.title3 a:hover,.title6 a:hover,.title10 a:hover{color:#8a8a8a; text-decoration:underline;}
+
+/*中间部分*/
+.salon-content{width:980px;}
+/*左边*/
+.salon-left{float:left;width:678px;padding:10px;border:1px solid #dcdcdc;}
+/*线上沙龙*/
+.on-salon{width:678px;margin-bottom:20px;}
+.on-salon-left{float:left;width:212px;margin-top:20px;}
+.on-salon-pic{width:212px;height:159px;}
+
+.on-salon-font{width:212px;margin-top:11px;}
+.on-salon-font li{float:left; width:212px;padding:8px 0px 5px 0px;color:#8a8a8a;border-bottom:1px solid #f1f1f1;text-align:left; white-space:nowrap;font-size:14px;}
+.on-salon-font li img{float:left;padding:2px 0 0 10px;}
+.font-links a{color:#f60;font-weight:bold; text-decoration:none;}
+.font-links a:hover{color:#f60; text-decoration:underline;}
+.font-links2 a{color:#5B6D83;font-weight:bold; text-decoration:none;}
+.font-links2 a:hover{color:#5B6D83; text-decoration:underline;}
+/*小图*/
+.on-salon-right{float:right;width:466px;}
+.small-pic-box{float:left;width:217px;height:67px;margin-top:23px;padding-left:13px; }
+.small-pic{float:left;width:80px;height:61px;border:1px solid #ddd;}
+.small-pic img{padding:2px;}
+.small-pic-font{float:right;width:127px;height:67px;color:#999; text-align:left; line-height:22px;}
+.small-links a{color:#f60; font-size:14px;text-decoration:none;}
+.small-links a:hover{color:#f60; text-decoration:underline;}
+.small-links2 a{color:#5B6D83;font-size:14px;text-decoration:none;}
+.small-links2 a:hover{color:#5B6D83; text-decoration:underline;}
+/*主办单位*/
+.danwei-box{width:658px;padding-bottom:10px;}
+.danwei{width:658px;height:79px;margin-top:20px;}
+.danwei-pic{float:left;width:102px;height:77px;border:1px solid #ddd;}
+.danwei-pic img{width:100px;height:75px;padding:1px;}
+.danwei-font{float:right;width:538px;height:100px; text-align:left; line-height:28px;color:#818181;}
+.danwei-font a{color:#5B6D83;font-size:14px;text-decoration:none;}
+.danwei-font a:hover{color:#f60; text-decoration:underline;}
+/*右边*/
+.salon-right{float:right;width:268px;}
+.salon-right-pic{width:268px;height:211px;}
+/*经典沙龙*/
+.jindian{width:234px;padding:10px 0px 10px 34px;}
+.jindian li{float:left;width:80px;height:86px;border:1px solid #eee;margin:10px 34px 0px auto;}
+.jindian img{width:76px;height:57px;padding:2px;margin-bottom:-1px;}
+.jindian img{margin-bottom:5px\9;}
+.jindian img{*margin-bottom:5px;}
+.jindian img{_margin-bottom:5px;}
+/*经典文章*/
+.wenzhang-text{width:268px;padding:9px 0px;border-bottom:1px dashed #ddd;}
+.wenzhang-text li{float:left;width:258px; padding-left:10px;white-space:nowrap;padding-top:5px; text-align:left;color:#818181;}
+.wenzhang-text span{float:right;color:#5B6D83;width:100px; white-space:nowrap;overflow:hidden;}
+/*往届沙龙*/
+.wangjie-box{float:left;width:254px;height:63px;margin:20px auto;padding:0 10px;}
+.wangjie-pic{float:left;width:80px;height:61px;border:1px solid #ddd;}
+.wangjie-pic img{padding:2px;}
+.wangjie-pic-font{float:right;width:164px;height:67px;color:#999; text-align:left; line-height:30px;}
+.wangjie-text{width:268px;}
+.wangjie-text dl{width:268px;border-top:1px dashed #ddd;height:20px;padding:10px 0px 8px 0px;margin:0px auto;}
+.wangjie-text dt{float:left;width:160px;overflow:hidden; white-space:nowrap;text-overflow:ellipsis;padding:0px 0px 0px 20px;text-align:left;background:url(../images/salon-dian.png) 10px center no-repeat;}
+.wangjie-text dd{float:left;color:#818181;padding:0px 0px 0px 20px;margin:0px auto;}
+
+.wangjie-text a,.wenzhang-text a{font-size:14px;}
+/*----创业沙龙三级页面---------------线上沙龙----------------------------*/
+/*左边*/
+.online-content{width:980px;margin:10px auto;}
+/*右边*/
+.online-font{width:268px;margin:5px auto 15px auto;}
+.online-font li{float:left;width:248px;text-align:left;border-bottom:1px dashed #e8e8e8;padding:12px 0px 8px 20px;font-size:14px;color:#5C6B80;background:url(../images/system-dian.gif) 10px center no-repeat;}
+/*左边*/
+.online-left{float:left;width:678px;padding:20px 10px 30px 10px;border-top:1px solid #FF6302;border-left:1px solid #dcdcdc;border-right:1px solid #dcdcdc;border-bottom:1px solid #dcdcdc;}
+.line-left{float:left;width:690px;padding:20px 0px 30px 0px;}
+.line-left h1{width:690px;font-size:26px;padding:5px 0px;margin-bottom:20px;}
+.line-left h3{width:690px;font-size:14px;margin:12px auto 20px auto;color:#f60;font-weight:normal; text-align:left;}
+.online-left h1,.online-left h2{width:678px;font-size:26px;margin-bottom:20px;line-height:35px;word-break:break-all;}
+.online-left h1 em,.online-left h2 em,.line-left h1 em{font-family:"宋体";font-style:normal;font-size:12px;font-weight:normal;color:#999;line-height:30px; }
+.online-left h2{border-bottom:1px solid #ddd;}
+
+.online-left h3{width:678px;font-size:14px;margin:12px auto 20px auto;color:#f60;font-weight:normal; text-align:left;}
+.online-left p,.line-left p{width:678px; text-align:left;}
+.online-pic-box{width:678px;}
+.online-pic-box2{width:690px;}
+.online-pic{float:left;width:320px;height:240px;}
+.online-pic-font{float:right;width:340px;}
+.online-pic-font2{float:right;width:360px; }
+.online-pic-font li,.online-pic-font2 li{float:left;text-align:left;font-size:14px;color:#666;background:url(../images/details-dian.png) 10px center no-repeat;}
+.online-pic-font li{padding:10px 0px 6px 20px;width:340px;border-bottom:1px dashed #e8e8e8;outline:none;}
+.online-pic-font2 li{padding:6px 0px 1px 20px;width:360px;}
+.online-pic-font a,.online-pic-font2 a{outline:none;}
+.online-pic-font img,.online-pic-font2 img{margin:12px 20px 0 auto;}
+.online-pic-font span,.online-pic-font2 span{color:#5C6B80;}
+.online-left-title{text-align:left;font-size:14px;margin-top:20px;}
+.title8 strong,.title9 strong,.title10 strong,.title11 strong,.title12 strong,.title13 strong,.title14 strong,.title15 strong,.title16 strong{float:left; display:block;padding:6px 10px 3px 10px;margin-right:16px;color:#fff;font-weight:normal;}
+.title8,.title9,.title10{width:678px;}
+.title11,.title12,.title13{width:980px;}
+.title14,.title15{width:480px; overflow:hidden;}
+.title8,.title11,.title14{border-bottom:1px solid #f60;}
+.title9,.title12,.title15{border-bottom:1px solid #5B6D83;}
+.title10,.title13{border-bottom:1px solid #8a8a8a;}
+.title8 strong,.title11 strong,.title14 strong{background:#f60;}
+.title9 strong,.title12 strong,.title15 strong{background:#5B6D83;}
+.title10 strong,.title13 strong{background:#8a8a8a;}
+.online-left-title span{float:right;margin-top:3px;}
+.online-left-title span a{margin:0 auto;}
+.online-left-title span img{margin:0 auto;}
+.title15 a{float:left;margin-top:6px;color:#5B6D83; text-decoration:none;}
+.title15 a:hover{color:#5B6D83; text-decoration:underline;}
+.title14 a{float:left;margin-top:6px;color:#f60; text-decoration:none;}
+.title14 a:hover{color:#f60; text-decoration:underline;}
+/*已报名参加活动的用户*/
+.user-images{width:636px;padding-left:42px;}
+.user-images li{float:left;width:48px;height:72px;margin:15px 42px 0px auto;}
+.user-images img{margin-bottom:0px;}
+.user-images img{margin-bottom:7px\9;}
+.user-images img{*margin-bottom:6px;}
+.user-images img{_margin-bottom:6px;}
+/*用户观点图片*/
+.view{width:678px;height:48px;overflow:hidden;margin-top:20px;}
+.view-picture{float:left;width:48px;}
+.view-font{float:right;width:610px;}
+.view-font h3{width:610px;text-align:left;margin:0px auto 10px auto;font-weight:normal;font-size:14px;color:#5C6E84;}
+.view-font h3 span{float:right;font-size:12px;}
+.view-font p{ text-align:left;color:#888;}
+/*沙龙图片*/
+.salon-image{width:640px;padding-left:38px;}
+.salon-image li{float:left;width:120px;margin:20px 40px 0px auto;color:#666;}
+.salon-image img{margin-bottom:0px;}
+.salon-image img{margin-bottom:7px\9;}
+.salon-image img{*margin-bottom:7px;}
+.salon-image img{_margin-bottom:7px;}
+.salon-image a{font-size:14px;color:#000; text-decoration:none;}
+.salon-image a:hover{color:#f60; text-decoration:none;}
+/*用户评论*/
+.user-reviews{width:678px;margin-top:20px;}
+.salon-line{width:980px;margin-top:20px;}
+.user-reviews h3,.salon-line h3{padding:0px 10px 5px 10px;text-align:left;font-weight:normal;font-size:12px;color:#5C6E84;border-bottom:1px solid #ddd;margin:0px auto;}
+.user-reviews h3{width:658px;}
+.user-reviews h3 span,.salon-line h3 span{float:right;font-size:12px;color:#666;}
+.user-reviews p,.salon-line p{padding:15px 10px 10px 10px;text-align:left;font-size:14px; line-height:25px;}
+.user-reviews p{width:658px;}
+.salon-line p,.salon-line h3{width:960px;}
+.user-reviews span,.salon-line span{float:right;font-size:14px;color:#5C6E84;}
+/*发表评论*/
+.comment,.comment2{width:678px;margin-top:15px;}
+.comment textarea{width:500px;height:100px;border:1px solid #ccc;padding:5px;font-size:12px;}
+.comment li{float:left;font-size:14px; text-align:left;color:#5A6D83;}
+.comment li input{width:150px;border:1px solid #ccc;margin-right:20px;padding:5px 0px 5px 5px;}
+.comment0{margin-top:7px;}
+.comment1{margin-right:20px;}
+.comment2 img{margin-right:20px;}
+/*评论botton*/
+.view-details-botton{width:280px;margin:15px auto 0px auto;overflow:hidden;}
+.view-details-botton li{float:left;width:120px;height:30px;margin-right:20px;font-size:14px;background:url(../images/system-botton3.gif) center center no-repeat;}
+.view-details-botton a{ display:block;width:120px;height:23px;padding:7px 0px 0px 0px;color:#fff; text-decoration:none;}
+.view-details-botton a:hover{ display:block;width:120px;height:23px;padding:7px 0px 0px 0px;color:#fff; text-decoration:none;}
+/*三级页面------------------------------沙龙视频-----------------------*/
+.classic-font{width:268px;margin-bottom:25px;}
+.classic-font dl{float:left;width:268px;margin:15px auto;padding:0px;}
+.classic-font dl dt{float:left;width:126px;margin:0px auto;padding:0px;}
+.classic-font dl dt img{width:120px;height:90px;overflow:hidden;padding:2px;border:1px solid #ccc;}
+.classic-font dl dd{float:right;width:130px;margin:0px auto;padding:0px;text-align:left;color:#999; line-height:24px;}
+.classic-font dl dd a{font-size:14px;color:#f60; text-decoration:none;}
+.classic-font dl dd a:hover{font-size:14px;color:#f60; text-decoration:underline;}
+.classic-font ul{float:left;width:268px;background:url(../images/classic-icon.png) 10px 13px no-repeat;}
+.classic-font li{float:left;width:233px;text-align:left;border-bottom:1px dashed #e8e8e8;padding:12px 0px 8px 35px;font-size:14px;color:#5C6B80;}
+.classic-font a{color:#999; text-decoration:none;}
+.classic-font a:hover{color:#f60; text-decoration:underline;}
+.classic-video{width:268px;}
+.classic-video li{float:left;width:120px;height:115px;margin-top:15px;overflow:hidden;font-size:14px;}
+.classic1{margin-right:28px;}
+.classic-video img{margin-bottom:0px;}
+.classic-video img{margin-bottom:7px\9;}
+.classic-video img{*margin-bottom:7px;}
+.classic-video img{_margin-bottom:7px;}
+
+/*沙龙视频图片*/
+.classic-video-pic{width:678px;overflow:hidden;}
+.classic-video-pic p{width:678px;margin:20px auto; text-align:left;font-size:14px; text-indent:2em; line-height:24px;}
+.classic-video-pic ul{width:678px;margin:50px auto 20px auto;}
+.classic-video-pic li{float:left;width:678px; text-align:left;font-size:14px;color:#5B6D83; white-space:nowrap;overflow:hidden;margin-top:10px;}
+.classic-video-pic a{color:#f60; text-decoration:none;}
+.classic-video-pic a:hover{color:#f60; text-decoration:underline;}
+/*沙龙视频小图片*/
+.small-video{width:678px;overflow:hidden;margin-top:36px;}
+.small-video-botton{float:left;width:89px;margin-top:40px;cursor:pointer;}
+.small-video-botton2{float:right;width:89px;margin-top:40px;cursor:pointer;}
+.small-video-img{float:left;width:465px;padding-left:35px;}
+.small-video-img li{float:left;width:120px;overflow:hidden;margin-right:35px;}
+
+/*沙龙视频搜索*/
+.classic-search{wdith:568px;margin-top:15px;padding-left:118px;}
+.classic-search li{float:left;font-size:14px; line-height:32px;}
+.classic-search li input{width:200px;border:1px solid #ddd;padding:6px 0px 4px 5px;}
+.classic-search li.ppk input{width:71px;height:28px;border:none;padding:0px 10px 0px 5px; outline:none;}
+.classic-search img{padding:0 15px;}
+/*三级页面-----------------------------线下沙龙------------------------------------*/
+.line-pic-video{width:980px;}/*height:346px;*/
+.line-pic{float:left;width:484px;}
+.line-video{float:right;width:484px;}
+/*线下沙线图片及视频*/
+.line-font{width:480px;}
+.line-font dl{float:left;width:480px;margin:15px auto;padding:0px;}
+.line-font dl dt{float:left;width:126px;margin:0px auto;padding:0px;}
+.line-font dl dt img{width:120px;height:90px;overflow:hidden;padding:2px;border:1px solid #ccc;}
+.line-font dl dd{float:right;width:342px;margin:0px auto;padding:0px;text-align:left;color:#999; line-height:24px;}
+.line-font dl dd a{font-size:14px;color:#f60; text-decoration:none;}
+.line-font dl dd a:hover{font-size:14px;color:#f60; text-decoration:underline;}
+.line-font ul{float:left;width:480px;height:164px;background:url(../images/classic-icon.png) 10px 13px no-repeat;}
+.line-font li{float:left;width:450px;height:20px;text-align:left;border-bottom:1px dashed #e8e8e8;padding:12px 0px 8px 35px;font-size:14px;color:#5C6B80;}
+.line-font a{color:#999; text-decoration:none;}
+.line-font a:hover{color:#f60; text-decoration:underline;}
+.line-video-pic{width:450px;padding-left:30px;}
+.line-video li{float:left;width:120px;height:115px;margin-right:30px;margin-top:30px;overflow:hidden;font-size:14px;}
+.line-video img{margin-bottom:0px;}
+.line-video img{margin-bottom:7px\9;}
+.line-video img{*margin-bottom:7px;}
+.line-video img{_margin-bottom:7px;}
+
+/*线下沙龙已报名参加活动的用户*/
+.line-images{width:300px;padding-left:10px;}
+.line-images li{float:left;width:48px;height:72px;margin:15px 20px 0px auto;}
+.line-images img{margin-bottom:0px;}
+.line-images img{margin-bottom:7px\9;}
+.line-images img{*margin-bottom:6px;}
+.line-images img{_margin-bottom:6px;}
+/*线下沙龙大图片文字*/
+.line-part{width:980px;}
+.line-part h3{width:980px;margin-top:10px;padding:7px 0px 5px 0px;font-size:16px;color:#fff;}
+.line-h-bg1{background:#FB812C;}
+.line-h-bg2{background:#5A6D83;}
+.line-h-bg3{background:#8a8a8a;}
+.line-part dl{width:980px;height:246px;overflow:hidden;}
+
+.line-dl1 dt{float:left;width:326px;height:246px;margin:0px;padding:0px;}
+.line-dl1 dd{float:right;width:640px;margin:0px;line-height:24px; text-indent:2em;}
+.line-dl2 dt{float:right;width:326px;height:246px;margin:0px;padding:0px;}
+.line-dl2 dd{float:left;width:640px;margin:0px;line-height:24px; text-indent:2em;}
+.line-part dt img{padding:2px;border:1px solid #ccc;}
+.line-dd1{color:#999;padding-bottom:10px;}
+.line-dd2{ text-align:left;}
+
+
+
+
+
+
+
+
+
+

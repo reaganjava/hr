@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="salonInfoDto" type="com.dotoyo.buildjob.innovationSalon.dto.SalonInfoDto"/>
+ 	<typeAlias alias="salonSearchVo" type="com.dotoyo.buildjob.innovationSalon.vo.SalonSearchVo"/>
+
+ <!-- **********************************************************************************
+   Module:  Salon
+   Function: add salon information
+   Date：2011-01-06
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<insert id="addSalonInfo" parameterClass="salonInfoDto">
+ 		     <![CDATA[insert into T_SALON_SALONINFO(
+ 		     salonType,
+ 		     subject,
+             content,
+             startDate,
+             endDate,
+             compere,
+ 			 sponsor,
+ 			 location,
+ 			 isExcellent,
+ 			 subjectPic,
+             audiFlag,
+             browseCount,
+             reputationCount,
+			 schlussgruppeCount,
+			 addDate) values(
+             #salonType#,
+ 		     #subject#,
+             #content#,
+             #startDate#,
+             #endDate#,
+             #compere#,
+ 			 #sponsor#,
+ 			 #location#,
+ 			 #isExcellent#,
+ 			 #subjectPic#,
+             #audiFlag#,
+             #browseCount#,
+             #reputationCount#,
+			 #schlussgruppeCount#,
+			 now())]]>
+		 <selectKey resultClass="Long" keyProperty="id">
+		  <![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+        </selectKey>
+ 	</insert>
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: update salon information
+   Date：2011-01-25
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	<update id="updateSalonInfo" parameterClass="salonInfoDto">
+		update T_SALON_SALONINFO
+		set subject = #subject#,content = #content#,startDate = #startDate#,endDate = #endDate#,sponsor = #sponsor#,
+			location = #location#,isExcellent = #isExcellent#
+			<isNotEmpty property="subjectPic">
+				,subjectPic = #subjectPic#
+			</isNotEmpty>
+			<isNotEmpty property="audiFlag">
+				,audiFlag = #audiFlag#
+			</isNotEmpty>
+		where id = #id#
+	</update>
+
+	 <!-- **********************************************************************************
+   Module:  Salon
+   Function: delete salon information
+   Date：2011-01-25
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	<delete id="deleteSalonInfo" parameterClass="java.lang.String">
+		DELETE FROM T_SALON_SALONINFO WHERE id in($id$)
+	</delete>
+
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon information list for salon home page
+   Date：2011-01-06
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="querySalonInfoList" resultClass="salonInfoDto" parameterClass="java.util.Map">
+ 		select
+ 		     id,
+ 		     salonType,
+ 		     subject,
+             content,
+             startDate,
+             endDate,
+             compere,
+ 			 sponsor,
+ 			 location,
+ 			 isExcellent,
+ 			 subjectPic,
+             audiFlag,
+             browseCount,
+             reputationCount,
+			 schlussgruppeCount
+ 		  from T_SALON_SALONINFO where audiFlag = 1
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="isExcellent">
+				(isExcellent = #isExcellent#)
+			</isNotEmpty>
+ 		  	<isNotEmpty prepend="and" property="isExcellent">
+				<![CDATA[DATE_FORMAT(startDate,'%Y-%m-%d') <= DATE_FORMAT(now(),'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="salonType">
+				(salonType = #salonType#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[DATE_FORMAT(endDate,'%Y-%m-%d') = DATE_FORMAT(#endDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pendingDate">
+				<![CDATA[DATE_FORMAT(endDate,'%Y-%m-%d') >= DATE_FORMAT(#pendingDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pendingDate">
+				<![CDATA[DATE_FORMAT(startDate,'%Y-%m-%d') <= DATE_FORMAT(#pendingDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+		   </dynamic>
+		   and  <![CDATA[DATE_FORMAT(endDate,'%Y-%m-%d') >= DATE_FORMAT(now(),'%Y-%m-%d')]]>
+ 		  order by addDate desc
+ 	</select>
+
+<!-- **********************************************************************************
+   Module:  Salon
+   Function: get old salon information list for salon home page
+   Date：2011-01-07
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="queryOldSalonInfoList" resultClass="salonInfoDto" parameterClass="java.util.Map">
+ 		<![CDATA[	select
+ 		     id,
+ 		     salonType,
+ 		     subject,
+             content,
+             startDate,
+             endDate,
+             compere,
+ 			 sponsor,
+ 			 location,
+ 			 isExcellent,
+ 			 subjectPic,
+             audiFlag,
+             browseCount,
+             reputationCount,
+			 schlussgruppeCount
+ 		  from T_SALON_SALONINFO where audiFlag = 1 and DATE_FORMAT(endDate,'%Y-%m-%d') < DATE_FORMAT(#currentDate#,'%Y-%m-%d') order by endDate desc
+ 	  ]]>
+ 	</select>
+
+
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: get hot salon information list
+   Date：2011-01-11
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="queryHotSalonInfoList" resultClass="salonInfoDto" parameterClass="java.util.Map">
+ 	<![CDATA[	select
+ 		     id,
+ 		     salonType,
+ 		     subject,
+             content,
+             startDate,
+             endDate,
+             compere,
+ 			 sponsor,
+ 			 location,
+ 			 isExcellent,
+ 			 subjectPic,
+             audiFlag,
+             browseCount,
+             reputationCount,
+			 schlussgruppeCount
+ 		  from T_SALON_SALONINFO where audiFlag = 1 and salonType = #salonType# and
+		  DATE_FORMAT(endDate,'%Y-%m-%d') >= DATE_FORMAT(now(),'%Y-%m-%d')
+		  order by browseCount desc,endDate
+ 	  ]]>
+ 	</select>
+
+   <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon detail information
+   Date：2011-01-11
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	<select id="getSalonInfoById" parameterClass="java.lang.Long" resultClass="salonInfoDto">
+		select
+ 		     s.id,
+ 		     s.salonType,
+ 		     s.subject,
+             s.content,
+             s.startDate,
+             s.endDate,
+             s.compere,
+ 			 s.sponsor,
+ 			 s.location,
+ 			 s.isExcellent,
+ 			 s.subjectPic,
+             s.audiFlag,
+             s.browseCount,
+             s.reputationCount,
+			 s.schlussgruppeCount,
+			 s.content,
+			 u.userName
+ 		  from T_SALON_SALONINFO s,T_LOGIN_USER u where s.compere = u.id
+          and s.id=#id#
+	</select>
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: update salon browse、comment count
+   Date：2011-01-11
+   Author Bill Xu
+  ********************************************************************************** -->
+	<update id="updateSalonForCount" parameterClass="java.util.Map">
+		UPDATE T_SALON_SALONINFO s
+		        SET s.reputationCount=s.reputationCount+#reputationCount#,
+		            s.schlussgruppeCount=s.schlussgruppeCount+#schlussgruppeCount#,
+		            s.browseCount=s.browseCount+#browseCount#
+		 where s.id=#id#
+	</update>
+
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon information list for search
+   Date：2011-01-18
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="searchSalonInfoList" resultClass="salonInfoDto" parameterClass="salonSearchVo">
+ 		select
+ 		     s.id,
+ 		     s.salonType,
+ 		     s.subject,
+             s.content,
+             s.startDate,
+             s.endDate,
+             s.compere,
+ 			 s.sponsor,
+ 			 s.location,
+ 			 s.isExcellent,
+ 			 s.subjectPic,
+             s.audiFlag,
+             s.browseCount,
+             s.reputationCount,
+			 s.schlussgruppeCount,
+			 u.userName
+ 		  from T_SALON_SALONINFO s,T_LOGIN_USER u where s.compere = u.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="subject">
+				(s.subject like concat("%",#subject#,"%"))
+			</isNotEmpty>
+			 <isNotEmpty prepend="and" property="sponsor">
+				(s.sponsor like concat("%",#sponsor#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="location">
+				(s.location like concat("%",#location#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userName">
+				(u.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="content">
+				(u.userName like concat("%",#content#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="salonType">
+				(s.salonType = #salonType#)
+			</isNotEmpty>
+		    <isNotEmpty prepend="and" property="isExcellent">
+				(s.isExcellent = #isExcellent#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="compere">
+				(s.compere = #compere#)
+			</isNotEmpty>
+		     <isNotEmpty prepend="and" property="startDate">
+		     <![CDATA[DATE_FORMAT(s.startDate,'%Y-%m-%d') >= DATE_FORMAT(#startDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[DATE_FORMAT(s.endDate,'%Y-%m-%d') <= DATE_FORMAT(#endDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pendingDate">
+				<![CDATA[DATE_FORMAT(s.endDate,'%Y-%m-%d') >= DATE_FORMAT(#pendingDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pendingDate">
+				<![CDATA[DATE_FORMAT(s.startDate,'%Y-%m-%d') <= DATE_FORMAT(#pendingDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="sponsor">
+				(s.sponsor like concat("%",#sponsor#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(s.audiFlag = #status#)
+			</isNotEmpty>
+
+		   </dynamic>
+ 		  order by s.startDate desc
+ 	</select>
+
+ 	<select id="searchSalonInfoListCount" resultClass="java.lang.Integer" parameterClass="salonSearchVo">
+ 		select
+ 		    count(*)
+ 		  from T_SALON_SALONINFO s,T_LOGIN_USER u where s.compere = u.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="subject">
+				(s.subject like concat("%",#subject#,"%"))
+			</isNotEmpty>
+			 <isNotEmpty prepend="and" property="sponsor">
+				(s.sponsor like concat("%",#sponsor#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="location">
+				(s.location like concat("%",#location#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userName">
+				(u.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="content">
+				(u.userName like concat("%",#content#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="salonType">
+				(s.salonType = #salonType#)
+			</isNotEmpty>
+		    <isNotEmpty prepend="and" property="isExcellent">
+				(s.isExcellent = #isExcellent#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="compere">
+				(s.compere = #compere#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="startDate">
+		     <![CDATA[DATE_FORMAT(s.startDate,'%Y-%m-%d') >= DATE_FORMAT(#startDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[DATE_FORMAT(s.endDate,'%Y-%m-%d') <= DATE_FORMAT(#endDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pendingDate">
+				<![CDATA[DATE_FORMAT(s.endDate,'%Y-%m-%d') >= DATE_FORMAT(#pendingDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pendingDate">
+				<![CDATA[DATE_FORMAT(s.startDate,'%Y-%m-%d') <= DATE_FORMAT(#pendingDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="sponsor">
+				(s.sponsor like concat("%",#sponsor#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(s.audiFlag = #status#)
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+
+ <!-- **********************************************************************************
+   Module:  personal center
+   Function: get salon information list by user
+   Date：2011-01-25
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="querySalonListByUserId" resultClass="salonInfoDto" parameterClass="java.util.Map">
+ 		select
+ 		     s.id,
+ 		     s.salonType,
+ 		     s.subject,
+             s.content,
+             s.startDate,
+             s.endDate,
+             s.compere,
+ 			 s.sponsor,
+ 			 s.location,
+ 			 s.isExcellent,
+ 			 s.subjectPic,
+             s.audiFlag,
+             s.browseCount,
+             s.reputationCount,
+			 s.schlussgruppeCount,
+			 u.userName
+ 		  from T_SALON_SALONINFO s,T_LOGIN_USER u where s.compere = u.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="userId">
+				(s.compere = #userId#)
+			</isNotEmpty>
+		  	<isNotEmpty prepend="and" property="salonType">
+				(s.salonType = #salonType#)
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by startDate desc
+ 	</select>
+
+ 	<select id="querySalonListByUserIdCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+ 		    count(*)
+ 		  from T_SALON_SALONINFO s,T_LOGIN_USER u where s.compere = u.id
+ 		    <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="userId">
+				(s.compere = #userId#)
+			</isNotEmpty>
+		  	<isNotEmpty prepend="and" property="salonType">
+				(s.salonType = #salonType#)
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+
+ <!-- administrator module-->
+  <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: audition salon
+   Date：2011-02-17
+   Author Bill Xu
+  ********************************************************************************** -->
+	<update id="autiSalon" parameterClass="java.util.Map">
+		UPDATE T_SALON_SALONINFO s SET s.audiFlag=#audiFlag# where s.id in($ids$)
+	</update>
+
+ <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: set salon
+   Date：2011-02-17
+   Author Bill Xu
+  ********************************************************************************** -->
+	<update id="setExcellentSalon" parameterClass="java.util.Map">
+		UPDATE T_SALON_SALONINFO s SET s.isExcellent=#isExcellent# where s.id in($ids$)
+	</update>
+ </sqlMap>

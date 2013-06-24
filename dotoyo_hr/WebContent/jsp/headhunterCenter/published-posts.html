@@ -1,0 +1,534 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大太阳建筑猎头--猎头中心--发布职位</title>
+<link href="../../css/index-style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/head.css" rel="stylesheet" type="text/css" />
+<script src="../../javascripts/common/jquery.js"></script>
+<script src="../../javascripts/common/select.js"></script>
+<script src="../../javascripts/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+function changeMenu(obj)
+{
+	for(var i=1;i<=8;i++)
+	{
+		$("#menu0"+i).attr("class","nav-on");
+	}
+	
+	$(obj).attr("class","nav-out");
+}
+</script>
+</head>
+<body>
+<div class="top">
+	<div class="logo1"><img src="../../images/logo.png" width="152" height="88" alt="中国建筑平台"/></div>
+    <div class="logo2"><a href="#"><img src="../../images/logo2.png" width="147" height="55" alt="猎头，甄别模下的人才交流"/></a></div>
+    <div class="top-right">
+    	<div class="top-add"><a href="#"><img src="../../pic/top-add.jpg" width="612" height="82" /></a></div>
+        <div class="top-font">
+        	<ul>
+            	<li><a href="#">大太阳公益</a></li>
+                <li><a href="#">在线培训</a></li>
+                <li><a href="#">在线客服</a></li>
+                <li><a href="#">在线帮助</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="nav">
+	<ul>
+    	<li class="nav-on" id="menu01" onmouseover="changeMenu(this)"><a href="../../index.html">首页</a></li>
+        <li class="nav-out" id="menu02" onmouseover="changeMenu(this)"><a href="../headhunterCenter/head.html">猎头中心</a></li>
+        <li class="nav-on" id="menu03" onmouseover="changeMenu(this)"><a href="../applyJobCenter/people.html">人才中心</a></li>
+        <li class="nav-on" id="menu04" onmouseover="changeMenu(this)"><a href="../peopleExcavate/excavate.html">人才挖掘</a></li>
+        <li class="nav-on" id="menu05" onmouseover="changeMenu(this)"><a href="../certificateCenter/certificate.html">猎证中心</a></li>
+        <li class="nav-on" id="menu06" onmouseover="changeMenu(this)"><a href="../innovationPark/park.html">创业园</a></li>
+        <li class="nav-on" id="menu07" onmouseover="changeMenu(this)"><a href="../wisdomChina/china.html">智慧中国</a></li>
+        <li class="nav-on" id="menu08" onmouseover="changeMenu(this)"><a href="../innovationSalon/salon.html">创业沙龙</a></li>
+    </ul>
+</div>
+<!--以上为头部分-->
+<!--搜索-->
+<div class="head-ss">
+    	<div class="ss-left">
+        	<div class="ss-zhiwei">
+            	<ul>
+                	<li class="ss0">行业：</li>
+                	<li class="ss1"><img src="../../images/search-down.png" width="21" height="22" />
+               	    <input name="" type="text" value="选择行业类别"/></li>
+                    <li class="ss0">地区：</li>
+                    <li class="ss2"><img src="../../images/search-down.png" width="21" height="22" /><input name="" type="text" value="广东省"/></li>
+                    <li class="ss2"><img src="../../images/search-down.png" width="21" height="22" /><input name="" type="text" value="深圳市"/></li>
+                    <li class="ss2"><img src="../../images/search-down.png" width="21" height="22" /><input name="" type="text" value="南山区"/></li>
+                    <li class="ss0">职能：</li>
+                	<li class="ss1"><img src="../../images/search-down.png" width="21" height="22" />
+               	    <input name="" type="text" value="选择职能类别"/></li>
+                    <li class="ss3"><input name="" type="text" value="输入关键字"/></li>
+                </ul>
+            </div>
+            <div class="ss-botton">
+            	<a href="#"><img src="../../images/head-search.png" width="77" height="28" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#"><img src="../../images/head-search2.png" width="77" height="28" /></a>
+                <a href="#"><img src="../../images/head-search3.png" width="77" height="28" /></a>
+            </div>
+        </div>
+        <div class="ss-right"><a href="published-posts.html"><img src="../../images/head-search4.png" width="91" height="28" alt="发布职位"/></a></div>
+    </div>
+<!--选择~绝对定位~-->
+<div class="moban-down" id="showMenuID">
+	<!--基本信息-->
+     <div class="moban-down1" id="searchDown1" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">注册化工工程师</a></li>
+              <li><a href="#">注册化工工程师</a></li>
+              <li><a href="#">注册电气工程师</a></li>
+              <li><a href="#">注册安全工程师</a></li>
+              <li><a href="#">一级注册建筑师</a></li>
+              <li><a href="#">注册环保工程师</a></li>
+              <li><a href="#">一级建造师</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down2" id="searchDown2" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+              <li><a href="#">监理和工程咨询</a></li>
+              <li><a href="#">建材设备厂商</a></li>
+              <li><a href="#">施工及装饰</a></li>
+              <li><a href="#">房地产及物业</a></li>
+              <li><a href="#">工程管理</a></li>
+              <li><a href="#">勘察设计</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down3" id="searchDown3" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">测量/测绘员">测量/测绘员</a></li>
+              <li><a href="#">注册化工工程师</a></li>
+              <li><a href="#">注册电气工程师</a></li>
+              <li><a href="#">注册安全工程师</a></li>
+              <li><a href="#">一级注册建筑师</a></li>
+              <li><a href="#">注册环保工程师</a></li>
+              <li><a href="#">一级建造师</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down4" id="searchDown4" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">水利水电机电设备安装工程</a></li>
+              <li><a href="#">注册化工工程师</a></li>
+              <li><a href="#">注册电气工程师</a></li>
+              <li><a href="#">注册安全工程师</a></li>
+              <li><a href="#">一级注册建筑师</a></li>
+              <li><a href="#">注册环保工程师</a></li>
+              <li><a href="#">一级建造师</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down5" id="searchDown5" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down6" id="searchDown6" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">否</a></li>
+              <li><a href="#">是</a></li>
+              <li><a href="#">是</a></li>
+              <li><a href="#">是</a></li>
+              <li><a href="#">是</a></li>
+              <li><a href="#">是</a></li>
+              <li><a href="#">是</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down7" id="searchDown7" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">湖南省</a></li>
+              <li><a href="#">湖南省</a></li>
+              <li><a href="#">湖南省</a></li>
+              <li><a href="#">湖南省</a></li>
+              <li><a href="#">湖南省</a></li>
+              <li><a href="#">湖南省</a></li>
+              <li><a href="#">湖南省</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down7" id="searchDown8" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">邵阳市</a></li>
+              <li><a href="#">邵阳市</a></li>
+              <li><a href="#">邵阳市</a></li>
+              <li><a href="#">邵阳市</a></li>
+              <li><a href="#">邵阳市</a></li>
+              <li><a href="#">邵阳市</a></li>
+              <li><a href="#">邵阳市</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down7" id="searchDown9" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">双清区</a></li>
+              <li><a href="#">双清区</a></li>
+              <li><a href="#">双清区</a></li>
+              <li><a href="#">双清区</a></li>
+              <li><a href="#">双清区</a></li>
+              <li><a href="#">双清区</a></li>
+              <li><a href="#">双清区</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down8" id="searchDown10" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">10000-50000万</a></li>
+              <li><a href="#">10000-50000万</a></li>
+              <li><a href="#">10000-50000万</a></li>
+              <li><a href="#">10000-50000万</a></li>
+              <li><a href="#">10000-50000万</a></li>
+              <li><a href="#">10000-50000万</a></li>
+              <li><a href="#">10000-50000万</a></li>
+		  </ul>
+     </div> 
+     <!--具体要求-->
+     <div class="moban-down6" id="searchDown11" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">男</a></li>
+              <li><a href="#">女</a></li>
+              <li><a href="#">女</a></li>
+              <li><a href="#">女</a></li>
+              <li><a href="#">女</a></li>
+              <li><a href="#">女</a></li>
+              <li><a href="#">女</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down8" id="searchDown12" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">不限制</a></li>
+              <li><a href="#">博士以上</a></li>
+              <li><a href="#">博士以上</a></li>
+              <li><a href="#">博士以上</a></li>
+              <li><a href="#">博士以上</a></li>
+              <li><a href="#">博士以上</a></li>
+              <li><a href="#">博士以上</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down8" id="searchDown13" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">5-10年</a></li>
+              <li><a href="#">5-10年</a></li>
+              <li><a href="#">5-10年</a></li>
+              <li><a href="#">5-10年</a></li>
+              <li><a href="#">5-10年</a></li>
+              <li><a href="#">5-10年</a></li>
+              <li><a href="#">5-10年</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down8" id="searchDown14" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">英语8级以上</a></li>
+              <li><a href="#">英语8级以上</a></li>
+              <li><a href="#">英语8级以上</a></li>
+              <li><a href="#">英语8级以上</a></li>
+              <li><a href="#">英语8级以上</a></li>
+              <li><a href="#">英语8级以上</a></li>
+              <li><a href="#">英语8级以上</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down5" id="searchDown15" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">熟练</a></li>
+              <li><a href="#">熟练</a></li>
+              <li><a href="#">熟练</a></li>
+              <li><a href="#">熟练</a></li>
+              <li><a href="#">熟练</a></li>
+              <li><a href="#">熟练</a></li>
+              <li><a href="#">熟练</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down5" id="searchDown16" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">精通</a></li>
+              <li><a href="#">精通</a></li>
+              <li><a href="#">精通</a></li>
+              <li><a href="#">精通</a></li>
+              <li><a href="#">精通</a></li>
+              <li><a href="#">精通</a></li>
+              <li><a href="#">精通</a></li>
+		  </ul>
+     </div>
+     <!--职位过滤条件-->
+     <div class="moban-down2" id="searchDown17" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">监理和工程咨询</a></li>
+              <li><a href="#">建材设备厂商</a></li>
+              <li><a href="#">施工及装饰</a></li>
+              <li><a href="#">房地产及物业</a></li>
+              <li><a href="#">工程管理</a></li>
+              <li><a href="#">勘察设计</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down4" id="searchDown18" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">水利水电机电设备安装工程</a></li>
+              <li><a href="#">注册化工工程师</a></li>
+              <li><a href="#">注册电气工程师</a></li>
+              <li><a href="#">注册安全工程师</a></li>
+              <li><a href="#">一级注册建筑师</a></li>
+              <li><a href="#">注册环保工程师</a></li>
+              <li><a href="#">一级建造师</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down5" id="searchDown19" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+              <li><a href="#">全职</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down8" id="searchDown20" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">不限制</a></li>
+              <li><a href="#">博士以上</a></li>
+              <li><a href="#">博士以上</a></li>
+              <li><a href="#">博士以上</a></li>
+              <li><a href="#">博士以上</a></li>
+              <li><a href="#">博士以上</a></li>
+              <li><a href="#">博士以上</a></li>
+		  </ul>
+     </div>
+     <div class="moban-down6" id="searchDown21" onmouseleave="menuHide(this)" style="display:none;">
+    	  <ul>
+			  <li><a href="#">男</a></li>
+              <li><a href="#">女</a></li>
+              <li><a href="#">女</a></li>
+              <li><a href="#">女</a></li>
+              <li><a href="#">女</a></li>
+              <li><a href="#">女</a></li>
+              <li><a href="#">女</a></li>
+		  </ul>
+     </div>
+</div>
+<!--中间部分-->    
+<div class="head-jobs">
+    	<div class="head-jobs-top">
+            <div class="jobs-title jobs-title-bg1"><strong>基本信息</strong></div>
+            <div class="fbzw-box">
+					<div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0"><em>*</em>职位名称：</li>
+                            <li class="fbzw5"><input name="" type="text" value="输入职位名称"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div2">
+                        <ul>
+                            <li class="fbzw0"><em>*</em>行业类型：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border2', '#searchDown2')" />
+                                <input id="border2" name="" type="text" value="请选择行业类型"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0">职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;能：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border3', '#searchDown3')" /><input id="border3" name="" type="text" value="请选择职能"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div2">
+                        <ul>
+                            <li class="fbzw0"><em>*</em>专业类型：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border4', '#searchDown4')" /><input id="border4" name="" type="text" value="请选择目标职能"/></li>  
+                        </ul>
+                    </div>
+                    <div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0"><em>*</em>工作性质：</li>
+                            <li class="fbzw2"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border5', '#searchDown5')" /><input id="border5" name="" type="text" value="全职"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div2">
+                        <ul>
+                            <li class="fbzw0"><em>*</em>顾&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;问：</li>
+                            <li class="fbzw6"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border6', '#searchDown6')" /><input id="border6" name="" type="text" value="否"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0"><em>*</em>招聘人数：</li>
+                            <li class="fbzw5"><input name="" type="text" value="输入职位名称"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div2">
+                        <ul>
+                            <li class="fbzw0"><em>*</em>工作地区：</li>
+                            <li class="fbzw2"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border7', '#searchDown7')" /><input id="border7" name="" type="text" value="省份"/></li>
+                            <li class="fbzw2"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border8', '#searchDown8')" /><input id="border8" name="" type="text" value="城市"/></li>
+                            <li class="fbzw2"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border9', '#searchDown9')" /><input id="border9" name="" type="text" value="城区"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0">月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;薪：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border10', '#searchDown10')" /><input id="border10" name="" type="text" value="10000-5000万"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div2">
+                        <ul>
+                            <li class="fbzw0">关键字：</li>
+                            <li class="fbzw5">
+                                <input name="" type="text" value="请输入关键字"/></li>
+                        </ul>
+                    </div>          
+        	</div> 
+          <div class="jobs-title jobs-title-bg2"><strong>具体要求</strong></div>
+          <div class="fbzw-box">
+				<div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</li>
+                            <li class="fbzw5"><input name="" type="text" value="输入职位名称"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div2">
+                        <ul>
+                            <li class="fbzw0">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</li>
+                            <li class="fbzw6"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border11', '#searchDown11')" /><input id="border11" name="" type="text" value="女"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0">学历要求：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border12', '#searchDown12')" /><input id="border12" name="" type="text" value="博士以上"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div2">
+                        <ul>
+                            <li class="fbzw0">工作年限：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border13', '#searchDown13')" /><input id="border13" name="" type="text" value="请选择"/></li>  
+                        </ul>
+                    </div>
+                    <div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0">语言能力：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border14', '#searchDown14')" /><input id="border14" name="" type="text" value="英语"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div2">
+                        <ul>
+                            <li class="fbzw0">掌握程度：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border15', '#searchDown15')" /><input id="border15" name="" type="text" value="请选择"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0">计算机能力：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border16', '#searchDown16')" /><input id="border16" name="" type="text" value="精通"/></li>
+                        </ul>
+                    </div>   
+        	</div>   
+          <div class="jobs-middle2">
+            	<ul> 	 		
+                    <li class="jobs5"><em>*</em>岗位职责&nbsp;&nbsp;<textarea name="" cols="" rows=""></textarea></li>
+                    <li class="jobs5"><em>*</em>任职要求&nbsp;&nbsp;<textarea name="" cols="" rows=""></textarea></li>
+                </ul>
+            </div>
+          <div class="jobs-title jobs-title-bg3"><strong>发布设置</strong></div>
+          <div class="jobs-fb">
+               <ul>
+                   <li class="jobs7"><em>*</em>发布日期：<input  id="jobIssuetDate" name="jobInfo.jobIssuetDate" type="text" size="12"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd',errDealMode:1,minDate:'%y-%M-{%d}'})"/></li>
+                   <li class="jobs7"><em>*</em>发布日期：<input  id="jobIssuetDate" name="jobInfo.jobIssuetDate" type="text" size="12"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd',errDealMode:1,minDate:'%y-%M-{%d}'})"/></li>
+                   <li class="jobs7"><em>*</em>有效日期：<input  id="jobIssuetDate" name="jobInfo.jobIssuetDate" type="text" size="12"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd',errDealMode:1,minDate:'%y-%M-{%d}'})"/></li>
+                   <li class="jobs7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至：<input  id="jobIssuetDate" name="jobInfo.jobIssuetDate" type="text" size="12" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',errDealMode:1,minDate:'%y-%M-{%d}'})"/></li>
+               </ul>
+      	</div>
+          <div class="jobs-middle2">
+            	<ul> 	 		
+                    <li class="jobs5"><em>*</em>岗位职责&nbsp;&nbsp;<textarea name="" cols="" rows=""></textarea></li>
+                    <li class="jobs5"><em>*</em>任职要求&nbsp;&nbsp;<textarea name="" cols="" rows=""></textarea></li>
+                </ul>
+            </div>
+          <div class="jobs-title jobs-title-bg3"><strong>职位过滤条件</strong></div>
+          <div class="fbzw-box">
+          			<div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0">行业类型：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border17', '#searchDown17')" />
+                                <input id="border17" name="" type="text" value="请选择行业类型"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div2">
+                        <ul>
+                            <li class="fbzw0">专业类型：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border18', '#searchDown18')" />
+                                <input id="border18" name="" type="text" value="请选择专业类型"/></li>
+                        </ul>
+                    </div>
+					<div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0">专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;长：</li>
+                            <li class="fbzw5"><input name="" type="text" value="输入专长关键字"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div2">
+                        <ul>
+                            <li class="fbzw0">工作性质：</li>
+                            <li class="fbzw2"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border19', '#searchDown19')" /><input id="border19" name="" type="text" value="全职"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0">工作年限：</li>
+                            <li class="fbzw3">小于&nbsp;&nbsp;</li>
+                            <li class="fbzw4"><input name="" type="text" value="100"/></li>
+                            <li class="fbzw3">大于&nbsp;&nbsp;</li>
+                            <li class="fbzw4"><input name="" type="text" value="100"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div2">
+                        <ul>
+                            <li class="fbzw0">最低学历：</li>
+                            <li class="fbzw1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border20', '#searchDown20')" />
+                                <input id="border20" name="" type="text" value="不限"/></li>
+                        </ul>
+                    </div>
+                    <div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</li>
+                            <li class="fbzw6"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border21', '#searchDown21')" /><input id="border21" name="" type="text" value="女"/></li>  
+                        </ul>
+                    </div>
+                    <div class="fbzw-div">
+                        <ul>
+                            <li class="fbzw0">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</li>
+                            <li class="fbzw3">小于&nbsp;&nbsp;</li>
+                            <li class="fbzw4"><input name="" type="text" value="100"/></li>
+                            <li class="fbzw3">大于&nbsp;&nbsp;</li>
+                            <li class="fbzw4"><input name="" type="text" value="100"/></li>
+                        </ul>
+                    </div>
+        	</div>
+          
+          <div class="head-jobs-botton"><a href="#"><img src="../../images/head-jobs-botton1.png" width="109" height="32" /></a><input name="" type="image" src="../../images/head-jobs-botton2.png" /><a href="#"><img src="../../images/head-jobs-botton4.png" width="109" height="32" /></a><a href="#"><img src="../../images/head-jobs-botton3.png" width="79" height="32" /></a><a href="#"><img src="../../images/head-jobs-botton5.png" width="79" height="32" /></a></div>
+      	</div>
+      	<div class="wenxin-box">
+      	   <div class="wenxin">
+           		<p class="wenxin1">您发布的招聘信息需要建筑猎头人才网审核通过后，求职者才能搜索到。审核时间间隔一般在2小时左右，节假日除外。如需立即审核，您可致电0755－98898989或联系您你的客户服务专员。</p>
+                <p class="wenxin2">为了保障供求双方建筑猎头人才网的权益，请您在发布招聘信息时遵守国家相关法律法规，不得发布虚假招聘信息，不得代其它单位招聘。</p>
+                <p class="wenxin3">招聘单位违反国家法律法规的，建筑猎头人才网有权立即停止您在本网所有服务，且不予退款。</p>
+           </div>
+    	</div>  
+    </div>
+
+<!--底部分-->
+<div class="add"><a href="#"><img src="../../pic/bottom-add.png" width="980" height="77" /></a></div>
+<div class="bottom">
+	<a href="#">关于我们</a>|
+    <a href="#">免费注册</a>|
+    <a href="#">用户中心</a>|
+    <a href="#">法律声明</a>|
+    <a href="#">意见反馈</a>|
+    <a href="#">设为首页</a><br />
+    深圳大太阳网络科技有限公司&nbsp;&nbsp;&nbsp;&nbsp;粤ICP证号：888888号&nbsp;&nbsp;&nbsp;&nbsp;网络安全证书：4403100920657
+</div>
+<div class="bottom-links"><a href="#"><img src="../../images/bottom-logo1.png" width="108" height="42" alt="公共信息安全网络监察"/></a><a href="#"><img src="../../images/bottom-logo2.png" width="108" height="42"  alt="经营性网站备案信息"/></a><a href="#"><img src="../../images/bottom-logo3.png" width="108" height="42" alt="不良信息举报中心"/></a></div>
+</body>
+</html>

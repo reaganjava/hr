@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="hotCertDto" type="com.dotoyo.buildjob.certificateCenter.dto.HotCertDto" />
+	<typeAlias alias="hotCertVo" type="com.dotoyo.buildjob.certificateCenter.vo.HotCertVo" />
+	
+	<resultMap class="hotCertVo" id="get-hotCertList-result">
+		<result property="id" column="id"/>
+		<result property="hotCert" column="certCode" select="getClassMasterByCode"/>
+	</resultMap>
+
+<!-- ********************************************************************************** 
+        模块:    猎证中心
+        功能:    增加热门证书
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-27    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveHotCert" parameterClass="hotCertDto">
+		INSERT INTO
+		t_certctr_hotcert
+			(certCode)
+		values
+			(#certCode#)
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:    猎证中心
+        功能:    删除热门证书
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-27    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteHotCert" parameterClass="java.lang.Long">
+		DELETE FROM
+		t_certctr_hotcert
+		WHERE
+			id = #id#
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:    猎证中心
+        功能:    查询热门证书列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-27    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryHotCertList" resultMap="get-hotCertList-result">
+		SELECT
+			id,certCode
+		FROM
+		t_certctr_hotcert
+	</select>
+</sqlMap>

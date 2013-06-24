@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="backGroupMusicDto" type="com.dotoyo.buildjob.systemManage.dto.BackgroupMusicDto"/>
+<!-- ********************************************************************************** 
+        模块:    系统管理，背景音乐管理
+        功能:    删除背景音乐
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-6    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteBackgroupMusic" parameterClass="backGroupMusicDto">
+		DELETE FROM t_comm_backgroup_music WHERE id=#id#
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理，背景音乐管理 
+        功能:    修改背景音乐状态
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-6    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateBackgroupMusicStatusById" parameterClass="java.util.Map">
+		UPDATE t_comm_backgroup_music SET STATUS=#status# WHERE id=#id#
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理，背景音乐管理 
+        功能:    增加背景音乐
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-6    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+	<insert id="addBackgroupMusic" parameterClass="backGroupMusicDto">
+		INSERT INTO t_comm_backgroup_music(articleid,
+		                                   url,
+		                                   STATUS,
+		                                   modifyDate) 
+		                           VALUES(#articleid#,
+		                           		  #url#,
+		                           		  #status#,
+		                           		  #modifyDate#)	
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理，背景音乐管理 
+        功能:    加载所有背景音乐
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-6    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryBackgroupMustForList" resultClass="backGroupMusicDto">
+		SELECT id,articleid,url,STATUS,modifydate FROM t_comm_backgroup_music
+	</select>	
+	
+</sqlMap>

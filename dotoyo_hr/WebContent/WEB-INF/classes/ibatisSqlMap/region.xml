@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+ 	<typeAlias alias="provinceDto" type="com.dotoyo.buildjob.common.dto.ProvinceDto"/>
+	<typeAlias alias="cityDto" type="com.dotoyo.buildjob.common.dto.CityDto"/>
+	<typeAlias alias="areaDto" type="com.dotoyo.buildjob.common.dto.AreaDto"/>	
+	<typeAlias alias="hotCityDto" type="com.dotoyo.buildjob.common.dto.HotCityDto"/>
+<!-- ********************************************************************************** 
+        模块:    地区数据加载
+        功能:    加载省数据
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-2    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryProvinceList" resultClass="provinceDto">
+		SELECT id,CODE,NAME FROM t_comm_province
+	</select>	
+	
+<!-- ********************************************************************************** 
+        模块:    地区数据加载
+        功能:    根据省份编码加载省下相关市数据
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-2    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryCityListByProvinceCode" parameterClass="java.lang.String" resultClass="cityDto">
+		SELECT id,CODE,NAME,province_Code FROM t_comm_city WHERE province_code = #provinceCode#
+	</select>	
+	
+<!-- ********************************************************************************** 
+        模块:    地区数据加载
+        功能:    根据市编码加载市下面相关区数据
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-2    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryAreaListByCityCode" parameterClass="java.lang.String" resultClass="areaDto">
+		SELECT id,CODE,NAME,city_code FROM t_comm_area WHERE city_code=#cityCode#
+	</select>	
+	
+<!-- ********************************************************************************** 
+        模块:    系统热点城市加载
+        功能:    系统热点城市加载
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-21    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryHotCityList" resultClass="hotCityDto">
+		SELECT id,cityCode,pic,orderNumber FROM t_comm_HotCity
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    地区数据加载
+        功能:    根据省份编码加载省份数据
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-22    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getProvinceByCode" parameterClass="java.lang.String" resultClass="provinceDto">
+		SELECT id,code,name FROM t_comm_province WHERE code = #code# 
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    地区数据加载
+        功能:    根据城市编码加载城市数据
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-22    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getCityByCode" parameterClass="java.lang.String" resultClass="cityDto">
+		SELECT id,code,province_code AS provinceCode,name FROM t_comm_city WHERE code = #code#
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    地区数据加载
+        功能:    根据区域编码加载区域数据
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-22    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getAreaByCode" parameterClass="java.lang.String" resultClass="areaDto">
+		SELECT id,code,city_code AS cityCode,name FROM t_comm_area WHERE code = #code#
+	</select>
+</sqlMap>

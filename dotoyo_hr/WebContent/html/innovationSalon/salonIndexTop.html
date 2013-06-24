@@ -1,0 +1,54 @@
+<!--top-->
+<div class="salon-banner">
+   <form id="salonSearchFrom" name="salonSearchFrom" action="http://10.50.110.57:8090/dotoyoBuildJob/salonSearchAction!search.action" method="post">
+	<div class="salon-select">
+         <ul>
+             <li class="se0">沙龙主题：</li>
+             <li class="se1"><img src="http://10.50.110.57:8090/dotoyoBuildJob/images/search-down.png" width="21" height="22" onclick="menuClick('#searchTitle', '#searchDown1')" />
+              <input type="text" name="searchTitle" value="" id="searchTitle" readonly="readonly"/>
+              <input type="hidden" name="salonSearchVo.searchTitle" value="" id="salonSearchVo.searchTitle"/>
+
+             </li>
+             <li class="se0">起止时间：</li>
+             <li class="se2">
+              <input id="strStartDate" name="strStartDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',errDealMode:1})"/>
+             </li>
+             <li class="se2">
+              <input id="strEndDate" name="strEndDate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'strStartDate\')}'})"/>
+             </li>
+	  </ul>
+	  <ul>
+
+             <li class="se0">搜索内容：</li>
+             <li class="se1"><img src="http://10.50.110.57:8090/dotoyoBuildJob/images/search-down.png" width="21" height="22" onclick="getDataFromParent('searchContent','salonSearchVo.searchContent','#searchDown4','salonSearchVo.searchTitle'),menuClick('#searchContent', '#searchDown4')" />
+              <input type="text" name="searchContent" value="" id="searchContent" readonly="readonly"/>
+              <input type="hidden" name="salonSearchVo.searchContent" value="" id="salonSearchVo.searchContent"/>
+             </li>
+             <li class="se3">
+              <input type="text" name="salonSearchVo.keyWords" value="" id="salonSearchVo.keyWords"/>
+             </li>
+             <li><input type="image" src="http://10.50.110.57:8090/dotoyoBuildJob/images/salon-botton1.png" width="77" height="27" /></li>
+
+         </ul>
+    </div>
+    </form>
+    <div class="salon-botton"><a href="salonAction!toLaunchSalonPage.action"><img src="http://10.50.110.57:8090/dotoyoBuildJob/images/salon-botton2.png" width="107" height="34" alt="发起沙龙"/></a></div>
+</div>
+<!--search select~-->
+<div class="salon-down" id="showMenuID">
+    <div class="salon-down2" id="searchDown1" onmouseleave="menuHide(this)" style="display:none;">
+        <ul>
+          		<li><a href="#" id="015-1001" onclick="setValue(this,'searchTitle','salonSearchVo.searchTitle');$('#salonSearchVo.searchContent').val('');$('#searchContent').val('');">沙龙</a></li>
+          		<li><a href="#" id="015-1002" onclick="setValue(this,'searchTitle','salonSearchVo.searchTitle');$('#salonSearchVo.searchContent').val('');$('#searchContent').val('');">沙龙图片</a></li>
+          		<li><a href="#" id="015-1003" onclick="setValue(this,'searchTitle','salonSearchVo.searchTitle');$('#salonSearchVo.searchContent').val('');$('#searchContent').val('');">沙龙视频</a></li>
+          		<li><a href="#" id="015-1004" onclick="setValue(this,'searchTitle','salonSearchVo.searchTitle');$('#salonSearchVo.searchContent').val('');$('#searchContent').val('');">沙龙文章</a></li>
+        </ul>
+    </div>
+    <div class="salon-down2" id="searchDown4" onmouseleave="menuHide(this)" style="display:none;">
+    </div>
+</div>
+<!--center-->
+
+<div class="salon-content">
+	<div class="salon-left">
+        <!--offline salon-->

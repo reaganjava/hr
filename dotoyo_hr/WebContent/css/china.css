@@ -1,0 +1,114 @@
+﻿/*智慧中国样式表*/
+/*banner*/
+.china-banner{width:980px;height:92px;background:url(../images/banner-inside.png) center top no-repeat; background-position:0px -286px;}
+/*智慧中介绍botton*/
+.china-jishao{float:left;width:201px;text-align:right;}
+/*select*/
+.china-select{float:right;width:547px;padding-top:13px;margin-right:70px;_margin-right:35px;}
+.china-select li{float:left;font-size:14px;color:#555; text-align:left;margin-bottom:12px;}
+.se1 img,.se2 img{float:right; cursor:pointer;}
+.china-select li input{padding-top:4px;font-size:14px;color:#666;border:none;background:none;}
+.se0{margin-top:5px;}
+.se1,.se2,.se3{background:url(../images/select-common.gif) right center no-repeat;}
+.se1{ display:block;width:120px;height:23px;padding:3px 4px 2px 5px;background-position:0px 0px;margin-right:20px;}
+.se1 input{width:90px;}
+.se2{display:block;width:105px;height:23px;padding:3px 4px 2px 5px;background-position:-134px 0px;margin-right:15px;}
+.se2 input{width:75px;}
+.se3{width:218px;height:24px;margin-right:8px;background-position:0px -30px;padding:2px 5px;}
+
+.se-botton{float:right;width:170px;margin-top:12px;}
+.se-right{float:right;width:122px;height:40px;padding:52px 0px 0px 80px;background:url(../images/head-common.png) no-repeat; background-position:0px -35px;}
+
+/*---------------------------------------以上为seclect定义----------------------------------------------------------------------------*/
+
+/*中间部分*/
+.china-content{width:980px;margin-top:10px;}
+/*页面标题定义*/
+.china-title{ text-align:left;font-size:14px;margin-bottom:10px;}
+.china-title span{float:right;margin-top:3px;}
+.china-title strong{float:left; display:block;padding:6px 10px 3px 10px;margin-right:16px;color:#fff;}
+.title1{width:689px;border-bottom:1px solid #5B6D83;}
+.title2{width:689px;border-bottom:1px solid #f60;margin-top:10px;}
+.title3{width:689px;border-bottom:1px solid #5B6D83;margin-top:10px;}
+.title4{width:689px;border-bottom:1px solid #8a8a8a;margin-top:10px;}
+.title5{width:256px;border-bottom:1px solid #f60;margin-top:10px;}
+.title6{width:256px;border-bottom:1px solid #5B6D83;margin-top:10px;}
+.title7{width:256px;border-bottom:1px solid #8a8a8a;margin-top:10px;}
+.title1 strong{background:#5B6D83;font-weight:normal;}
+.title2 strong,.title5 strong{background:#f60;}
+.title3 strong,.title6 strong{background:#5B6D83;}
+.title4 strong,.title7 strong{background:#8a8a8a;}
+.title5 strong,.title6 strong,.title7 strong{font-weight:normal;}
+
+.title1 a{float:left;line-height:29px;color:#5B6D83; text-decoration:none;}
+.title1 a:hover{color:#5B6D83; text-decoration:underline;}
+.title2 a,.title5 a{float:left;line-height:29px;color:#f60; text-decoration:none;}
+.title2 a:hover,.title5 a:hover{color:#f60; text-decoration:underline;}
+.title3 a,.title6 a{float:left;line-height:29px;color:#5B6D83; text-decoration:none;}
+.title3 a:hover,.title6 a:hover{color:#5B6D83; text-decoration:underline;}
+.title4 a,.title7 a{float:left;line-height:29px;color:#8a8a8a; text-decoration:none;}
+.title4 a:hover,.title7 a:hover{color:#8a8a8a; text-decoration:underline;}
+/*左边*/
+.china-left{float:left;width:689px;}
+/*专家简介*/
+.zjjj-box{width:689px;height:182px;}
+.zjjj1,.zjjj2,.zjjj3,.zjjj4,.zjjj5,.zjjj6{float:left;width:223px;height:83px;}
+.zjjj1,.zjjj2,.zjjj3{margin-bottom:10px;}
+.zjjj1,.zjjj2,.zjjj4,.zjjj5{margin-right:10px;}
+.zjjj-left{float:left;width:79px;height:79px;padding:0px 4px 4px 0px;background:url(../images/china-pho-bg.png) no-repeat;}
+.zjjj-right{float:right;width:128px;}
+.zjjj-right li{float:left; width:128px;padding:4px 0px 2px 0px;color:#8a8a8a;border-bottom:1px solid #f1f1f1;text-align:left; white-space:nowrap;}
+.zjjj-right a{color:#596D85;font-size:14px;font-weight:bold; text-decoration:none;}
+.zjjj-right a:hover{color:#f60; text-decoration:underline;}
+/*左边标题目内容定义*/
+.china-text{width:669px;padding:0 10px;font-size:14px; color:#818181;}
+.china-text-bg1{background:#FF7802;color:#fff;margin-bottom:8px;}
+.china-text-bg2{background:#5B6D83;color:#fff;margin-bottom:8px;}
+.china-text-bg3{background:#8a8a8a;color:#fff;margin-bottom:8px;}
+.china-text li{float:left;white-space:nowrap;padding:5px 0px;overflow:hidden;height:20px;}
+.china1{width:519px; text-align:left;}
+.china1 a,.china-text2 a{color:#000; text-decoration:none;}
+.china1 a:hover,.china-text2 a:hover{color:#f60; text-decoration:underline;}
+.china2{width:60px;}
+.china3{width:90px;}
+.china4{width:519px;}
+.china5{width:419px; text-align:left;}
+.china55{width:419px;}
+.china5 a{color:#000; text-decoration:none;}
+.china5 a:hover{color:#8a8a8a; text-decoration:underline;}
+.china6{width:100px;}
+.china7{width:519px; text-align:left;}
+.china7 a{color:#000; text-decoration:none;}
+.china7 a:hover{color:#5B6D83; text-decoration:underline;}
+/*右边*/
+.china-right{float:right;width:256px;border:1px solid #dcdcdc;padding:10px;}
+.china-pic{width:256px;height:211px;}
+/*右边标题目内容定义*/
+.china-text2{width:246px;padding-left:10px;color:#818181;}
+.china-text-bg1{background:#FF7802;color:#fff;margin-bottom:8px;}
+.china-text-bg2{background:#5B6D83;color:#fff;margin-bottom:8px;}
+.china-text-bg3{background:#8a8a8a;color:#fff;margin-bottom:8px;}
+.china-text2 li{float:left;white-space:nowrap;overflow:hidden;padding:5px 0px;height:20px;}
+.china8{width:176px;font-size:14px; text-align:left;}
+.china9{width:70px;font-size:14px;}
+.china10{width:176px; text-align:left;}
+.china11{width:70px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

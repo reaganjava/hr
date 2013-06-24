@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大太阳建筑猎头--系统管理--企业首页</title>
+<link href="../../css/system-manage.css" rel="stylesheet" type="text/css" />
+<script src="../../javascripts/common/jquery.js"></script>
+<script src="../../javascripts/common/jquery-ui-1.7.2.custom.min.js"></script>
+<script src="../../javascripts/common/accordion.js"></script>
+<script src="../../javascripts/common/jquery.cookie.js"></script>
+<script type="text/javascript">
+
+$(function(){
+			//Main menu
+			$(".nav li").mouseover(function(){
+				$(".nav li").attr("class","nav-on");
+				$(this).addClass("nav-out");
+			});
+		
+			// Accordion
+            $("#leftNav").accordion({
+                header: "h3",
+                collapsible: true,
+				autoHeight: false,
+                active: false,
+				multipleMode: true
+            });
+			
+			//Init active array
+			var activeArr;
+			if($.cookie("active_left_nav")!=null){
+				activeArr = $.cookie("active_left_nav").replace(/(^\,*)|(\,*$)/g, "").split(",");
+			}
+			else{
+				activeArr = new Array();
+			}
+			//Init left nav
+			var activeA = $.cookie("active_left_nav_a");
+			if(activeA != null){
+				$("#leftNav a").removeClass("active");
+				$("#leftNav a").eq(activeA).addClass("active");
+			}
+			if(activeArr.length>0)
+			{
+				$.each(activeArr,function(key,val){
+					if(val!=""){
+						$("#leftNav h3").eq(val).addClass("ui-state-active").next().addClass("ui-accordion-content-active").show();
+					}
+				});
+			}
+			//Set active array when click
+			$("#leftNav h3").click(function(){
+				var index = $("#leftNav h3").index($(this)[0]);
+				if($(this).hasClass("ui-state-active")){
+					//Add to array
+					if($.inArray(index, activeArr)){
+						activeArr.push(index);
+					}
+				}
+				else{
+					//Remove from array
+					$.grep(activeArr,function(val,key){
+						if(val==index){
+							activeArr.splice(key, 1);
+						}
+					});
+				}
+				$.cookie("active_left_nav", activeArr.join(","));
+			});
+			
+			$("#leftNav a").click(function(){
+				$("#leftNav a").removeClass("active");
+				var index = $("#leftNav a").index($(this)[0]);
+				$(this).addClass("active");
+				$.cookie("active_left_nav_a", index);
+			});
+        });
+</script>
+</head>
+<body>
+<div class="top">
+	<div class="top-left"><img src="../../images/logo.png" width="152" height="88" alt="中国建筑平台"/></div>
+    <div class="top-right">arthas&nbsp;&nbsp;中国建筑猎头平台欢迎您！</div>
+</div>
+<div class="nav">
+	<ul>
+    	<li class="nav-on"><a href="../../index.html">首页</a></li>
+        <li class="nav-on"><a href="../headhunterCenter/head.html">猎头中心</a></li>
+        <li class="nav-on"><a href="../applyJobCenter/people.html">人才中心</a></li>
+        <li class="nav-on"><a href="../peopleExcavate/excavate.html">人才挖掘</a></li>
+        <li class="nav-out"><a href="../certificateCenter/certificate.html">猎证中心</a></li>
+        <li class="nav-on"><a href="../innovationSalon/salon.html">创业沙龙</a></li>
+    </ul>
+</div>
+<!--以上为头部分-->
+<!--中间部分-->
+<div class="content">
+	<div id="leftNav">
+    	<ul>
+        	<li>
+                <h3>职位管理</h3>
+                <ul>
+                    <li><a href="company1.html">新增职位</a></li>
+                    <li><a href="company2.html">发布中的职位</a></li>
+                    <li><a href="company3.html">暂停的职位</a></li>
+                    <li><a href="company4.html">即将到期的职位</a></li>
+                    <li><a href="company5.html">已结束的职位</a></li>
+                </ul>
+            </li>
+            <li>
+				<h3><a tabindex="-1" href="#">招聘管理</a></h3>
+                <div>
+                    <a class="second-nav" tabindex="-1" href="company6.html">收到的申请</a><span></span>
+                    <a class="second-nav" tabindex="-1" href="company7.html">查看已发送邀请</a><span></span>
+                    <h3>站内信管理</h3>
+                    <ul>
+                        <li><a href="personal-5.html">-&nbsp;&nbsp;收件箱</a> </li>
+                        <li><a href="personal-7.html">-&nbsp;&nbsp;职位申请自动回复设置</a> </li>
+                    </ul>
+              </div>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="company8.html">线下人才推荐</a></h3>
+            </li>
+            <li>
+                <h3>证书管理</h3>
+                <ul>
+                    <li><a href="personal-9.html">已提交证书管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>发起的沙龙</h3>
+                <ul>
+                    <li><a href="personal-10.html">线上沙龙</a></li>
+                    <li><a href="personal-11.html">线下沙龙</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>参与的沙龙</h3>
+                <ul>
+                    <li><a href="personal-12.html">线上沙龙</a></li>
+                    <li><a href="personal-13.html">线下沙龙</a></li>
+                </ul>
+            </li>
+   			<li>
+                <h3><a tabindex="-1" href="personal-14.html">线下沙龙图片库</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="personal-15.html">线下沙龙视频库</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="personal-16.html">文章管理</a></h3>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="personal-17.html">评论管理</a></h3>
+            </li>
+           	<li>
+                <h3>积分管理</h3>
+                <ul>
+                    <li><a href="personal-18.html">积分情况</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>猎头服务管理</h3>
+                <ul>
+                    <li><a href="personal-19.html">购买服务</a></li>
+                    <li><a href="personal-20.html">已购买的服务</a></li>
+                    <li><a href="personal-21.html">已过期的服务</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3><a tabindex="-1" href="#">退出系统</a></h3>
+            </li>
+        </ul>
+    </div>
+    <div class="content-right">
+    	
+    	<div class="jbxx">
+    		<div class="jbxx-title"><strong>基本信息</strong></div>
+            <div class="message">
+            	<div class="message-left"><img src="../../pic/system-photo1.jpg" width="150" height="150" /></div>
+                <div class="message-right">
+                	<ul>
+                		<li>用户名：lilia@achievo.com</li>
+                        <li>电话：0755-888888</li>
+                        <li>行业：建筑行业</li>
+                        <li>手机：1388888888</li>
+                        <li>专业：桥梁</li>
+                        <li>Email：lilia@achievo.com</li>
+                        
+                        <li>专长：混泥土</li>
+                        <li>传真：0755-888888</li>
+                        <li>积分：1002</li>
+                        <li>状态：正常</li>
+                        <li>上次登录日期：2010-12-20</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="today-title"><span>今日提醒</span><em>2010-12-30</em></div>
+            <div class="today">
+            	<div class="today-left">
+                	<h1>特别提醒</h1>
+                    <ul>
+                    	<li>您有时2332个职位需要查看。<a href="#">查看即将到期的职位</a></li>
+                        <li>您有3232个证书需求即将到期。<a href="#">查看即将到期需求</a></li>
+                        <li>已有2223个人才查看您的招聘职位信息。<a href="#">查看被浏览情况</a></li>
+                    </ul>
+                </div>
+                <div class="today-right">
+                	<h2>招聘情况</h2>
+                    <ul>
+                    	<li>您有0个职位正在招聘中，还可以发布0个。<a href="#">查看已发布职位</a></li>
+                        <li>您最近三个月共收到0份应聘简历。<a href="#">查看应聘简历</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="today">
+            	<div class="today-left">
+                    <h3>证书挂靠情况</h3>
+                    <ul>
+                    	<li>您有0个证书需求正在挂靠中，还可以发布0个。<a href="#">查看已发布证书挂靠需求</a></li>
+                    </ul>
+                </div>
+                <div class="today-right">
+                    <h3>猎头服务</h3>
+                    <ul>
+                    	<li>您还有0个等待支付的订单。<a href="#">等待付款的订单</a></li>
+                        <li>您的XX服务还有XX天即将到期。<a href="#">已购买的服务</a></li>
+                    </ul>
+                </div>
+            </div>
+      </div>
+        <div class="system-botton">
+        	<ul>
+            	<li class="botton1"><a href="#" title="发布求职信息">发布求职信息</a></li>
+                <li class="botton2"><a href="#" title="人才挖掘">人才挖掘</a></li>
+                <li class="botton3"><a href="#" title="发布证书需求">发布证书需求</a></li>
+                <li class="botton3"><a href="#" title="证书搜索">证书搜索</a></li>
+                <li class="botton3"><a href="#" title="返回首页">返回首页</a></li>
+            </ul>
+        </div>
+        <div class="add"><a href="#"><img src="../../pic/system-add.jpg" width="781" height="70" /></a></div>
+  </div>
+</div>
+
+</body>
+</html>

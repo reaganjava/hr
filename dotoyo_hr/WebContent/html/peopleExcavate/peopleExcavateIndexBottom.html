@@ -1,0 +1,90 @@
+      <div class="excavate-title">人才之星排名</div>
+      <div class="xinxin">
+      	<ul>
+                    	<li class="xinxin1"><a onclick="javascript:alert('博站链接?userId='+10);return false;" href="#" title="test1@163.com">test1@163.com</a></li>
+            	<li class="xinxin2"><span style="width:60px;float:left" class="index_hid_css" title="建筑师/建筑设计师">建筑师/建筑设计师</span></li>
+            	<li class="xinxin1"><a onclick="javascript:alert('博站链接?userId='+10);return false;" href="#" title="personal@achievo.com">personal@achievo.com</a></li>
+            	<li class="xinxin2"><span style="width:60px;float:left" class="index_hid_css" title="岩土工程师">岩土工程师</span></li>
+            	<li class="xinxin1"><a onclick="javascript:alert('博站链接?userId='+10);return false;" href="#" title="new12@12.com">new12@12.com</a></li>
+            	<li class="xinxin2"><span style="width:60px;float:left" class="index_hid_css" title="建筑师/建筑设计师">建筑师/建筑设计师</span></li>
+            	<li class="xinxin1"><a onclick="javascript:alert('博站链接?userId='+10);return false;" href="#" title="test0001@163.com">test0001@163.com</a></li>
+            	<li class="xinxin2"><span style="width:60px;float:left" class="index_hid_css" title="建筑师/建筑设计师">建筑师/建筑设计师</span></li>
+            	<li class="xinxin1"><a onclick="javascript:alert('博站链接?userId='+10);return false;" href="#" title="connie_2@qq.com">connie_2@qq.com</a></li>
+            	<li class="xinxin2"><span style="width:60px;float:left" class="index_hid_css" title="建筑师/建筑设计师">建筑师/建筑设计师</span></li>
+            	<li class="xinxin1"><a onclick="javascript:alert('博站链接?userId='+10);return false;" href="#" title="abc@abc.com">abc@abc.com</a></li>
+            	<li class="xinxin2"><span style="width:60px;float:left" class="index_hid_css" title="建筑师/建筑设计师">建筑师/建筑设计师</span></li>
+            	<li class="xinxin1"><a onclick="javascript:alert('博站链接?userId='+10);return false;" href="#" title="jack@achievo.com">jack@achievo.com</a></li>
+            	<li class="xinxin2"><span style="width:60px;float:left" class="index_hid_css" title="建筑师/建筑设计师">建筑师/建筑设计师</span></li>
+            	<li class="xinxin1"><a onclick="javascript:alert('博站链接?userId='+10);return false;" href="#" title="connie_6@qq.com">connie_6@qq.com</a></li>
+            	<li class="xinxin2"><span style="width:60px;float:left" class="index_hid_css" title="建筑师/建筑设计师">建筑师/建筑设计师</span></li>
+            	<li class="xinxin1"><a onclick="javascript:alert('博站链接?userId='+10);return false;" href="#" title="connie_5@qq.com">connie_5@qq.com</a></li>
+            	<li class="xinxin2"><span style="width:60px;float:left" class="index_hid_css" title="结构工程师">结构工程师</span></li>
+            	<li class="xinxin1"><a onclick="javascript:alert('博站链接?userId='+10);return false;" href="#" title="connie_4@qq.com">connie_4@qq.com</a></li>
+            	<li class="xinxin2"><span style="width:60px;float:left" class="index_hid_css" title="建筑师/建筑设计师">建筑师/建筑设计师</span></li>
+        </ul>
+      </div>
+      <div class="excavate-title">人才挖掘流程</div>
+      <div class="excavate-process-pic"><img src="http://10.50.110.57:8090/dotoyoBuildJob/images/excavate-process-pic1.png" width="245" height="114" alt="企业流程"/></div>
+      <div class="excavate-process-pic"><img src="http://10.50.110.57:8090/dotoyoBuildJob/images/excavate-process-pic2.png" width="245" height="114" alt="线上人才流程"/></div>
+      <div class="excavate-process-pic"><img src="http://10.50.110.57:8090/dotoyoBuildJob/images/excavate-process-pic3.png" width="245" height="114" alt="线下人才流程"/></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+
+function chooseExpDate(){
+	var effDate = $("#jobIssuetDate").val();
+	if(effDate == "" || effDate == null){
+		WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-{%d}'});	
+	}
+	else{
+		WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'jobIssuetDate\')}'});	
+	}
+}
+function keyWordsOnFocus(obj){
+		var text = obj.value;
+		if(text=="请输入关键字..."){
+				obj.value = "";
+		}
+}
+function keyWordsOnBlur(obj){
+		var text = obj.value;
+		if(text==""){
+				obj.value = "请输入关键字...";
+		}
+}
+		
+function loadbDataOfRegion(dataType,searchDown){
+	var citySearch='bcitySearch';
+	var areaSearch='bareaSearch';
+	if(dataType==citySearch){
+		$.getJSON("../common/loadCity.action?provinceCode="+$("#hiddenbProvince").val()+"&randomNum="+Math.random() , function(data) {
+			var options="";
+			data = eval('('+data+')');
+			$.each(data, function(i, item) {
+				value = item.code;
+				text = item.name;
+				options = options + "<li><a href='#' id=\""+value+"\""+" onclick=\"setValue(this,'bcitySearch','hiddenbCity');setArea('bareaSearch','hiddenbArea');return false;\">"+text+"</a></li>";
+			});
+
+			$('#bcityId').html(options);
+			menuClick('#bcitySearch', searchDown, -74, 24);
+		});
+	}else{
+		$.getJSON("../common/loadArea.action?cityCode="+$("#hiddenbCity").val()+"&randomNum="+Math.random() , function(data) {
+			var options="";
+			data = eval('('+data+')');
+			$.each(data, function(i, item) {
+				value = item.code;
+				text = item.name;
+				options = options + "<li><a href='#' id=\""+value+"\""+" onclick=\"setValue(this,'bareaSearch','hiddenbArea');return false;\">"+text+"</a></li>";
+			});
+
+			$('#bareaId').html(options);
+			menuClick('#bareaSearch', searchDown, -74, 24);
+		});
+	}
+}
+</script>
+<!--底部分-->

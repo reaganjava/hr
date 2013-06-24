@@ -1,0 +1,134 @@
+﻿/*人才挖掘样式表*/
+.excavate-banner{width:980px;height:92px;background:url(../images/banner-inside.png) center top no-repeat; background-position:0px -94px;}
+.excavate-banner span{ display:block;margin:25px auto 0px 370px;text-align:left;color:#515151;}
+.excavate-banner span strong{color:#ff6300;padding:0 8px; font-family:"宋体";}
+
+/*中间部分*/
+.excavate-mid{width:980px;margin-top:10px;}
+/*左边*/
+.excavate-left{float:left;width:710px;border:1px solid #dcdcdc;padding:6px;}
+.line-title1,.line-title2{width:700px;height:24px;padding:7px 0 0 10px; text-align:left;font-size:14px;color:#fff;}
+.line-title1{background:#f60;}
+.line-title2{background:#5B6D83;margin-top:10px;}
+.excavate-botton{width:710px;height:32px;padding-top:15px;}
+
+.downline-bottom{float:left;width:710px;}
+.downline-bottom li{float:left;width:710px;margin-top:17px; text-align:left; text-indent:30px; white-space:nowrap;color:#505050;font-size:14px;}
+.excavate5 textarea{width:500px;height:70px;padding:5px;border:1px solid #ddd;}
+/*右边*/
+.excavate-right{float:right;width:245px;height:1000px;}
+/*人才挖掘介绍pic*/
+.excavate-about{width:245px;height:198px;}
+/*人才之星排名*/
+.excavate-title{width:235px;height:24px;padding:7px 0 0 10px; text-align:left;font-size:14px;background:#8a8a8a;margin-top:10px;color:#fff;}
+.excavate-process-pic{width:245px;height:114px;margin-top:11px;}
+.xinxin{width:207px;height:287px;margin-top:10px;padding:10px 0px 10px 38px;background:url(../images/excavate-icon.png) 10px 10px no-repeat;}
+.xinxin ul{width:207px;}
+.xinxin ul li{float:left;text-align:left;font-size:14px; white-space:nowrap;height:30px;margin-right:10px;}
+.xinxin1{width:80px;}
+.xinxin2{width:107px;}
+.xinxin1 a{color:#5C6C83; text-decoration:none;}
+.xinxin1 a:hover{color:#5C6C83; text-decoration:underline;}
+.xinxin2 a{color:#898989; text-decoration:none;}
+.xinxin2 a:hover{color:#f60; text-decoration:none;}
+/*人才挖掘select菜单*/
+.online{width:710px;height:386px;background:url(../images/excavate-online-bg.jpg) center top repeat-x;}
+.downline{width:710px;background:#EAEBEF;height:676px;}
+.online-box{width:710px;}
+.online-box input{padding-top:4px;background:none;border:none;font-size:14px;}
+.online-box img{float:right; cursor:pointer;}
+.online-box em,.downline em{font-family:"宋体";font-style:normal;color:#f60;font-size:12px;padding-right:5px;}
+.online-div{float:left;width:355px;}
+.online-div li{float:left;font-size:14px;color:#555;margin-top:12px;}
+.online0{width:100px;padding-top:5px; text-align:right;}
+.online1,.online2,.online4,.online5,.online6,.online7,.online8,.online9{background:url(../images/select-common.gif) no-repeat;}
+.online1,.online5{display:block;width:165px;height:23px;padding:3px 4px 2px 5px;background-position:-0px -62px; text-align:left;}
+.online1 input{width:140px;}
+.online5 input{width:160px;}
+.online6{display:block;width:130px;height:23px;padding:3px 4px 2px 5px;background-position:-104px -127px; text-align:left;}
+.online6 input{width:100px;}
+.online9{display:block;width:105px;height:23px;padding:3px 4px 2px 5px;background-position:-134px -200px; text-align:left;}
+.online9 input{width:100px;}
+.online7{display:block;width:44px;height:23px;padding:3px 4px 2px 5px;background-position:-177px -62px; text-align:left;}
+.online7 input{width:16px;}
+.online8{display:block;width:108px;height:23px;margin-right:10px;padding:3px 4px 2px 5px;background-position:0px -162px; text-align:left;}
+.online8 input{width:95px;}
+/*地区*/
+.online2{display:block;width:59px;height:23px;margin-right:10px;padding:3px 4px 2px 5px;background-position:-176px -162px; text-align:left;}
+.online2 input{width:30px;}
+.online3{padding-top:5px;}
+/*人才挖掘下拉菜单------------------------*/
+.excavate-down1,.excavate-down2,.excavate-down3,.excavate-down4,.excavate-down5,.excavate-down6,.excavate-down7,.excavate-down8,.excavate-down9{z-index:1;position:absolute;padding:15px 0px 15px 15px;background:url(../images/select-bg.png) repeat;border:1px solid #ccc; font-size:14px;color:#5A6D83;}
+
+.excavate-down li{float:left;padding:0 3px 0 3px;text-align:left; white-space:nowrap;}
+.excavate-down a{ display:block;padding:3px 3px 3px 3px;color:#516275; text-decoration:none;}
+.excavate-down a:hover{  display:block;padding:3px 3px 3px 3px;background:#a8b2c1;color:#fff;text-decoration:none;}
+.excavate-down1{width:720px;}
+.excavate-down1 li{width:160px;}
+.excavate-down2{width:840px;}
+.excavate-down2 li{width:120px;}
+.excavate-down3{width:460px;}
+.excavate-down3 li{width:200px;}
+.excavate-down4{width:600px;}
+.excavate-down4 li{width:280px;}
+.excavate-down5{width:410px;}
+.excavate-down5 li{width:62px;}
+.excavate-down6{width:164px;}
+.excavate-down6 li{width:34px;}
+.excavate-down7{width:410px;}
+.excavate-down7 li{width:62px;}
+.excavate-down8{width:560px;}
+.excavate-down8 li{width:120px;}
+.excavate-down9{width:560px;}
+.excavate-down9 li{width:120px;}
+
+/*二级页面-------------线上人才搜索----------------------------------*/
+/*标题titile*/
+.excavate-search-title{width:980px;border-bottom:1px solid #f60; text-align:left;margin:15px auto 10px auto; }
+.excavate-search-title a{float:left;margin-top:7px;color:#f60; text-decoration:none;}
+.excavate-search-title a:hover{color:#f60; text-decoration:underline;}
+.excavate-search-title h3{float:left;font-weight:normal; display:block;font-size:14px;padding:6px 10px 3px 10px;margin-right:16px;background:#FE6400;color:#fff;}
+.excavate-search-title span{float:left;margin-top:6px;}
+/*标题按钮*/
+.excavate-search-botton{width:955px;padding:0px 15px 0px 10px;height:35px;margin-bottom:10px;background:#8a8a8a; text-align:left;color:#fff;}
+.excavate-search-botton-left{float:left;}
+.excavate-search-botton-left li{float:left;margin:5px 10px 0px auto;}
+.excavate-search-botton1{padding-top:4px;}
+.excavate-search-botton-right{float:right;}
+.excavate-search-botton-right li{float:left;margin:6px 10px 0px auto;}
+
+
+/*摘要列表*/
+.rcss,.rcss-title,.rcss-p{width:955px;padding:0px 15px 0px 10px; font-size:14px;}
+
+.rcss li,.rcss-title li{float:left; text-align:left;white-space:nowrap;margin-right:5px;padding:7px 0px 5px 0px;overflow:hidden;height:20px;}
+.rcss li{color:#666;}
+.rcss0{width:22px;}
+.rcss1{width:200px;}
+.rcss2{width:110px;}
+.rcss3{width:60px;}
+.rcss4{width:85px;}
+.rcss4 img{padding-left:4px;}
+.rcss5{width:155px;}
+.rcss a{font-weight:bold;color:#093268; text-decoration:none;}
+.rcss a:hover{color:#f60; text-decoration:underline;}
+.rcss-box{width:980px;margin-top:10px;padding-top:3px;}
+.rcss-box-bg{width:980px;background:#F2EDE9;padding-bottom:5px;}
+/*摘要段落*/
+.rcss-p-left{float:left;width:800px;font-size:12px;color:#666; line-height:30px;height:66px;padding-left:28px;text-align:left;}
+.rcss-p-left p strong{font-weight:normal;padding-left:30px;color:#000;}
+.rcss-botton{float:right;width:98px;height:90px;}
+.rcss-botton img{margin-bottom:5px;}
+ 
+
+
+
+
+
+
+
+
+
+
+
+

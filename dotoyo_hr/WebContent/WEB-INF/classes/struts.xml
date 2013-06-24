@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.i18n.decoding" value="utf-8"/>
+	<constant name="struts.action.extension" value="action,do,*"/>
+	<!-- 不让struts2给我们生成代码 -->
+	<constant name="struts.ui.theme" value="simple"/>
+	<!-- 开发模式下使用,这样可以打印出更详细的错误信息 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- ognl调用静态方法 -->
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+	<constant name= "struts.multipart.maxSize" value="9999999999999999" />
+	<include file="strutsConfig/struts-Global.xml"/>
+	<include file="strutsConfig/struts-BuildJob.xml"/>
+</struts>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="offlineSearchResultDto" type="com.dotoyo.buildjob.common.dto.OfflineSearchResultDto"/>
+	
+<!-- ********************************************************************************** 
+        模块:    人才挖掘
+        功能:    增加企业线下人才挖掘搜索记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-2    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveOfflineSearchResult" parameterClass="offlineSearchResultDto">
+		INSERT INTO
+			T_COMM_OFFLINESEARCHRESULT
+			(
+				id,userId,userName,industryTypeCode,specializedTypeCode,competencyCode,provinceCode,cityCode,
+				areaCode,metier,educationCode,workingLifeCode,age,sex,langCapaCode,masteryCode,computerGradeCode,isAdviser,
+				jobNatureCode,userInfoUpdateDate,categoryIndex,jobKeyWord,recruitingNumber,jobIssuetDate,jobExpiryDate,
+				jobResponsibility,jobRequirements
+			)
+		VALUES
+			(
+				#id#,#userId#,#userName#,#industryTypeCode#,#specializedTypeCode#,#competencyCode#,#provinceCode#,#cityCode#,
+				#areaCode#,#metier#,#educationCode#,#workingLifeCode#,#age#,#sex#,#langCapaCode#,#masteryCode#,#computerGradeCode#,#isAdviser#,
+				#jobNatureCode#,#userInfoUpdateDate#,#categoryIndex#,#jobKeyWord#,#recruitingNumber#,#jobIssuetDate#,#jobExpiryDate#,
+				#jobResponsibility#,#jobRequirements#
+			)
+		
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    批量删除企业线下人才挖掘搜索记录
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-2    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteOfflineSearchResult" parameterClass="java.lang.String">
+		DELETE
+		FROM
+			T_COMM_OFFLINESEARCHRESULT
+		WHERE
+			id in ($ids$)
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    加载企业线下人才挖掘搜索记录列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-2    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryOfflineSearchResultList" parameterClass="offlineSearchResultDto" resultClass="offlineSearchResultDto">
+		SELECT
+			searchResult.id,searchResult.userId,searchResult.userName,userInfo.companyName AS userRealName,
+			searchResult.provinceCode,
+			(SELECT NAME FROM t_comm_province WHERE CODE = searchResult.provinceCode) AS provinceName,
+			searchResult.cityCode,
+			(SELECT NAME FROM t_comm_city WHERE CODE = searchResult.cityCode ) AS cityName,
+			searchResult.areaCode,
+			(SELECT NAME FROM t_comm_area WHERE CODE = searchResult.areaCode ) AS areaName,
+			searchResult.jobNatureCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.jobNatureCode ) AS jobNatureName,
+			searchResult.isAdviser,searchResult.jobKeyWord,searchResult.competencyCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.competencyCode ) AS competencyName,
+			searchResult.industryTypeCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.industryTypeCode ) AS industryTypeName,
+			searchResult.specializedTypeCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.specializedTypeCode ) AS specializedTypeName,
+			searchResult.metier,searchResult.categoryIndex,searchResult.userInfoUpdateDate,searchResult.jobExpiryDate
+		FROM
+			T_COMM_OFFLINESEARCHRESULT searchResult,T_USER_INFO userInfo
+		WHERE userInfo.userName = searchResult.userName
+		<dynamic>
+			<isNotEmpty prepend="and" property="userId">
+				(searchResult.userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userRealName">
+				(userInfo.companyName like concat("%",#userRealName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="jobKeyWord">
+				(searchResult.jobKeyWord like concat("%",#jobKeyWord#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="competencyName">
+				(searchResult.competencyCode in (SELECT CODE FROM t_comm_class_master WHERE NAME like concat("%",#competencyName#,"%") ))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="categoryIndex">
+				(searchResult.categoryIndex = #categoryIndex#)
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY searchResult.id DESC
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    计算加载企业线下人才挖掘搜索记录列表条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-2    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryOfflineSearchResultCount" parameterClass="offlineSearchResultDto" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			T_COMM_OFFLINESEARCHRESULT searchResult,T_USER_INFO userInfo
+		WHERE userInfo.userName = searchResult.userName
+		<dynamic>
+			<isNotEmpty prepend="and" property="userId">
+				(searchResult.userId = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userRealName">
+				(userInfo.companyName like concat("%",#userRealName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="jobKeyWord">
+				(searchResult.jobKeyWord like concat("%",#jobKeyWord#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="competencyName">
+				(searchResult.competencyCode in (SELECT CODE FROM t_comm_class_master WHERE NAME like concat("%",#competencyName#,"%") ))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="categoryIndex">
+				(searchResult.categoryIndex = #categoryIndex#)
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    加载企业线下人才挖掘搜索记录详细信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-2    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getOfflineSearchResultById" parameterClass="java.lang.Long" resultClass="offlineSearchResultDto">
+		SELECT
+			searchResult.id,searchResult.userId,searchResult.userName,userInfo.companyName AS userRealName,
+			searchResult.provinceCode,
+			(SELECT NAME FROM t_comm_province WHERE CODE = searchResult.provinceCode) AS provinceName,
+			searchResult.cityCode,
+			(SELECT NAME FROM t_comm_city WHERE CODE = searchResult.cityCode ) AS cityName,
+			searchResult.areaCode,
+			(SELECT NAME FROM t_comm_area WHERE CODE = searchResult.areaCode ) AS areaName,
+			searchResult.jobNatureCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.jobNatureCode ) AS jobNatureName,
+			searchResult.isAdviser,searchResult.jobKeyWord,searchResult.industryTypeCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.industryTypeCode ) AS industryTypeName,
+			searchResult.specializedTypeCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.specializedTypeCode ) AS specializedTypeName,
+			searchResult.competencyCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.competencyCode ) AS competencyName,
+			searchResult.metier,searchResult.educationCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.educationCode and parentCode='007') AS educationName,
+			searchResult.workingLifeCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.workingLifeCode and parentCode='006') AS workingLifeName,
+			searchResult.age,searchResult.sex,searchResult.langCapaCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.langCapaCode and parentCode='008') AS langCapaName,
+			searchResult.masteryCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.masteryCode and parentCode='007') AS masteryName,
+			searchResult.computerGradeCode,
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = searchResult.computerGradeCode and parentCode='011') AS computerGradeName,
+			searchResult.userInfoUpdateDate,searchResult.categoryIndex,searchResult.recruitingNumber,searchResult.jobIssuetDate,
+			searchResult.jobExpiryDate,searchResult.jobResponsibility,searchResult.jobRequirements
+		FROM
+			T_COMM_OFFLINESEARCHRESULT searchResult,T_USER_INFO userInfo
+		WHERE userInfo.userName = searchResult.userName
+		AND searchResult.id = #id#
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    企业后台
+        功能:    更新企业线下人才挖掘搜索记录信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-3    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateOfflineSearchResult" parameterClass="offlineSearchResultDto">
+		UPDATE
+			T_COMM_OFFLINESEARCHRESULT
+		SET
+			industryTypeCode=#industryTypeCode#,specializedTypeCode=#specializedTypeCode#,competencyCode=#competencyCode#,
+			provinceCode=#provinceCode#,cityCode=#cityCode#,areaCode=#areaCode#,metier=#metier#,educationCode=#educationCode#,
+			workingLifeCode=#workingLifeCode#,age=#age#,sex=#sex#,langCapaCode=#langCapaCode#,masteryCode=#masteryCode#,
+			computerGradeCode=#computerGradeCode#,isAdviser=#isAdviser#,jobNatureCode=#jobNatureCode#,
+			userInfoUpdateDate=#userInfoUpdateDate#,categoryIndex=#categoryIndex#,jobKeyWord=#jobKeyWord#,
+			recruitingNumber=#recruitingNumber#,jobIssuetDate=#jobIssuetDate#,jobExpiryDate=#jobExpiryDate#,
+			jobResponsibility=#jobResponsibility#,jobRequirements=#jobRequirements#
+		WHERE
+			id = #id#
+	</update>
+</sqlMap>

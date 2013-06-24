@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>大太阳建筑猎头--首页</title>
+		<link href="/css/index-style.css" rel="stylesheet" type="text/css" />
+	<link href="/css/validateMessage.css" rel="stylesheet" type="text/css" />
+	<script src="/javascripts/common/jquery.js"></script>
+	<script src="/javascripts/common/jquery.validate.js"></script>
+	<script src="/javascripts/common/common.js"></script>
+	<script src="/javascripts/common/businessValidate.js"></script>
+	<link rel="stylesheet" href="/javascripts/validationEngine/css/template.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="/javascripts/validationEngine/css/validationEngine.jquery.css" />
+	<script type="text/javascript" src="/javascripts/validationEngine/jquery.validationEngine-cn.js"></script>
+	<script type="text/javascript" src="/javascripts/validationEngine/jquery.validationEngine.js"></script>
+	<script>
+	    function beforeCall(form, options){
+	       if($("#userLogonForm").validationEngine('validate')){
+	    	   form.submit();
+	       }
+	       return true;
+	    }
+	    
+	    // Called once the server replies to the aja form validation request
+	    function ajaxValidationCallback(status, form, json, options){
+	       alert("Callback");
+	    }
+	    $(document).ready(function(){
+	        $("#userLogonForm").validationEngine({
+	            ajaxFormValidation: true,
+	            onAjaxFormComplete: ajaxValidationCallback,
+	            onBeforeAjaxFormValidation: beforeCall,
+	            validationEventTriggers:"blur",  //触发的事件  validationEventTriggers:"keyup blur",  
+	            success:false//为true时即使有不符合的也提交表单,false表示只有全部通过验证了才能提交表单,默认false  
+	            
+	        });
+	    });
+	</script>
+</head>
+<body>
+

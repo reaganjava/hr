@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/tx
+                    http://www.springframework.org/schema/tx/spring-tx.xsd
+                    http://www.springframework.org/schema/aop
+                    http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- properties config -->
+	<bean id="propertyConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- dataSource config -->
+	<!-- 1.可以查看SQL语句参数 开发测试用 -->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  -->
+	<!-- 2.发布 -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+
+		<!-- 初始化连接数
+		<property name="initialSize" value="${dataSource.initialSize}"></property>-->
+		<!-- 最大连接数据库连接数，设置为0时，表示没有限制
+		<property name="maxActive" value="${dataSource.maxActive}"></property>-->
+		<!-- 最大空闲连接数，设置为0时，表示没有限制
+		<property name="maxIdle" value="${dataSource.maxIdle}"></property>-->
+		<!-- 最小空闲连接数，设置为0时，表示没有限制
+		<property name="minIdle" value="${dataSource.minIdle}"></property>-->
+		<!-- maxWait代表当Connection用尽了，多小毫秒之后进行回收丢失连接
+		<property name="maxWait" value="${dataSource.maxWait}"></property>-->
+		<!-- 是否自动回收超时连接
+		<property name="removeAbandoned" value="${dataSource.removeAbandoned}"></property>-->
+	</bean>
+
+	<!-- spring ibatis config -->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocations">
+			<list>
+				<value>classpath:sqlMapConfig.xml</value>
+				<value>classpath:sqlMapConfigManage.xml</value>
+			</list>
+		</property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- spring ibatis template -->
+	<bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+
+	<!-- spring tx -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref local="dataSource"/>
+		</property>
+	</bean>
+
+	<!-- 事务切面配置 -->
+	<aop:config>
+		<aop:pointcut id="serviceOperation" expression="execution(* *.*.*.*.*.service.*.*(..))" />
+		<aop:pointcut id="serviceOperation1" expression="execution(* *.*.*.*.service.*.*(..))" />
+		<aop:advisor pointcut-ref="serviceOperation" advice-ref="txAdvice" />
+		<aop:advisor pointcut-ref="serviceOperation1" advice-ref="txAdvice" />
+	</aop:config>
+
+	<!-- 事务语义 配置 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<!-- 对service层抛出的Exception作回滚操作 -->
+			<tx:method name="delete*" rollback-for="Exception" />
+			<tx:method name="add*" rollback-for="Exception" />
+			<tx:method name="update*" rollback-for="Exception" />
+			<tx:method name="save*" rollback-for="Exception" />
+			<tx:method name="edit*" rollback-for="Exception" />
+		</tx:attributes>
+	</tx:advice>
+
+<!-- MemCache Spring配置 -->
+	<bean id="memcachedPool" class="com.danga.MemCached.SockIOPool" factory-method="getInstance"  
+         init-method="initialize" destroy-method="shutDown">  
+         <constructor-arg><value>neeaMemcachedPool</value></constructor-arg>  
+         <property name="servers">  
+             <list>  
+                 <value>192.168.1.98:11211</value>  
+             </list>  
+         </property>  
+         <property name="initConn"><value>20</value></property>  
+         <property name="minConn"><value>10</value></property>  
+         <property name="maxConn"><value>50</value></property>  
+         <property name="maintSleep"><value>30</value></property>  
+         <property name="nagle"><value>false</value></property>  
+         <property name="socketTO"><value>3000</value></property>  
+         <!--    
+         <property name="initConn"><value></value></property>  
+         <property name="initConn"><value></value></property>
+         -->  
+    </bean>  
+       
+    <bean id="memcachedClient" class="com.danga.MemCached.MemCachedClient">  
+        <constructor-arg><value>neeaMemcachedPool</value></constructor-arg>  
+        <property name="compressEnable"><value>true</value></property>  
+        <property name="compressThreshold"><value>4096</value></property>  
+    </bean> 
+    
+	<!-- 引入其它spring配置文件 -->
+	<import resource="springConfig/applicationContext-Action.xml"/>
+	<import resource="springConfig/applicationContext-DAO.xml"/>
+	<import resource="springConfig/applicationContext-Service.xml"/>
+	<import resource="springConfig/applicationContext-DAO-manage.xml"/>
+	<import resource="springConfig/applicationContext-Service-manage.xml"/>
+	<import resource="springConfig/applicationContext-JCaptcha.xml"/>
+	<import resource="springConfig/applicationContext-Quartz.xml"/>
+	
+	
+
+</beans>

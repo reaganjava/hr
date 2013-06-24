@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysIncrementRecruitSettingDto" type="com.dotoyo.buildjob.sys.dto.SysIncrementRecruitSettingDto"/>
+	<resultMap class="sysIncrementRecruitSettingDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="serviceCode" column="service_code"/>
+		<result property="serviceName" column="service_name"/>
+		<result property="timesOfPublicPosition" column="times_of_public_position"/>
+		<result property="timesOfLookupBlog" column="times_of_lookup_blog"/>
+		<result property="timesOfLookupInvite" column="times_of_lookup_invite"/>
+		<result property="operator" column="operator"/>
+		<result property="operatorName" column="userName"/>
+		<result property="submitDate" column="submit_date"/>
+		<result property="lastEditDate" column="last_edit_date"/>
+	</resultMap>
+ <!-- **********************************************************************************
+   Module:  System manager, recruit setting
+   Function: add  recruit setting
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addIncrementRecruitSetting" parameterClass="sysIncrementRecruitSettingDto">
+ 		     insert into T_SYS_INCREMENT_Recruit_SETTING(
+   			 service_code,
+   			 times_of_public_position,
+   			 times_of_lookup_blog,
+   			 times_of_lookup_invite,
+   			 operator,
+   			 submit_date,
+             last_edit_date) values(
+             #serviceCode#,
+             #timesOfPublicPosition#,
+             #timesOfLookupBlog#,
+             #timesOfLookupInvite#,
+             #operator#,
+             #submitDate#,
+ 			 #lastEditDate#)
+ 	</insert>
+
+ <!-- **********************************************************************************
+   Module:  System manager, recruit setting
+   Function: get  recruit fields list
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="queryIncrementRecruitList" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+ 			 Recruit.id,
+   			 Recruit.service_code,
+   			 service.service_name,
+   			 Recruit.times_of_public_position,
+   			 Recruit.times_of_lookup_blog,
+   			 Recruit.times_of_lookup_invite,
+   			 Recruit.operator,
+   			 user.userName,
+   			 Recruit.submit_date,
+             Recruit.last_edit_date
+ 		  from T_SYS_INCREMENT_Recruit_SETTING Recruit,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service,T_LOGIN_USER_ADMIN user
+ 		   where Recruit.service_code = service.service_code and Recruit.operator = user.id
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="serviceName">
+				(service.service_name like concat("%",#serviceName#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by service.service_name asc
+ 	</select>
+ 	<select id="queryIncrementRecruitCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(*)
+ 		  from T_SYS_INCREMENT_Recruit_SETTING Recruit,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service
+ 		   where Recruit.service_code = service.service_code
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="serviceName">
+				(service.service_name like concat("%",#serviceName#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by service.service_name asc
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager, recruit setting
+   Function: get  recruit fields DTO
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="queryIncrementRecruit" resultMap="result_dto" parameterClass="sysIncrementRecruitSettingDto">
+ 		select
+ 			 Recruit.id,
+   			 Recruit.service_code,
+   			 service.service_name,
+   			 Recruit.times_of_public_position,
+   			 Recruit.times_of_lookup_blog,
+   			 Recruit.times_of_lookup_invite,
+   			 Recruit.operator,
+   			 user.userName,
+   			 Recruit.submit_date,
+             Recruit.last_edit_date
+ 		  from T_SYS_INCREMENT_Recruit_SETTING Recruit,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service,T_LOGIN_USER_ADMIN user
+ 		   where Recruit.service_code = service.service_code and Recruit.operator = user.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="serviceCode">
+				(Recruit.service_code = #serviceCode#)
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by Recruit.last_edit_date
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager, recruit setting
+   Function: update  recruit fields
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateIncrementRecruitSetting" parameterClass="sysIncrementRecruitSettingDto">
+ 		update T_SYS_INCREMENT_Recruit_SETTING
+ 		set
+   		     service_code     = #serviceCode#,
+   			 times_of_public_position = #timesOfPublicPosition#,
+   			 times_of_lookup_blog     = #timesOfLookupBlog#,
+   			 times_of_lookup_invite   = #timesOfLookupInvite#,
+   			 operator         = #operator#,
+             last_edit_date   = #lastEditDate#
+ 		where service_code    = #serviceCode#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager, recruit setting
+   Function: remove  recruit fields
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeIncrementRecruitSetting" parameterClass="sysIncrementRecruitSettingDto">
+ 		delete from T_SYS_INCREMENT_Recruit_SETTING
+ 		where service_code = #serviceCode#
+ 	</statement>
+ </sqlMap>

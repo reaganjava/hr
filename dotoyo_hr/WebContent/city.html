@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大太阳建筑猎头--城市站点</title>
+<link href="css/other.css" rel="stylesheet" type="text/css" />
+<script src="javascripts/common/jquery.js"></script>
+<script src="javascripts/common/select.js"></script>
+</head>
+<body>
+<div class="top">
+	<div class="logo1"><img src="images/logo.png" width="152" height="88" alt="中国建筑平台"/></div>
+    <div class="logo2"><a href="#"><img src="images/logo2.png" width="147" height="55" alt="猎头，甄别模下的人才交流"/></a></div>
+    <div class="top-right">
+    	<div class="top-add"><a href="#"><img src="pic/top-add.jpg" width="612" height="82" /></a></div>
+        <div class="top-font">
+        	<ul>
+            	<li><a href="#">大太阳公益</a></li>
+                <li><a href="help.html">帮助中心</a></li>
+                <li><a href="services.html">增值服务</a></li>
+                <li><a href="#">注册</a></li>
+                <li><a href="#">登录</a></li>
+            </ul>
+        </div>
+    </div>
+    
+</div>
+<div class="nav">
+	<ul>
+    	<li class="nav-out" id="menu01" onmouseover="changeMenu(this)"><a href="index.html">首页</a></li>
+        <li class="nav-on" id="menu02" onmouseover="changeMenu(this)"><a href="jsp/headhunterCenter/head.html">猎头中心</a></li>
+        <li class="nav-on" id="menu03" onmouseover="changeMenu(this)"><a href="jsp/applyJobCenter/people.html">人才中心</a></li>
+        <li class="nav-on" id="menu04" onmouseover="changeMenu(this)"><a href="jsp/peopleExcavate/excavate.html">人才挖掘</a></li>
+        <li class="nav-on" id="menu05" onmouseover="changeMenu(this)"><a href="jsp/certificateCenter/certificate.html">猎证中心</a></li>
+        <li class="nav-on" id="menu08" onmouseover="changeMenu(this)"><a href="jsp/innovationSalon/salon.html">创业沙龙</a></li>
+    </ul>
+</div>
+<!--以上为头部分-->
+<!--搜索-->
+<div class="head-ss">
+    	<div class="ss-left">
+        	<div class="ss-zhiwei">
+            	<ul>
+                	<li class="ss0">行业：</li>
+                	<li class="ss1"><img src="images/search-down.png" width="21" height="22" onclick="menuClick('#border1', '#searchDown1')" /><input id="border1" name="" type="text" value="选择行业类别"/></li>
+                    <li class="ss0">地区：</li>
+                    <li class="ss2"><img src="images/search-down.png" width="21" height="22" onclick="menuClick('#border2', '#searchDown2')" /><input id="border2" name="" type="text" value="省份"/></li>
+                    <li class="ss2"><img src="images/search-down.png" width="21" height="22" onclick="menuClick('#border3', '#searchDown3')" /><input id="border3" name="" type="text" value="城市"/></li>
+                    <li class="ss2"><img src="images/search-down.png" width="21" height="22" onclick="menuClick('#border4', '#searchDown4')" /><input id="border4" name="" type="text" value="城区"/></li>
+                    <li class="ss0">职能：</li>
+                	<li class="ss1"><img src="images/search-down.png" width="21" height="22" onclick="menuClick('#border5', '#searchDown5')" />
+               	    <input id="border5" name="" type="text" value="选择职能类别"/></li>
+                    <li class="ss3"><input name="" type="text" value="输入关键字"/></li>
+                </ul> 
+            </div>
+            <div class="ss-botton">
+            	<a href="jsp/headhunterCenter/abstract.html"><img src="images/head-search.png" width="77" height="28" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="jsp/headhunterCenter/abstract.html"><img src="images/head-search2.png" width="77" height="28" /></a>
+                <a href="#"><img src="images/head-search3.png" width="77" height="28" /></a>
+            </div>
+        </div>
+        <div class="ss-right"><a href="jsp/headhunterCenter/published-posts.html"><img src="images/head-search4.png" width="91" height="28" alt="发布职位"/></a></div>
+    </div>
+<!--搜索下拉菜单~绝对定位~-->
+<div class="head-down" id="showMenuID">
+    <div class="head-down1" id="searchDown1" onmouseleave="menuHide(this)" style="display:none;">
+        <ul>
+            <li><a href="#">监理和工程咨询</a></li>
+            <li><a href="#">施工及装饰</a></li>
+            <li><a href="#">体系认证</a></li>
+            <li><a href="#">公关策划</a></li>
+            <li><a href="#">财务审计</a></li>
+            <li><a href="#">后勤安保</a></li>
+            <li><a href="#">设备维修</a></li>
+            <li><a href="#">物资供应</a></li>
+            <li><a href="#">设备租赁</a></li>
+            <li><a href="#">工程物流</a></li>
+            <li><a href="#">工程翻译</a></li>
+            <li><a href="#">物业管理</a></li>
+            <li><a href="#">建设报关</a></li>
+            <li><a href="#">工程检测</a></li>
+            <li><a href="#">建筑风水</a></li>
+            <li><a href="#">工程技术</a></li>
+            <li><a href="#">工程材料</a></li>
+            <li><a href="#">工程设备</a></li>
+            <li><a href="#">工程五金</a></li>
+            <li><a href="#">器具用品</a></li>
+            <li><a href="#">工程试验</a></li>
+            <li><a href="#">结构安全</a></li>
+            <li><a href="#">工程安全</a></li>
+            <li><a href="#">岩土工程</a></li>
+            <li><a href="#">地质灾害</a></li>
+            <li><a href="#">环境保护</a></li>
+            <li><a href="#">建筑节能</a></li>
+            <li><a href="#">工程计算</a></li>
+            <li><a href="#">工程软件</a></li>
+            <li><a href="#">工程管理</a></li>
+            <li><a href="#">企业管理</a></li>
+            <li><a href="#">城市规划</a></li>
+            <li><a href="#">房地产及物业</a></li>
+            <li><a href="#">勘察设计</a></li>
+            <li><a href="#">施工及装饰</a></li>
+            <li><a href="#">监理和工程咨询</a></li>
+            <li><a href="#">建材设备厂商</a></li>
+            <li><a href="#"> 其他</a></li>
+        </ul>
+    </div>
+    <div class="head-down2" id="searchDown2" onmouseleave="menuHide(this)" style="display:none;">
+   	  <ul>
+            <li><a href="#">北京市</a></li>
+            <li><a href="#">天津市</a></li>
+            <li><a href="#">河北省</a></li>
+            <li><a href="#">山西省</a></li>
+            <li><a href="#">内蒙古</a></li>
+            <li><a href="#">吉林省吉林省</a></li>
+            <li><a href="#">黑龙江</a></li>
+            <li><a href="#">上海市</a></li>
+            <li><a href="#">江苏省</a></li>
+            <li><a href="#">宁夏</a></li>
+            <li><a href="#">香港</a></li>
+            <li><a href="#">澳门</a></li>
+            <li><a href="#">山东省</a></li>
+            <li><a href="#">福建省</a></li>
+            <li><a href="#">安徽省</a></li>
+            <li><a href="#">江西省</a></li>
+            <li><a href="#">河南省</a></li>
+            <li><a href="#">湖北省</a></li>
+            <li><a href="#">湖南省</a></li>
+            <li><a href="#">贵州省</a></li>
+            <li><a href="#">云南省</a></li>
+            <li><a href="#">广东省</a></li>
+            <li><a href="#">广西省</a></li>
+            <li><a href="#">重庆市</a></li>
+            <li><a href="#">海南省</a></li>
+            <li><a href="#">四川省</a></li>
+            <li><a href="#">陕西省</a></li>
+            <li><a href="#">甘肃省</a></li>
+            <li><a href="#">青海省</a></li>
+            <li><a href="#">浙江省</a></li>
+            <li><a href="#">台湾省</a></li>
+        </ul>
+    </div>
+    <div class="head-down3" id="searchDown3" onmouseleave="menuHide(this)" style="display:none;">
+   	  <ul>
+            <li><a href="#">北京市</a></li>
+            <li><a href="#">天津市</a></li>
+            <li><a href="#">海口市</a></li>
+            <li><a href="#">昆明市</a></li>
+            <li><a href="#">济南市</a></li>
+            <li><a href="#">石家庄市</a></li>
+            <li><a href="#">西宁市</a></li>
+            <li><a href="#">太原市</a></li>
+            <li><a href="#">呼和浩特市</a></li>
+            <li><a href="#">银川市</a></li>
+            <li><a href="#">武汉市</a></li>
+            <li><a href="#">沈阳市</a></li>
+            <li><a href="#">深圳市</a></li>
+            <li><a href="#">南京市</a></li>
+            <li><a href="#">长沙市</a></li>
+            <li><a href="#">郑州市</a></li>
+            <li><a href="#">成都市</a></li>
+            <li><a href="#">贵阳市</a></li>
+            <li><a href="#">兰州市</a></li>
+            <li><a href="#">南宁市</a></li>
+            <li><a href="#">福州市</a></li>
+            <li><a href="#">南昌市</a></li>
+            <li><a href="#">西安市</a></li>
+            <li><a href="#">长春市</a></li>
+            <li><a href="#">哈尔滨市</a></li>
+        </ul>
+    </div>
+    <div class="head-down4" id="searchDown4" onmouseleave="menuHide(this)" style="display:none;">
+   	  <ul>
+        	<li><a href="#">芙蓉区</a></li>
+            <li><a href="#">岳麓区</a></li>
+            <li><a href="#">开福区</a></li>
+            <li><a href="#">天心区</a></li>
+            <li><a href="#">西城区</a></li>
+            <li><a href="#">宣武区</a></li>
+            <li><a href="#">朝阳区</a></li>
+            <li><a href="#">东城区</a></li>
+            <li><a href="#">海淀区</a></li>
+            <li><a href="#">丰台区</a></li>
+            <li><a href="#">怀柔区</a></li>
+            <li><a href="#">昌平区</a></li>
+            <li><a href="#">崇文区</a></li>
+            <li><a href="#">石景山区</a></li>
+            <li><a href="#">通州区</a></li>
+            <li><a href="#">平谷区</a></li>
+            <li><a href="#">顺义区</a></li>
+            <li><a href="#">门头沟区</a></li>
+            <li><a href="#">房山区</a></li>
+            <li><a href="#">大兴区</a></li>
+            <li><a href="#">罗湖区</a></li>
+            <li><a href="#">盐田区</a></li>
+            <li><a href="#">福田区</a></li>
+            <li><a href="#">南山区</a></li>
+            <li><a href="#">龙岗区</a></li>
+            <li><a href="#">宝安区</a></li>
+            <li><a href="#">番禺区</a></li>
+            <li><a href="#">萝岗区</a></li>
+            <li><a href="#">越秀区</a></li>
+            <li><a href="#">荔湾区</a></li>
+            <li><a href="#">海珠区</a></li>
+            <li><a href="#">天河区</a></li>
+            <li><a href="#">白云区</a></li>
+            <li><a href="#">黄埔区</a></li>
+            <li><a href="#">南沙区</a></li>
+            <li><a href="#">花都区</a></li>
+        </ul>
+    </div>
+    <div class="head-down5" id="searchDown5" onmouseleave="menuHide(this)" style="display:none;">
+   	  <ul>
+            <li><a href="#">建筑师/建筑设计师</a></li>
+            <li><a href="#">规划设计师</a></li>
+            <li><a href="#">园林景观设计师</a></li>
+            <li><a href="#">结构工程师</a></li>
+            <li><a href="#">岩土工程师</a></li>
+            <li><a href="#">设备工程师</a></li>
+            <li><a href="#">室内外装潢设计师</a></li>
+            <li><a href="#">绘图员/建模人员</a></li>
+            <li><a href="#">效果图</a></li>
+            <li><a href="#">给排水工程师</a></li>
+            <li><a href="#">暖通空调工程师</a></li>
+            <li><a href="#">电气/强电/弱电/机电工程师</a></li>
+            <li><a href="#">路桥/隧道工程师</a></li>
+            <li><a href="#">市政工程师</a></li>
+            <li><a href="#">工程部经理/项目经理/建造师工程部经理</a></li>
+            <li><a href="#">总工程师/技术负责人</a></li>
+            <li><a href="#">造价工程师/预算员/成本控制</a></li>
+            <li><a href="#">工长/施工员</a></li>
+            <li><a href="#">土建工程师/装饰工程师</a></li>
+            <li><a href="#">安全/质检员/安全质量工程师</a></li>
+            <li><a href="#">监理员/监理工程师</a></li>
+            <li><a href="#">土建/工民建监理</a></li>
+            <li><a href="#">公路/铁路/桥梁/隧道/市政监理</a></li>
+            <li><a href="#">水利/水电监理</a></li>
+            <li><a href="#">电力/燃气监理</a></li>
+            <li><a href="#">机电/设备/通讯/安装监理</a></li>
+            <li><a href="#">暖通/给排水监理</a></li>
+            <li><a href="#">园林/绿化/景观/林业监理</a></li>
+            <li><a href="#">装饰/装潢监理</a></li>
+            <li><a href="#">工程咨询/招投标人员</a></li>
+            <li><a href="#">测量/测绘员/测量/测绘员</a></li>
+            <li><a href="#">资料员/档案管理员</a></li>
+            <li><a href="#">试验员/检测员</a></li>
+            <li><a href="#">材料员/采购员/物资管理</a></li>
+            <li><a href="#">建筑工人/维修工</a></li>
+            <li><a href="#">物业管理人员</a></li>
+            <li><a href="#">房地产销售/中介/置业顾问</a></li>
+            <li><a href="#">房地产/土地评估师</a></li>
+            <li><a href="#">房地产前期/策划/投资</a></li>
+            <li><a href="#">总经理/副总经理/部门经理</a></li>
+            <li><a href="#">项目策划经理</a></li>
+            <li><a href="#">前期部/投融资部/开发部经理</a></li>
+            <li><a href="#">招投标主管</a></li>
+            <li><a href="#">招商经理/主管/专员</a></li>
+            <li><a href="#">幕墙工程师</a></li>
+            <li><a href="#">水利工程师</a></li>
+            <li><a href="#">环保工程师</a></li>
+            <li><a href="#">铁路/城市轨道交通类</a></li>
+            <li><a href="#">财务审计类</a></li>
+            <li><a href="#">人力资源类</a></li>
+            <li><a href="#">行政文秘类</a></li>
+            <li><a href="#">市场销售类</a></li>
+            <li><a href="#">计算机/网络人员</a></li>
+            <li><a href="#">其他职能</a></li>
+        </ul>
+    </div>  
+</div>
+<!--中间部分-->    
+<div class="head-mid">
+	<div class="head-left">
+    	<div class="head-city">
+        	<a href="#"><img src="images/city11.jpg" width="104" height="85" alt="北京站"/></a>
+            <a href="#"><img src="images/city12.jpg" width="104" height="85" alt="上海站"/></a>
+            <a href="#"><img src="images/city13.jpg" width="104" height="85" alt="广州站"/></a>
+            <a href="#"><img src="images/city14.jpg" width="104" height="85" alt="深圳站"/></a>
+            <a href="#"><img src="images/city15.jpg" width="104" height="85" alt="杭州站"/></a>
+            <a href="#"><img src="images/city16.jpg" width="104" height="85" alt="天津站"/></a>
+            <a href="#"><img src="images/city17.jpg" width="104" height="85" alt="武汉站"/></a>
+            <a href="#"><img src="images/city18.jpg" width="104" height="85" alt="重庆站"/></a>
+            <a href="#"><img src="images/city19.jpg" width="104" height="85" alt="南京站"/></a>
+            <a href="#"><img src="images/city20.jpg" width="104" height="85" alt="苏州站"/></a>
+        </div>
+        <div class="hyfl">
+        	<div class="hyfl-title"><strong>职能分类</strong></div>
+            <div class="znfl">
+            	<ul>
+                    <li><a href="#">建筑师/建筑设计师</a></li>
+                    <li><a href="#">规划设计师</a></li>
+                    <li><a href="#">园林景观设计师</a></li>
+                    <li><a href="#">结构工程师</a></li>
+                    <li><a href="#">岩土工程师</a></li>
+                    <li><a href="#">设备工程师</a></li>
+                    <li><a href="#">室内外装潢设计师</a></li>
+                    <li><a href="#">绘图员/建模人员</a></li>
+                    <li><a href="#">效果图</a></li>
+                    <li><a href="#">给排水工程师</a></li>
+                    <li><a href="#">暖通空调工程师</a></li>
+                    <li><a href="#">电气/强电/弱电/机电工程师</a></li>
+                    <li><a href="#">路桥/隧道工程师</a></li>
+                    <li><a href="#">市政工程师</a></li>
+                    <li><a href="#">工长/施工员</a></li>
+                    <li><a href="#">土建工程师/装饰工程师</a></li>
+                    <li><a href="#">安全/质检员/安全质量工程师</a></li>
+                    <li><a href="#">监理员/监理工程师</a></li>
+                    <li><a href="#">土建/工民建监理</a></li>
+                    <li><a href="#">公路/铁路/桥梁/隧道/市政监理</a></li>
+                    <li><a href="#">水利/水电监理</a></li>
+                    <li><a href="#">电力/燃气监理</a></li>
+                    <li><a href="#">机电/设备/通讯/安装监理</a></li>
+                    <li><a href="#">暖通/给排水监理</a></li>
+                    <li><a href="#">园林/绿化/景观/林业监理</a></li>
+                    <li><a href="#">资料员/档案管理员</a></li>
+                    <li><a href="#">试验员/检测员</a></li>
+                    <li><a href="#">材料员/采购员/物资管理</a></li>
+                    <li><a href="#">建筑工人/维修工</a></li>
+                    <li><a href="#">物业管理人员</a></li>
+                    <li><a href="#">房地产销售/中介/置业顾问</a></li>
+                    <li><a href="#">房地产/土地评估师</a></li>
+                    <li><a href="#">房地产前期/策划/投资</a></li>
+                    <li><a href="#">总经理/副总经理/部门经理</a></li>
+                    <li><a href="#">项目策划经理</a></li>
+                    <li><a href="#">前期部/投融资部/开发部经理</a></li>
+                    <li><a href="#">招投标主管</a></li>
+                    <li><a href="#">招商经理/主管/专员</a></li>
+                    <li><a href="#">幕墙工程师</a></li>
+                    <li><a href="#">水利工程师</a></li>
+                    <li><a href="#">环保工程师</a></li>
+                    <li><a href="#">铁路/城市轨道交通类</a></li>
+                    <li><a href="#">财务审计类</a></li>
+                    <li><a href="#">计算机/网络人员</a></li>
+                    <li><a href="#">其他职能</a></li>
+                    <li><a href="#">财务审计类</a></li>
+                    <li><a href="#">计算机/网络人员</a></li>
+                    <li><a href="#">其他职能</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="hyf2">
+        	<div class="city-title"><span>热门城市职位</span></div>
+            <div class="znfl">
+            	<ul>
+                    <li><a href="#">建筑师/建筑设计师</a></li>
+                    <li><a href="#">规划设计师</a></li>
+                    <li><a href="#">园林景观设计师</a></li>
+                    <li><a href="#">结构工程师</a></li>
+                    <li><a href="#">岩土工程师</a></li>
+                    <li><a href="#">设备工程师</a></li>
+                    <li><a href="#">室内外装潢设计师</a></li>
+                    <li><a href="#">绘图员/建模人员</a></li>
+                    <li><a href="#">效果图</a></li>
+                    <li><a href="#">给排水工程师</a></li>
+                    <li><a href="#">暖通空调工程师</a></li>
+                    <li><a href="#">电气/强电/弱电/机电工程师</a></li>
+                    <li><a href="#">路桥/隧道工程师</a></li>
+                    <li><a href="#">市政工程师</a></li>
+                    <li><a href="#">工长/施工员</a></li>
+                    <li><a href="#">土建工程师/装饰工程师</a></li>
+                    <li><a href="#">安全/质检员/安全质量工程师</a></li>
+                    <li><a href="#">监理员/监理工程师</a></li>
+                    <li><a href="#">土建/工民建监理</a></li>
+                    <li><a href="#">公路/铁路/桥梁/隧道/市政监理</a></li>
+                    <li><a href="#">水利/水电监理</a></li>
+                    <li><a href="#">电力/燃气监理</a></li>
+                    <li><a href="#">机电/设备/通讯/安装监理</a></li>
+                    <li><a href="#">暖通/给排水监理</a></li>
+                    <li><a href="#">园林/绿化/景观/林业监理</a></li>
+                    <li><a href="#">资料员/档案管理员</a></li>
+                    <li><a href="#">试验员/检测员</a></li>
+                    <li><a href="#">材料员/采购员/物资管理</a></li>
+                    <li><a href="#">建筑工人/维修工</a></li>
+                    <li><a href="#">物业管理人员</a></li>
+                    <li><a href="#">房地产销售/中介/置业顾问</a></li>
+                    <li><a href="#">房地产/土地评估师</a></li>
+                    <li><a href="#">房地产前期/策划/投资</a></li>
+                    <li><a href="#">总经理/副总经理/部门经理</a></li>
+                    <li><a href="#">项目策划经理</a></li>
+                    <li><a href="#">前期部/投融资部/开发部经理</a></li>
+                    <li><a href="#">招投标主管</a></li>
+                    <li><a href="#">招商经理/主管/专员</a></li>
+                    <li><a href="#">幕墙工程师</a></li>
+                    <li><a href="#">水利工程师</a></li>
+                    <li><a href="#">环保工程师</a></li>
+                    <li><a href="#">铁路/城市轨道交通类</a></li>
+                    <li><a href="#">财务审计类</a></li>
+                    <li><a href="#">计算机/网络人员</a></li>
+                    <li><a href="#">其他职能</a></li>
+                </ul>
+            </div>
+            
+            <div class="city-title city-title2"><span>热门城市企业</span></div>
+            <div class="qiye-hot">
+            	<ul>
+                    <li><a href="#">北京博杰建筑工程有限公司</a></li>
+                    <li><a href="#">山东一箭建设有限公司北京分公司</a></li>
+                    <li><a href="#">中国建筑装饰工程有限公司北京第三分公司</a></li>
+                    <li><a href="#">北京同菁园林绿化工程有限公司</a></li>
+                    <li><a href="#">北京星河园林景观工程有限公司</a></li>
+                    <li><a href="#">大龙建筑集团第五分公司</a></li>
+                    <li><a href="#">北京辰辉建筑安装工程有限公司</a></li>
+                    <li><a href="#">深圳市极尚建筑装饰设计工程有限公司(北京)</a></li>
+                    <li><a href="#">中国人民解放军工程建设协会工程施工委员会</a></li>
+                    <li><a href="#">北京朝林科技发展集团有限公司</a></li>
+                    <li><a href="#">中国建筑装饰工程有限公司</a></li>
+                    <li><a href="#">北京乾景园林工程有限公司</a></li>
+                    <li><a href="#">北京西飞世纪门窗幕墙工程有限责任公司</a></li>
+                    <li><a href="#">北京泽辉建筑装饰工程有限公司</a></li>
+                    <li><a href="#">北京晟利达科贸有限责任公司</a></li>
+                    <li><a href="#">北京中艺瀚海装饰有限公司</a></li>
+                    <li><a href="#">北京建工海亚建设工程有限公司</a></li>
+                    <li><a href="#">量居建业（北京）建筑工程有限公司</a></li>
+                    <li><a href="#">中国水利水电第二工程局有限公司</a></li>
+                    <li><a href="#">中国航空技术国际工程有限公司</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="head-right">
+    	<div class="head-about"><a href="#"><img src="pic/head-about.png" width="340" height="220" alt="猎头中心介绍频道"/></a></div>
+        <div class="tjqy">
+        	<div class="tjqy-title"><strong>推荐企业</strong></div>
+            <div class="tjqy-bottom">
+            	<ul class="tjqy-pic">
+            		<li><a href="#"><img src="pic/head-add1.jpg" width="155" height="60" /></a></li>
+                    <li><a href="#"><img src="pic/head-add2.jpg" width="155" height="60" /></a></li>
+                    <li><a href="#"><img src="pic/head-add3.jpg" width="155" height="60" /></a></li>
+                    <li><a href="#"><img src="pic/head-add4.jpg" width="155" height="60" /></a></li>
+                    <li><a href="#"><img src="pic/head-add5.jpg" width="155" height="60" /></a></li>
+                    <li><a href="#"><img src="pic/head-add6.jpg" width="155" height="60" /></a></li>
+                    <li><a href="#"><img src="pic/head-add7.jpg" width="155" height="60" /></a></li>
+                    <li><a href="#"><img src="pic/head-add8.jpg" width="155" height="60" /></a></li>
+                </ul>
+                <ul class="tjqy-font">     
+            		<li><a href="#">哈曼音响深圳研发中心</a><span><a href="#">项目经理</a><a href="#">研发工程师</a></span></li>
+                    <li><a href="#">深圳市农产品股份有限公司</a><span><a href="#">现场管理工程经理</a></span></li>
+                    <li><a href="#">北京嘉寓门窗幕墙股份有限公司</a></li>
+                    <li><a href="#">万华圳业投资</a><span><a href="#">总经理助理</a><a href="#">商务助理</a></span></li>
+                    <li><a href="#">花旗银行（中国）有限公司深圳分行</a><span><a href="#">CGA Head</a></span></li>
+                    <li><a href="#">缤特力通讯科技苏州有限公司</a><span><a href="#">供应商质量管理</a></span></li>
+                    <li><a href="#">缤特力通讯科技苏州有限公司</a><span><a href="#">供应商质量管理</a></span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="city-add">
+        	<ul>
+            	<li><a href="#"><img src="pic/city-add1.jpg" width="340" height="70" /></a></li>
+                <li><a href="#"><img src="pic/city-add2.jpg" width="340" height="70" /></a></li>
+                <li><a href="#"><img src="pic/city-add1.jpg" width="340" height="70" /></a></li>
+                <li><a href="#"><img src="pic/city-add2.jpg" width="340" height="70" /></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<!--底部分-->
+<div class="add"><a href="#"><img src="pic/bottom-add.png" width="980" height="77" /></a></div>
+<div class="bottom">
+	<a href="about.html">关于我们</a>|
+    <a href="contact-us.html">联系我们</a>|
+    <a href="#">在线客服</a>|
+    <a href="#">在线培训</a>|
+    <a href="#">免费注册</a>|
+    <a href="#">用户中心</a>|
+    <a href="legal-notices.html">法律声明</a>|
+    <a href="#">意见反馈</a>|
+    <a onclick="this.style.behavior='url(#default#homepage)';this.sethomepage('http://www.jzpt.com');return false;" href="http://www.jzpt.com">
+		设为首页</a><br />
+    粤ICP备10009347号 增值电信业务经营许可证：粤B2-20100358 广播电视节目制作经营许可证：（粤）字第1116号
+		Copyright(C)2010-2012 jzpt.All Rights Reserved
+</div>
+<div class="bottom-links"><a href="http://www.sznet110.gov.cn/webrecord/innernet/Welcome.jsp?bano=4403101010155"><img src="images/bottom-logo1.png" width="108" height="42" alt="公共信息安全网络监察"/></a><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=0272000112400002"><img src="images/bottom-logo2.png" width="108" height="42"  alt="经营性网站备案信息"/></a><a href="http://net.china.cn/chinese/index.htm"><img src="images/bottom-logo3.png" width="108" height="42" alt="不良信息举报中心"/></a></div>
+</body>
+</html>

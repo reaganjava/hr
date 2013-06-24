@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="blogUserInfoDto" type="com.dotoyo.buildjob.common.dto.BlogUserInfoDto"/>
+ 	<typeAlias alias="peopleExcavateVo" type="com.dotoyo.buildjob.peopleExcavate.vo.PeopleExcavateVo"/>
+<!-- ********************************************************************************** 
+        模块:    人才挖掘
+        功能:    人才之星查询(top_n)
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-15    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+ 	<select id="getTalentShowStarTOP_N" parameterClass="java.lang.Integer" resultClass="blogUserInfoDto">
+ 		<![CDATA[
+ 		SELECT u.id,u.userName,c.NAME as competency
+ 		  FROM t_user_info u,t_comm_class_master c,t_login_user loginUser 
+ 		 WHERE u.competency=c.CODE 
+ 		   AND u.userName=loginUser.userName 
+ 		   AND loginUser.STATUS=1
+ 		   AND u.userType=0
+      ORDER BY u.categoryIndex DESC LIMIT #limit# ]]>
+ 	</select>
+<!-- ********************************************************************************** 
+        模块:    人才挖掘
+        功能:    线上人才挖掘
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-17    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="peopleExcavate" parameterClass="peopleExcavateVo" resultClass="blogUserInfoDto">
+		<![CDATA[
+		   SELECT loginUser.id as userId,
+				  userInfo.userName,
+				  applyjobctr.expectedPosition   AS jobName,
+				  (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.competency) AS competency,
+				  (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.industryType) AS industryType,
+				  (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.specializedType) AS specializedType,
+				  userInfo.metier,
+				  userInfo.categoryIndex,
+				  userInfo.userInfoUpdateDate,
+				  userInfo.userName,
+				  (SELECT NAME FROM t_comm_province WHERE CODE = userInfo.provinceCode) AS provinceCode,
+				  (SELECT NAME FROM t_comm_city WHERE CODE = userInfo.cityCode) AS cityCode,
+				  (SELECT NAME FROM t_comm_area WHERE CODE = userInfo.areaCode) AS areaCode,
+				  (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.education AND parentCode = '007') AS education,
+				  userInfo.workingLife,
+				  userInfo.age,
+				  userInfo.sex,
+				  (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.langCapa AND parentCode = '008') AS langCapa,
+				  (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.mastery AND parentCode = '009') AS mastery,
+				  (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.computerGrade AND parentCode = '011') AS computerGrade,
+				  userInfo.isAdviser,
+				  (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.jobNature) AS jobNature
+		   FROM t_user_info userInfo,
+			    t_login_user loginUser
+			    join t_applyjobctr_recommendation applyjobctr  on applyjobctr.userId=loginUser.id
+		  WHERE userInfo.userName=loginUser.userName
+		    AND userInfo.userType=0 AND (applyjobctr.interviewStatus IS NULL OR  applyjobctr.interviewStatus=0 OR  applyjobctr.interviewStatus=2)
+		]]>
+	    <dynamic prepend="and">
+	    	<isNotEmpty prepend="and" property="industryType">
+			    (userInfo.industryType=#industryType#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="specializedType">
+	    		(userInfo.specializedType=#specializedType#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="competency">
+	    		<![CDATA[(userInfo.competency=#competency#)]]>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="provinceCode">
+	    		(userInfo.provinceCode=#provinceCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="cityCode">
+	    		(userInfo.cityCode=#cityCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="areaCode">
+	    		(userInfo.areaCode=#areaCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="metier">
+	    		<![CDATA[(userInfo.metier like concat("%",#metier#,"%"))]]>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="education">
+	    		<isNotEqual property="education" compareValue="0">
+	    			(userInfo.education=#education#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="workingLife">
+	    		<isNotEqual property="workingLife" compareValue="0-0">
+		    		<![CDATA[userInfo.workingLife>=$ltWorkingLife$ AND userInfo.workingLife<=$gtWorkingLife$]]>
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="age">
+	    		<isNotEqual property="age" compareValue="0-0">
+		    		<![CDATA[userInfo.age>$ltAge$ AND userInfo.age<=$gtAge$]]> 
+	    		</isNotEqual>
+	    	</isNotEmpty>
+    		<isNotEmpty prepend="and" property="sex">
+	    		(userInfo.sex=#sex#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="langCapa">
+	    		<isNotEqual property="langCapa" compareValue="0">
+	    			(userInfo.langCapa=#langCapa#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="mastery">
+	    		<isNotEqual property="mastery" compareValue="0">
+	    			(userInfo.mastery=#mastery#)       
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="computerGrade">
+	    		<isNotEqual property="computerGrade" compareValue="0">
+		    		(userInfo.computerGrade=#computerGrade#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="isAdviser">      
+	    		(userInfo.isAdviser=#isAdviser#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="jobNature">   
+	    		(userInfo.jobNature=#jobNature#)
+	    	</isNotEmpty>
+	    	<isNotNull prepend="and" property="userInfoUpdateDate">
+	    		DATE_FORMAT(userInfo.userInfoUpdateDate,'%Y-%m-%d')>DATE_FORMAT(#userInfoUpdateDate#,'%Y-%m-%d')
+	    	</isNotNull>
+	    	<isNotEmpty prepend="and" property="categoryIndex">
+	    		(userInfo.categoryIndex=#categoryIndex#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="jobKeyWord">
+	    		(userInfo.expectedPosition like concat("%",#jobKeyWord#,"%"))
+	    	</isNotEmpty>
+    	</dynamic>
+    		AND NOT EXISTS(SELECT pf.id FROM t_personcenter_filtercompany pf WHERE pf.userid=loginUser.id AND #companyName# IN(pf.companyName1,pf.companyName2,pf.companyName3,pf.companyName4,pf.companyName5))
+	    	<isEqual prepend="order by" property="orderBy" compareValue="userInfoUpdateDate">
+	    		<![CDATA[userInfo.userInfoUpdateDate DESC]]>
+	    	</isEqual>
+	    	<isEqual prepend="order by" property="orderBy" compareValue="workingLife">
+	    		<![CDATA[userInfo.workingLife DESC]]>
+	    	</isEqual>
+	    	<isEqual prepend="order by" property="orderBy" compareValue="categoryIndex">
+	    		<![CDATA[userInfo.categoryIndex DESC]]>
+	    	</isEqual>
+	    	<isEqual prepend="order by" property="orderBy" compareValue="jobKeyWord">
+	    		<![CDATA[userInfo.expectedPosition DESC]]>
+	    	</isEqual>
+	</select>
+<!-- ********************************************************************************** 
+        模块:    人才挖掘 
+        功能:    分页 计数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-1-18    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+<select id="queryTalentCount" parameterClass="peopleExcavateVo" resultClass="java.lang.Integer">
+		<![CDATA[
+    	SELECT count(userInfo.userName)
+    	  FROM t_user_info userInfo,
+			   t_login_user loginUser
+			   join t_applyjobctr_recommendation applyjobctr  on applyjobctr.userId=loginUser.id
+		 WHERE userInfo.userName=loginUser.userName
+	      AND userInfo.userType=0 AND (applyjobctr.interviewStatus IS NULL OR  applyjobctr.interviewStatus=0 OR  applyjobctr.interviewStatus=2)
+		]]>
+	    <dynamic prepend="and">
+	    	<isNotEmpty prepend="and" property="industryType">
+			    (userInfo.industryType=#industryType#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="specializedType">
+	    		(userInfo.specializedType=#specializedType#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="competency">
+	    		<![CDATA[(userInfo.competency=#competency#)]]>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="provinceCode">
+	    		(userInfo.provinceCode=#provinceCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="cityCode">
+	    		(userInfo.cityCode=#cityCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="areaCode">
+	    		(userInfo.areaCode=#areaCode#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="metier">
+	    		<![CDATA[(userInfo.metier like concat("%",#metier#,"%"))]]>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="education">
+	    		<isNotEqual property="education" compareValue="0">
+	    			(userInfo.education=#education#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="workingLife">
+	    		<isNotEqual property="workingLife" compareValue="0-0">
+		    		<![CDATA[userInfo.workingLife>=$ltWorkingLife$ AND userInfo.workingLife<=$gtWorkingLife$]]>
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="age">
+	    		<isNotEqual property="age" compareValue="0-0">
+		    		<![CDATA[userInfo.age>$ltAge$ AND userInfo.age<=$gtAge$]]> 
+	    		</isNotEqual>
+	    	</isNotEmpty>
+    		<isNotEmpty prepend="and" property="sex">
+	    		(userInfo.sex=#sex#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="langCapa">
+	    		<isNotEqual property="langCapa" compareValue="0">
+	    			(userInfo.langCapa=#langCapa#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="mastery">
+	    		<isNotEqual property="mastery" compareValue="0">
+	    			(userInfo.mastery=#mastery#)       
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="computerGrade">
+	    		<isNotEqual property="computerGrade" compareValue="0">
+		    		(userInfo.computerGrade=#computerGrade#)
+	    		</isNotEqual>
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="isAdviser">      
+	    		(userInfo.isAdviser=#isAdviser#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="jobNature">   
+	    		(userInfo.jobNature=#jobNature#)
+	    	</isNotEmpty>
+	    	<isNotNull prepend="and" property="userInfoUpdateDate">
+	    		DATE_FORMAT(userInfo.userInfoUpdateDate,'%Y-%m-%d')>DATE_FORMAT(#userInfoUpdateDate#,'%Y-%m-%d')
+	    	</isNotNull>
+	    	<isNotEmpty prepend="and" property="categoryIndex">
+	    		(userInfo.categoryIndex=#categoryIndex#)
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="and" property="jobKeyWord">
+	    		(userInfo.expectedPosition like concat("%",#jobKeyWord#,"%"))
+	    	</isNotEmpty>
+	    </dynamic>
+	    AND NOT EXISTS(SELECT pf.id FROM t_personcenter_filtercompany pf WHERE pf.userid=loginUser.id AND #companyName# IN(pf.companyName1,pf.companyName2,pf.companyName3,pf.companyName4,pf.companyName5))
+</select>	
+	
+<!-- ********************************************************************************** 
+   Module:  user 
+   Function: 获取用户的详细信息by userName(Email)
+   Date：2011-02-09        
+   Author Bill Xu     
+********************************************************************************** -->
+	 <select id="getUserInfoDetailByUserName" resultClass="blogUserInfoDto" parameterClass="java.lang.String" >
+	       SELECT 
+				ID, 
+				USERNAME, 
+				COMPANYNAME, 
+				INDUSTRYTYPE, 
+				SPECIALIZEDTYPE, 
+				COMPETENCY, 
+				PROVINCECODE, 
+				CITYCODE, 
+				AREACODE, 
+				METIER, 
+				EDUCATION, 
+				WORKINGLIFE, 
+				AGE, 
+				SEX, 
+				LANGCAPA, 
+				MASTERY, 
+				COMPUTERGRADE, 
+				ISADVISER, 
+				JOBNATURE, 
+				USERINFOUPDATEDATE, 
+				CATEGORYINDEX, 
+				EXPECTEDPOSITION, 
+				USERTYPE,
+				expectedPosition AS jobName	 
+		        FROM 
+	            T_USER_INFO WHERE  USERNAME = #userName#
+	</select>
+	 	
+<!-- ********************************************************************************** 
+        模块:		个人用户后台 
+        功能:    用户详细信息检索
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-11    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="loadUserInfoByUserName" parameterClass="java.lang.String" resultClass="blogUserInfoDto">
+		<![CDATA[
+		SELECT id, 
+			userName, 
+			companyName, 
+			industryType, 
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.industryType ) AS industryName,
+			specializedType, 
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.specializedType ) AS specializedName,
+			competency, 
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.competency ) AS competencyName,
+			metier, 
+			age, 
+			sex, 
+			isAdviser, 
+			userInfoUpdateDate, 
+			categoryIndex, 
+			expectedPosition, 
+			userType
+			FROM 
+			t_user_info userInfo
+			WHERE userInfo.userName=#userName#
+		]]>
+	</select>
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    新增线下推荐人才 数统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-25    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+	<select id="getNumberOfRecommendedTalentToDay" parameterClass="java.util.Date" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(ar.id)	 
+			  FROM t_applyjobctr_recommendation ar,
+			       t_login_user loginUser
+			 WHERE ar.userId=loginUser.id			
+			   AND DATE_FORMAT(ar.submitDate,'%Y-%m-%d')=DATE_FORMAT(#toDay#,'%Y-%m-%d')
+		]]>
+	</select>
+	
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    线下人才库人才统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-22    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getCountOfLineTalentPool" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		<![CDATA[
+			SELECT count(ar.id)	 
+			FROM t_applyjobctr_recommendation ar,
+				 t_login_user loginUser,
+				 t_user_info userInfo
+		       WHERE ar.userId=loginUser.id			
+			    AND  loginUser.userName=userInfo.userName
+		]]>
+			<dynamic prepend="AND">
+				<isNotEmpty prepend="AND" property="expectedPosition">
+					 AR.expectedPosition like concat("%",#expectedPosition#,"%")
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="metier">
+			    	<![CDATA[userInfo.metier like concat("%",#metier#,"%")]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="interviewStatus">
+					ar.interviewStatus = #interviewStatus#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="provinceCode">
+					ar.provinceCode = #provinceCode#
+				</isNotEmpty>	    
+				<isNotEmpty prepend="AND" property="cityCode">
+					ar.cityCode = #cityCode#
+				</isNotEmpty>	    
+				<isNotEmpty prepend="AND" property="areaCode">
+					ar.areaCode = #areaCode#
+				</isNotEmpty>
+				<isNotEmpty prepend="and" property="currentDate">
+					DATE_FORMAT(ar.submitDate,'%Y-%m-%d')= DATE_FORMAT(#currentDate#,'%Y-%m-%d')
+				</isNotEmpty>	    
+			</dynamic>
+	</select>	
+
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    线下人才库人才加载
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-22    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="loadLineTalentPool" parameterClass="java.util.Map" resultClass="blogUserInfoDto">
+		<![CDATA[
+			SELECT ar.id, 
+				   ar.expectedPosition, 
+				   (SELECT NAME FROM t_comm_class_master WHERE CODE = ar.functionCode ) AS competency,
+				   (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.industryType) AS industryType,
+				   (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.specializedType ) AS specializedType,
+				    EXISTS(SELECT jobInfo.id FROM t_applyjobctr_applyjobinfo jobInfo WHERE jobInfo.userId = loginUser.id) havePublished,
+					userInfo.metier,
+					userInfo.categoryIndex,
+					ar.lastEditDate, 
+					ar.recommendationType, 
+					ar.verifyStatus,
+					ar.interviewStatus,
+					(SELECT NAME FROM t_comm_province WHERE CODE = ar.provinceCode) AS provinceCode,
+					(SELECT NAME FROM t_comm_city WHERE CODE = ar.cityCode) AS cityCode,
+					(SELECT NAME FROM t_comm_area WHERE CODE = ar.areaCode) AS areaCode,
+					userInfo.companyName,
+					userInfo.userName,
+					(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.education AND parentCode = '007') AS education,
+					userInfo.workingLife,
+					userInfo.age,
+					userInfo.sex,
+					(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.langCapa AND parentCode = '008') AS langCapa,	 
+					(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.mastery AND parentCode = '009') AS mastery,	 
+					(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.computerGrade AND parentCode = '011') AS computerGrade,
+					ar.isAdvisor AS isAdviser,
+					(SELECT NAME FROM t_comm_class_master WHERE CODE = ar.jobTypeCode) AS jobNature	 	 
+			FROM t_applyjobctr_recommendation ar,
+				 t_login_user loginUser,
+				 t_user_info userInfo
+		       WHERE ar.userId=loginUser.id			
+			    AND  loginUser.userName=userInfo.userName
+		]]>
+			<dynamic prepend="AND">
+				<isNotEmpty prepend="AND" property="expectedPosition">
+					 AR.expectedPosition like concat("%",#expectedPosition#,"%")
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="metier">
+			    	<![CDATA[userInfo.metier like concat("%",#metier#,"%")]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="interviewStatus">
+					ar.interviewStatus = #interviewStatus#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="provinceCode">
+					ar.provinceCode = #provinceCode#
+				</isNotEmpty>	    
+				<isNotEmpty prepend="AND" property="cityCode">
+					ar.cityCode = #cityCode#
+				</isNotEmpty>	    
+				<isNotEmpty prepend="AND" property="areaCode">
+					ar.areaCode = #areaCode#
+				</isNotEmpty>
+				<isNotEmpty prepend="and" property="currentDate">
+					DATE_FORMAT(ar.submitDate,'%Y-%m-%d')= DATE_FORMAT(#currentDate#,'%Y-%m-%d')
+				</isNotEmpty>	    
+			</dynamic>			    
+			    ORDER BY $columnName$ DESC
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    新增个人/企业用户 数统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-25    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+	<select id="sysMemberToDayRegister" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT COUNT(loginUser.id)
+		  FROM t_login_user loginUser,t_user_info userInfo
+		 WHERE DATE_FORMAT(loginUser.registerDate,'%y-%m-%d')=DATE_FORMAT(#toDay#,'%y-%m-%d')
+		     AND loginUser.userName=userInfo.userName
+		     AND userInfo.userType=#userType#
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    根据猎头系统用户ID查找博站系统用户详细信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-25    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getBlogUserInfoByLoginUserId" parameterClass="java.lang.Long" resultClass="blogUserInfoDto">
+		<![CDATA[
+		SELECT userInfo.id, 
+			userInfo.userName, 
+			userInfo.companyName, 
+			userInfo.industryType, 
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.industryType ) AS industryName,
+			userInfo.specializedType, 
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.specializedType ) AS specializedName,
+			userInfo.competency, 
+			(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.competency ) AS competencyName,
+			userInfo.metier, 
+			userInfo.age, 
+			userInfo.sex, 
+			userInfo.isAdviser, 
+			userInfo.userInfoUpdateDate, 
+			userInfo.categoryIndex, 
+			userInfo.expectedPosition, 
+			userInfo.userType
+			FROM 
+			t_user_info userInfo,t_login_user loginUser
+			WHERE userInfo.userName=loginUser.userName
+			AND loginUser.id = #id#
+		]]>
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    招聘方数据 统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-26    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getCountOfRecruiterInformation" resultClass="java.lang.Integer" parameterClass="blogUserInfoDto">
+		 select count(userName) from (SELECT loginUser.userName
+		   FROM t_sys_order so,
+		        t_sys_increment_servicename_maintainance ssm,
+		        t_login_user loginUser,
+		        t_user_info userInfo
+	      WHERE so.service_code=ssm.service_code
+	        AND so.in_order=loginUser.id
+	        AND loginUser.userName=userInfo.userName
+	        AND loginUser.STATUS=1
+	        AND userInfo.userType=1
+	        <dynamic prepend="and">
+	        	<isNotEmpty prepend="and" property="userName">
+	        		loginUser.userName like concat("%",#userName#,"%")
+	        	</isNotEmpty>
+	        	<isNotEmpty prepend="and" property="companyName">
+	        		userInfo.companyName like concat("%",#companyName#,"%")
+	        	</isNotEmpty>
+	        </dynamic>
+	   GROUP BY loginUser.userName)t
+	</select>		
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理
+        功能:    招聘方信息 加载
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-26    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryRecruiterInformation" resultClass="blogUserInfoDto" parameterClass="blogUserInfoDto">
+		 SELECT loginUser.id,
+		 		userInfo.userName,
+		 		userInfo.companyName,
+		 		loginUser.lastLoginDate,
+		 		GROUP_CONCAT(SSM.service_name) as servicesHavePurchased 
+		   FROM t_sys_order so,
+		        t_sys_increment_servicename_maintainance ssm,
+		        t_login_user loginUser,
+		        t_user_info userInfo
+	      WHERE so.service_code=ssm.service_code
+	        AND so.in_order=loginUser.id
+	        AND loginUser.userName=userInfo.userName
+	        AND loginUser.STATUS=1
+	        AND userInfo.userType=1
+	        <dynamic prepend="and">
+	        	<isNotEmpty prepend="and" property="userName">
+	        		loginUser.userName like concat("%",#userName#,"%")
+	        	</isNotEmpty>
+	        	<isNotEmpty prepend="and" property="companyName">
+	        		userInfo.companyName like concat("%",#companyName#,"%")
+	        	</isNotEmpty>
+	        </dynamic>
+	   GROUP BY loginUser.userName
+	</select>	
+	
+<!-- ********************************************************************************** 
+        模块:    企业后台 招聘管理
+        功能:    收到的申请 详情列表 数统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-28    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getCountOfJobApplicationsDetails" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		<![CDATA[
+		 SELECT count(loginUser.userName)
+		   FROM t_hhc_receipt_of_applications_for_jobs app,
+	            t_login_user loginUser,
+	            t_user_info userInfo
+		   WHERE app.userId=loginUser.id
+		     AND loginUser.userName=userInfo.userName
+		     AND app.jobId =#jobId# 
+		]]>	
+			<dynamic prepend="AND">
+				<isNotEmpty prepend="and" property="status">
+					app.status=#status#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="userName">
+		     		userInfo.userName like concat("%",#userName#,"%")
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="metier">
+		     		<![CDATA[userInfo.metier like concat("%",#metier#,"%")]]>
+				</isNotEmpty>
+				<isEqual prepend="and" property="applyJobQueryType" compareValue="0">
+					DATE_FORMAT(app.applicationDate,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') 
+				</isEqual>
+				<isEqual property="applyJobQueryType" compareValue="1" prepend="and">
+       				90 >= TIMESTAMPDIFF(DAY ,DATE_FORMAT(app.applicationDate,'%Y-%m-%d'),DATE_FORMAT(NOW(),'%Y-%m-%d'))
+       			</isEqual>
+			</dynamic>     
+	</select>		
+	
+<!-- ********************************************************************************** 
+        模块:    企业后台 招聘管理
+        功能:    收到的申请 详情列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-28    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryJobApplicationsDetails" parameterClass="java.util.Map" resultClass="blogUserInfoDto">
+		<![CDATA[
+		 SELECT app.id,
+		 		loginUser.userName,
+		 		app.jobId,
+		 		loginUser.id as userId,
+			    (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.competency ) AS competency,
+			    (SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.industryType) AS industryType,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.specializedType ) AS specializedType,
+				EXISTS(SELECT jobInfo.id FROM t_applyjobctr_applyjobinfo jobInfo WHERE jobInfo.userId = loginUser.id) havePublished,
+				(SELECT NAME FROM t_comm_province WHERE CODE = userInfo.provinceCode) AS provinceCode,
+				(SELECT NAME FROM t_comm_city WHERE CODE = userInfo.cityCode) AS cityCode,
+				(SELECT NAME FROM t_comm_area WHERE CODE = userInfo.areaCode) AS areaCode,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.education AND parentCode = '007') AS education,
+				userInfo.workingLife,
+				userInfo.age,
+				userInfo.sex,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.langCapa AND parentCode = '008') AS langCapa,	 
+				(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.mastery AND parentCode = '009') AS mastery,	 
+				(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.computerGrade AND parentCode = '011') AS computerGrade,
+				(SELECT NAME FROM t_comm_class_master WHERE CODE = userInfo.jobNature) AS jobNature,
+				(
+					SELECT COUNT(*) FROM t_comm_receive_msg WHERE senderId = loginUser.id AND receiverId = #receiverId# AND status = '0'
+				) AS newMsgCount,
+				userInfo.expectedPosition,
+				userInfo.isAdviser,
+				userInfo.companyName,
+			    userInfo.metier,
+			    userInfo.categoryIndex,
+			    userInfo.userInfoUpdateDate,
+			    app.status,
+			    app.applicationDate
+		   FROM t_hhc_receipt_of_applications_for_jobs app,
+	            t_login_user loginUser,
+	            t_user_info userInfo
+		   WHERE app.userId=loginUser.id
+		     AND loginUser.userName=userInfo.userName
+		     AND app.jobId =#jobId# 
+		]]>	
+			<dynamic prepend="AND">
+				<isNotEmpty prepend="and" property="status">
+					app.status=#status#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="userName">
+		     		userInfo.userName like concat("%",#userName#,"%")
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="metier">
+		     		<![CDATA[userInfo.metier like concat("%",#metier#,"%")]]>
+				</isNotEmpty>
+				<isEqual prepend="and" property="applyJobQueryType" compareValue="0">
+					DATE_FORMAT(app.applicationDate,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') 
+				</isEqual>
+				<isEqual property="applyJobQueryType" compareValue="1" prepend="and">
+       				90 >= TIMESTAMPDIFF(DAY ,DATE_FORMAT(app.applicationDate,'%Y-%m-%d'),DATE_FORMAT(NOW(),'%Y-%m-%d'))
+       			</isEqual>
+			</dynamic>
+			 ORDER BY $columnName$ DESC     
+	</select>	
+	
+<!-- ********************************************************************************** 
+        模块:    企业后台
+        功能:    给收到的面试申请 用户发送面试邀请
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-28    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->	
+	<update id="updateApplicationJobRecordStatus" parameterClass="java.util.Map">
+		update t_hhc_receipt_of_applications_for_jobs set status = #status# where id in($appIds$)
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    用户注册
+        功能:    完善博站资料（仅供测试使用）
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-3-26    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateBlogUserInfo" parameterClass="blogUserInfoDto">
+		UPDATE t_user_info SET 
+			userType = #userType#,
+			companyName = #companyName#,
+			industryType = #industryType#,
+			specializedType = #specializedType#,
+			competency = #competency#,
+			provinceCode = #provinceCode#,
+			cityCode = #cityCode#,
+			areaCode = #areaCode#,
+			metier = #metier#,
+			education = #education#,
+			workingLife = #workingLife#,
+			age = #age#,
+			sex = #sex#,
+			langCapa = #langCapa#,
+			mastery = #mastery#,
+			computerGrade = #computerGrade#,
+			isAdviser = #isAdviser#,
+			jobNature = #jobNature#,
+			expectedPosition = #expectedPosition#,
+			userInfoUpdateDate = #userInfoUpdateDate#,
+			categoryIndex = #categoryIndex#			 
+		WHERE userName = #userName#
+	</update>	
+ </sqlMap>

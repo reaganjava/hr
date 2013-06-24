@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+
+	<typeAlias alias="shortMessageDto" type="com.dotoyo.buildjob.common.dto.ShortMessageDto"/>
+	<typeAlias alias="autoShortMsgConfigDto" type="com.dotoyo.buildjob.common.dto.AutoShortMsgConfigDto"/>
+	
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    添加接收站内信
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-20    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveReceiveMsg" parameterClass="shortMessageDto">
+		INSERT INTO
+			T_COMM_RECEIVE_MSG
+			(receiverId,title,message,type,receiveDate,status,senderId)
+		VALUES
+			(#receiverId#,#title#,#message#,#type#,#receiveDate#,#status#,#senderId#)
+	</insert>
+
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    批量删除接收站内信
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-20    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<delete id="deleteReceiveMsg" parameterClass="java.lang.String">
+		DELETE FROM
+			T_COMM_RECEIVE_MSG
+		WHERE
+			id in ($ids$)
+	</delete>
+	
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    查找站内信列表
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-20    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryReceiveMsgList" parameterClass="shortMessageDto" resultClass="shortMessageDto">
+		SELECT
+			msg.id,msg.receiverId,msg.title,msg.message,msg.type,msg.status,msg.receiveDate,msg.senderId,
+			userInfo.userName as senderUserName,userInfo.companyName as senderRealName
+		FROM
+			T_COMM_RECEIVE_MSG msg,T_LOGIN_USER loginUser,T_USER_INFO userInfo
+		WHERE
+			userInfo.userName = loginUser.userName
+		AND
+			msg.senderId = loginUser.id
+		<dynamic>
+			<isNotEmpty prepend="and" property="receiverId">
+				(msg.receiverId = #receiverId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="title">
+				(msg.title like concat("%",#title#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(msg.status = #status#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="senderId">
+				(msg.senderId = #senderId#)
+			</isNotEmpty>
+		</dynamic>
+		UNION
+		SELECT
+			msg.id,msg.receiverId,msg.title,msg.message,msg.type,msg.status,msg.receiveDate,msg.senderId,
+			'0' AS senderUserName, '0' AS senderRealName
+		FROM
+			T_COMM_RECEIVE_MSG msg
+		WHERE
+			msg.senderId = 0
+		<dynamic>
+			<isNotEmpty prepend="and" property="receiverId">
+				(msg.receiverId = #receiverId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="title">
+				(msg.title like concat("%",#title#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(msg.status = #status#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="senderId">
+				(msg.senderId = #senderId#)
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY receiveDate DESC
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    查找站内信列表条数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-20    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="queryReceiveMsgCount" parameterClass="shortMessageDto" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(result.id)
+		FROM
+			(
+				SELECT
+					msg.id,msg.receiverId,msg.title,msg.message,msg.type,msg.status,msg.receiveDate,msg.senderId,
+					userInfo.userName as senderUserName,userInfo.companyName as senderRealName
+				FROM
+					T_COMM_RECEIVE_MSG msg,T_LOGIN_USER loginUser,T_USER_INFO userInfo
+				WHERE
+					userInfo.userName = loginUser.userName
+				AND
+					msg.senderId = loginUser.id
+				<dynamic>
+					<isNotEmpty prepend="and" property="receiverId">
+						(msg.receiverId = #receiverId#)
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="title">
+						(msg.title like concat("%",#title#,"%"))
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="status">
+						(msg.status = #status#)
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="senderId">
+						(msg.senderId = #senderId#)
+					</isNotEmpty>
+				</dynamic>
+				UNION
+				SELECT
+					msg.id,msg.receiverId,msg.title,msg.message,msg.type,msg.status,msg.receiveDate,msg.senderId,
+					'0' AS senderUserName, '0' AS senderRealName
+				FROM
+					T_COMM_RECEIVE_MSG msg
+				WHERE
+					msg.senderId = 0
+				<dynamic>
+					<isNotEmpty prepend="and" property="receiverId">
+						(msg.receiverId = #receiverId#)
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="title">
+						(msg.title like concat("%",#title#,"%"))
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="status">
+						(msg.status = #status#)
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="senderId">
+						(msg.senderId = #senderId#)
+					</isNotEmpty>
+				</dynamic>
+			)result
+	</select>
+
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    加载接收站内信详细信息
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-20    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getReceiveMsgDetailById" parameterClass="java.lang.Long" resultClass="shortMessageDto">
+		SELECT
+			msg.id,msg.receiverId,msg.title,msg.message,msg.type,msg.status,msg.receiveDate,msg.senderId,
+			userInfo.userName as senderUserName,userInfo.companyName as senderRealName
+		FROM
+			T_COMM_RECEIVE_MSG msg,T_LOGIN_USER loginUser,T_USER_INFO userInfo
+		WHERE
+			msg.id = #id#
+		AND
+			userInfo.userName = loginUser.userName
+		AND
+			msg.senderId = loginUser.id
+		UNION
+		SELECT
+			msg.id,msg.receiverId,msg.title,msg.message,msg.type,msg.status,msg.receiveDate,msg.senderId,
+			'0' AS senderUserName, '0' AS senderRealName
+		FROM
+			T_COMM_RECEIVE_MSG msg
+		WHERE
+			msg.id = #id#
+		AND
+			msg.senderId = 0
+		
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    更新接收站内信状态
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-20    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateReceiveMsgStatus" parameterClass="shortMessageDto">
+		UPDATE
+			T_COMM_RECEIVE_MSG
+		SET
+			status = #status#
+		WHERE
+			id = #id#
+	</update>
+	
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    添加企业自动回复站内信设置
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-20    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<insert id="saveAutoShortMsgConfig" parameterClass="autoShortMsgConfigDto">
+		INSERT INTO
+			T_COMM_MSG_SET
+			(userId,title,msg)
+		VALUES
+			(#userId#,#title#,#msg#)
+	</insert>
+	
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    修改企业自动回复站内信设置
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-20    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateAutoShortMsgConfig" parameterClass="autoShortMsgConfigDto">
+		UPDATE
+			T_COMM_MSG_SET
+		SET
+			title = #title#, msg = #msg#
+		WHERE
+			id = #id#
+	</update>
+
+<!-- ********************************************************************************** 
+        模块:    站内信管理
+        功能:    根据用户ID查找企业自动回复站内信设置
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-20    arthas.zou      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getAutoShortMsgConfigByUserId" parameterClass="java.lang.Long" resultClass="autoShortMsgConfigDto">
+		SELECT
+			id,userId,title,msg
+		FROM
+			T_COMM_MSG_SET
+		WHERE
+			userId = #userId#
+	</select>
+</sqlMap>

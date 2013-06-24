@@ -1,0 +1,610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>大太阳建筑猎头--创业园</title>
+<link href="../../css/index-style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/park.css" rel="stylesheet" type="text/css" />
+<script src="../../javascripts/common/jquery.js"></script>
+<script src="../../javascripts/common/select.js"></script>
+<script type="text/javascript">
+function changeMenu(obj)
+{
+	for(var i=1;i<=8;i++)
+	{
+		$("#menu0"+i).attr("class","nav-on");
+	}
+	
+	$(obj).attr("class","nav-out");
+}
+</script>
+</head>
+<body>
+<div class="top">
+	<div class="logo1"><img src="../../images/logo.png" width="152" height="88" alt="中国建筑平台"/></div>
+    <div class="logo2"><a href="#"><img src="../../images/logo2.png" width="147" height="55" alt="猎头，甄别模下的人才交流"/></a></div>
+    <div class="top-right">
+    	<div class="top-add"><a href="#"><img src="../../pic/top-add.jpg" width="612" height="82" /></a></div>
+        <div class="top-font">
+        	<ul>
+            	<li><a href="#">大太阳公益</a></li>
+                <li><a href="#">在线培训</a></li>
+                <li><a href="#">在线客服</a></li>
+                <li><a href="#">在线帮助</a></li>
+            </ul>
+        </div>
+    </div>
+    
+</div>
+<div class="nav">
+	<ul>
+    	<li class="nav-on" id="menu01" onmouseover="changeMenu(this)"><a href="../../index.html">首页</a></li>
+        <li class="nav-on" id="menu02" onmouseover="changeMenu(this)"><a href="../headhunterCenter/head.html">猎头中心</a></li>
+        <li class="nav-on" id="menu03" onmouseover="changeMenu(this)"><a href="../applyJobCenter/people.html">人才中心</a></li>
+        <li class="nav-on" id="menu04" onmouseover="changeMenu(this)"><a href="../peopleExcavate/excavate.html">人才挖掘</a></li>
+        <li class="nav-on" id="menu05" onmouseover="changeMenu(this)"><a href="../certificateCenter/certificate.html">猎证中心</a></li>
+        <li class="nav-out" id="menu06" onmouseover="changeMenu(this)"><a href="../innovationPark/park.html">创业园</a></li>
+        <li class="nav-on" id="menu07" onmouseover="changeMenu(this)"><a href="../wisdomChina/china.html">智慧中国</a></li>
+        <li class="nav-on" id="menu08" onmouseover="changeMenu(this)"><a href="../innovationSalon/salon.html">创业沙龙</a></li>
+    </ul>
+</div>
+<!--以上为头部分-->
+<!--搜索下拉菜单~绝对定位~-->
+<div class="park-down" id="showMenuID">
+    <div class="park-down1" id="searchDown1" onmouseleave="menuHide(this)" style="display:none;">
+        <ul>
+        	<li><a href="#">创业求助解答</a></li>
+            <li><a href="#">创业项目</a></li>
+            <li><a href="#">创业团队</a></li>
+            <li><a href="#">获助感言</a></li>
+            <li><a href="#">优秀创业团队</a></li>
+            <li><a href="#">成功案例</a></li>
+			<li><a href="#">创业求助解答</a></li>
+            <li><a href="#">创业项目</a></li>
+            <li><a href="#">创业团队</a></li>
+            <li><a href="#">获助感言</a></li>
+            <li><a href="#">优秀创业团队</a></li>
+            <li><a href="#">成功案例</a></li>
+        </ul>
+    </div>
+    <div class="park-down2" id="searchDown2" onmouseleave="menuHide(this)" style="display:none;">
+        <ul>
+            <li><a href="#">标题</a></li>
+            <li><a href="#">作者</a></li>
+            <li><a href="#">日期</a></li>
+            <li><a href="#">团队</a></li>
+            <li><a href="#">标题</a></li>
+            <li><a href="#">作者</a></li>
+            <li><a href="#">日期</a></li>
+            <li><a href="#">团队</a></li>
+            <li><a href="#">标题</a></li>
+            <li><a href="#">作者</a></li>
+            <li><a href="#">日期</a></li>
+            <li><a href="#">团队</a></li>
+            <li><a href="#"> 其他</a></li>
+        </ul>
+    </div>
+</div>
+
+<!--中间部分-->
+
+<div class="part1">
+	<div class="part1-left"><a href="#"><img src="../../pic/park-banner.jpg" width="268" height="162" /></a></div>
+    <div class="part1-right">
+    	<div class="search-wz">
+        	<div class="search-wz-title">
+            	
+            	主题：<br />搜索内容：<br />关键字：
+            </div>
+            <div class="search-wz-seclect">
+            	<ul>
+                    <li class="se1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border1', '#searchDown1')" />
+                 <input id="border1" name="" type="text" value="请选择"/></li>
+                    <li class="se1"><img src="../../images/search-down.png" width="21" height="22" onclick="menuClick('#border2', '#searchDown2')" />
+                 <input id="border2" name="" type="text" value="请选择"/></li>
+                    <li class="se2"><input name="" type="text" value="输入关键字"/></li>
+                    <li class="se3"><a href="#"><img src="../../images/park-botton6.png" width="65" height="28" alt="搜文章"/></a></li>
+           		</ul>
+            </div>
+        </div>
+		<div class="search-team">
+        	<div class="search-team-title">关键字：</div>
+            <div class="search-team-seclect">
+            	<ul>
+                    <li class="se4"><input name="" type="text" value="输入关键字"/></li>
+                    <li class="se3"><a href="#"><img src="../../images/park-botton7.png" width="65" height="28" alt="搜项目"/></a><a href="#"><img src="../../images/park-botton8.png" width="65" height="28" alt="搜团队"/></a></li>
+           		</ul>
+            </div>
+            <div class="search-team-botton"><a href="#"><img src="../../images/search-team-botton.png" width="110" height="128" alt="创业团队申请"/></a></div>
+        </div>
+    </div>
+</div>     
+<div class="part2">
+	<div class="part2-left">
+    	<!--创业求助-->
+        <div class="park-title title5"><span><a href="#"><img src="../../images/park-botton0.png" width="72" height="22" alt="相法发表" /></a></span><strong>创业求助</strong><a href="#">更多>></a></div>
+        <div class="park-left-text">
+             <ul> 
+                 <li class="park6"><a href="#">人事奖惩条例</a></li>
+                 <li class="park5">20102-12-12</li>
+                 <li class="park6"><a href="#">中远房地产组织结构</a></li>
+                 <li class="park5">20102-12-09</li>
+                 <li class="park6"><a href="#">非常漂亮的工资表</a></li>
+                 <li class="park5">20102-12-11</li>
+                 <li class="park6"><a href="#">朴实型</a></li>
+                 <li class="park5">20102-12-06</li>
+                 <li class="park6"><a href="#">人力资源管理成本预算报告</a></li>
+                 <li class="park5">20102-12-12</li>
+                 <li class="park6"><a href="#">企业HR专用人力资源测试</a></li>
+                 <li class="park5">20102-12-23</li>
+                 <li class="park6"><a href="#">薪酬核算系统样表</a></li>
+                 <li class="park5">20102-12-16</li>
+                 <li class="park6"><a href="#">关于个人工作总结与计划</a></li>
+                 <li class="park5">20102-12-23</li>
+             </ul>
+    	</div>
+        <!--创业想法-->
+        <div class="part2-left-title"><a href="#">更多>></a><strong>创业求助解答</strong></div>
+        <div class="park-left-text">
+             <ul> 
+                 <li class="park6"><a href="#">人事奖惩条例</a></li>
+                 <li class="park5">20102-12-12</li>
+                 <li class="park6"><a href="#">中远房地产组织结构</a></li>
+                 <li class="park5">20102-12-09</li>
+                 <li class="park6"><a href="#">非常漂亮的工资表</a></li>
+                 <li class="park5">20102-12-11</li>
+                 <li class="park6"><a href="#">朴实型</a></li>
+                 <li class="park5">20102-12-06</li>
+                 <li class="park6"><a href="#">人力资源管理成本预算报告</a></li>
+                 <li class="park5">20102-12-12</li>
+                 <li class="park6"><a href="#">企业HR专用人力资源测试</a></li>
+                 <li class="park5">20102-12-23</li>
+                 <li class="park6"><a href="#">薪酬核算系统样表</a></li>
+                 <li class="park5">20102-12-16</li>
+                 <li class="park6"><a href="#">关于个人工作总结与计划</a></li>
+                 <li class="park5">20102-12-23</li>
+             </ul>
+    	</div>
+    </div>
+    <div class="part2-right">
+    	<!--创业团队-->
+    	<div class="xiangmu-title"><span><a href="#">更多>></a></span><strong>创业团队</strong></div>
+        <div class="team-box">
+        	 <div class="team">
+             	<div class="team-left"><a href="#"><img src="../../pic/park1.jpg" width="100" height="100" alt="华东地产集团"/></a></div>
+                <div class="team-right">
+                	<a href="#">华东地产集团</a><br />
+                    行业：房地产<br />
+                    专业：互联网<br />
+                    专长：建筑厦、房屋              
+                </div>
+             </div>
+             <div class="team">
+             	<div class="team-left"><a href="#"><img src="../../pic/park2.jpg" width="100" height="100" alt="新世界国产"/></a></div>
+                <div class="team-right">
+                	<a href="#">新世界国产</a><br />
+                    行业：房地产<br />
+                    专业：互联网<br />
+                    专长：建筑厦、房屋              
+                </div>
+             </div>
+             <div class="team">
+             	<div class="team-left"><a href="#"><img src="../../pic/park3.jpg" width="100" height="100" alt="家家宝创业"/></a></div>
+                <div class="team-right">
+                	<a href="#">家家宝创业</a><br />
+                    行业：房地产<br />
+                    专业：互联网<br />
+                    专长：建筑厦、房屋              
+                </div>
+             </div>
+             <div class="team">
+             	<div class="team-left"><a href="#"><img src="../../pic/park4.jpg" width="100" height="100" alt="家家宝创业"/></a></div>
+                <div class="team-right">
+                	<a href="#">家家宝创业</a><br />
+                    行业：房地产<br />
+                    专业：互联网<br />
+                    专长：建筑厦、房屋              
+                </div>
+             </div>
+             <div class="team">
+             	<div class="team-left"><a href="#"><img src="../../pic/park5.jpg" width="100" height="100"  alt="华东地产集团"/></a></div>
+                <div class="team-right">
+                	<a href="#">华东地产集团</a><br />
+                    行业：房地产<br />
+                    专业：互联网<br />
+                    专长：建筑厦、房屋              
+                </div>
+             </div>
+             <div class="team">
+             	<div class="team-left"><a href="#"><img src="../../pic/park6.jpg" width="100" height="100"  alt="新世界国产"/></a></div>
+                <div class="team-right">
+                	<a href="#">新世界国产</a><br />
+                    行业：房地产<br />
+                    专业：互联网<br />
+                    专长：建筑厦、房屋              
+                </div>
+             </div>
+        </div>
+        <!--创业项目-->
+    	<div class="xiangmu-title"><span><a href="#">更多>></a></span><strong>创业项目</strong></div>
+        <div class="park-text park-bg1">
+             <ul>
+                 <li class="xiangmu1">标题</li>
+                 <li class="xiangmu2">地区</li>
+                 <li class="xiangmu3">发表时间</li>
+                 <li class="xiangmu2">地区</li>
+                 <li class="xiangmu3">发表时间</li>
+             </ul>
+    	</div>
+        <div class="park-text">
+             <ul>
+                 <li class="xiangmu1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="xiangmu2">深圳</li>
+                 <li class="xiangmu3">2010-12-20</li>
+                 <li class="xiangmu1"><a href="#">景观规划设计有限公司</a></li>
+                 <li class="xiangmu2">广州</li>
+                 <li class="xiangmu3">2010-12-06</li>
+                 <li class="xiangmu1"><a href="#">北京某大型国企监理公司</a></li>
+                 <li class="xiangmu2">大连</li>
+                 <li class="xiangmu3">2010-12-06</li>
+                 <li class="xiangmu1"><a href="#">北京某大型房地产公司</a></li>
+                 <li class="xiangmu2">上海</li>
+                 <li class="xiangmu3">2010-12-15</li>
+                 <li class="xiangmu1"><a href="#">中国中液集团苏州沿海设计院</a></li>
+                 <li class="xiangmu2">天津</li>
+                 <li class="xiangmu3">2010-12-13</li>
+                 <li class="xiangmu1"><a href="#">四川兴鑫建设工程项目</a></li>
+                 <li class="xiangmu2">长沙</li>
+                 <li class="xiangmu3">2010-12-12</li>
+                 <li class="xiangmu1"><a href="#">北京佳益工程咨询</a></li>
+                 <li class="xiangmu2">南京</li>
+                 <li class="xiangmu3">2010-12-26</li>
+                 <li class="xiangmu1"><a href="#">北华泰工程建设监理有限公司</a></li>
+                 <li class="xiangmu2">武汉</li>
+                 <li class="xiangmu3">2010-12-03</li>
+                 <li class="xiangmu1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="xiangmu2">杭州</li>
+                 <li class="xiangmu3">2010-12-17</li>
+                 <li class="xiangmu1"><a href="#">中交三公局第三工程公司</a></li>
+                 <li class="xiangmu2">北京</li>
+                 <li class="xiangmu3">2010-12-01</li>
+                 <li class="xiangmu1"><a href="#">大太阳建筑猎头平台</a></li>
+                 <li class="xiangmu2">东莞</li>
+                 <li class="xiangmu3">2010-12-09</li>
+                 <li class="xiangmu1"><a href="#">中国市政工程西北设计</a></li>
+                 <li class="xiangmu2">常州</li>
+                 <li class="xiangmu3">2010-11-24</li>
+                 <li class="xiangmu1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="xiangmu2">北京</li>
+                 <li class="xiangmu3">2010-12-22</li>
+                 <li class="xiangmu1"><a href="#">佛山市腾瑞电力工程</a></li>
+                 <li class="xiangmu2">无锡</li>
+                 <li class="xiangmu3">2010-12-05</li>
+                 <li class="xiangmu1"><a href="#">四川兴鑫建设工程项目</a></li>
+                 <li class="xiangmu2">南昌</li>
+                 <li class="xiangmu3">2010-12-15</li>
+                 <li class="xiangmu1"><a href="#">北京某大型国企监理公司</a></li>
+                 <li class="xiangmu2">上海</li>
+                 <li class="xiangmu3">2010-12-26</li>
+             </ul>
+    	</div>
+    </div>
+</div>
+<div class="park-add"><a href="#"><img src="../../pic/park-add.jpg" width="980" height="92" /></a></div>
+<!--优秀创业团队-->
+<div class="youxiu-box">
+	<div class="youxiu-title">优秀创业团队</div>
+    <div class="youxiu-div">
+    	<div class="youxiu">
+    		<div class="youxiu-top">
+             	<div class="youxiu-left"><a href="#"><img src="../../pic/park7.jpg" width="80" height="80" alt="华东地产集团"/></a></div>
+                <div class="youxiu-right">
+                	<a href="#">华东地产集团</a><br />
+                    行业：房地产<br />
+                    专业：互联网<br />
+                    专长：建筑厦、房屋              
+                </div>
+             </div>
+            <div class="youxiu-bottom-title">团队业绩</div>
+            <div class="youxiu-bottom-pic">
+       	    	<ul>
+                	<li><a href="#"><img src="../../pic/yj1.jpg" width="80" height="60" alt="业绩名称"/><br />业绩名称</a></li>
+                    <li><a href="#"><img src="../../pic/yj2.jpg" width="80" height="60" alt="业绩名称"/><br />业绩名称</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="youxiu">
+    		<div class="youxiu-top">
+             	<div class="youxiu-left"><a href="#"><img src="../../pic/park8.jpg" width="80" height="80" alt="华东地产集团"/></a></div>
+                <div class="youxiu-right">
+                	<a href="#">家家宝创业</a><br />
+                    行业：房地产<br />
+                    专业：互联网<br />
+                    专长：建筑厦、房屋              
+                </div>
+             </div>
+            <div class="youxiu-bottom-title">团队业绩</div>
+            <div class="youxiu-bottom-pic">
+       	    	<ul>
+                	<li><a href="#"><img src="../../pic/yj3.jpg" width="80" height="60" alt="业绩名称"/><br />业绩名称</a></li>
+                    <li><a href="#"><img src="../../pic/yj4.jpg" width="80" height="60" alt="业绩名称"/><br />业绩名称</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="youxiu">
+    		<div class="youxiu-top">
+             	<div class="youxiu-left"><a href="#"><img src="../../pic/park9.jpg" width="80" height="80" alt="华东地产集团"/></a></div>
+                <div class="youxiu-right">
+                	<a href="#">新世界地产</a><br />
+                    行业：房地产<br />
+                    专业：互联网<br />
+                    专长：建筑厦、房屋              
+                </div>
+             </div>
+            <div class="youxiu-bottom-title">团队业绩</div>
+            <div class="youxiu-bottom-pic">
+       	    	<ul>
+                	<li><a href="#"><img src="../../pic/yj5.jpg" width="80" height="60" alt="业绩名称"/><br />业绩名称</a></li>
+                    <li><a href="#"><img src="../../pic/yj6.jpg" width="80" height="60" alt="业绩名称"/><br />业绩名称</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="youxiu">
+    		<div class="youxiu-top">
+             	<div class="youxiu-left"><a href="#"><img src="../../pic/park10.jpg" width="80" height="80" alt="华东地产集团"/></a></div>
+                <div class="youxiu-right">
+                	<a href="#">家家宝创业</a><br />
+                    行业：房地产<br />
+                    专业：互联网<br />
+                    专长：建筑厦、房屋              
+                </div>
+             </div>
+            <div class="youxiu-bottom-title">团队业绩</div>
+            <div class="youxiu-bottom-pic">
+       	    	<ul>
+                	<li><a href="#"><img src="../../pic/yj7.jpg" width="80" height="60" alt="业绩名称"/><br />业绩名称</a></li>
+                    <li><a href="#"><img src="../../pic/yj8.jpg" width="80" height="60" alt="业绩名称"/><br />业绩名称</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="part3">
+    <div class="part3-left">
+    	<!--获助感言-->
+    	<div class="park-title title2"><span><a href="#"><img src="../../images/park-botton1.png" width="79" height="22" alt="发表感谢信" /></a></span><strong>获助感言</strong><a href="#">更多>></a></div>
+        <div class="park-left-text park-bg1">
+             <ul>
+               <li class="park3">标题</li>
+               <li class="park4">发表者</li>
+               <li class="park5">发表时间</li>
+             </ul>
+    	</div>
+        <div class="park-left-text">
+             <ul>
+                 <li class="park3"><a href="#">朴实型</a></li>
+                 <li class="park4">王大鹏</li>
+                 <li class="park5">20102-12-23</li>
+                 <li class="park3"><a href="#">感谢大家，自己</a></li>
+                 <li class="park4">王志</li>
+                 <li class="park5">20102-12-10</li>
+                 <li class="park3"><a href="#">所有感谢都在心中</a></li>
+                 <li class="park4">李明</li>
+                 <li class="park5">20102-12-08</li>
+                 <li class="park3"><a href="#">给我这样一个机会</a></li>
+                 <li class="park4">张大家</li>
+                 <li class="park5">20102-12-10</li>
+                 <li class="park3"><a href="#">忘乎所以型</a></li>
+                 <li class="park4">伍行松</li>
+                 <li class="park5">20102-12-23</li>
+                 <li class="park3"><a href="#">朴实型 </a></li>
+                 <li class="park4">颜小右</li>
+                 <li class="park5">20102-12-30</li>
+                 <li class="park3"><a href="#">最节约型 </a></li>
+                 <li class="park4">吴有桂</li>
+                 <li class="park5">20102-12-22</li>
+                 <li class="park3"><a href="#">朴实型</a></li>
+                 <li class="park4">王大鹏</li>
+                 <li class="park5">20102-12-16</li>
+             </ul>
+    	</div>
+        <!--创业想法-->
+        <div class="park-title title3"><span><a href="#"><img src="../../images/park-botton3.png" width="72" height="22" alt="相法发表" /></a></span><strong>创业想法</strong><a href="#">更多>></a></div>
+        <div class="park-left-text">
+             <ul> 
+                 <li class="park6"><a href="#">人事奖惩条例</a></li>
+                 <li class="park5">20102-12-12</li>
+                 <li class="park6"><a href="#">中远房地产组织结构</a></li>
+                 <li class="park5">20102-12-09</li>
+                 <li class="park6"><a href="#">非常漂亮的工资表</a></li>
+                 <li class="park5">20102-12-11</li>
+                 <li class="park6"><a href="#">朴实型</a></li>
+                 <li class="park5">20102-12-06</li>
+                 <li class="park6"><a href="#">人力资源管理成本预算报告</a></li>
+                 <li class="park5">20102-12-12</li>
+                 <li class="park6"><a href="#">企业HR专用人力资源测试</a></li>
+                 <li class="park5">20102-12-23</li>
+                 <li class="park6"><a href="#">薪酬核算系统样表</a></li>
+                 <li class="park5">20102-12-16</li>
+                 <li class="park6"><a href="#">关于个人工作总结与计划</a></li>
+                 <li class="park5">20102-12-23</li>
+             </ul>
+    	</div>
+        <!--创业政策-->
+        <div class="park-title title4"><strong>创业政策</strong><a href="#">更多>></a></div>
+		<div class="park-left-text">
+             <ul>
+                 <li class="park6"><a href="#">部门职责_定岗定编和</a></li>
+                 <li class="park5">20102-12-13</li>
+                 <li class="park6"><a href="#">综合素质</a></li>
+                 <li class="park5">20102-12-08</li>
+                 <li class="park6"><a href="#">在企业管理中的高级应用</a></li>
+                 <li class="park5">20102-12-11</li>
+                 <li class="park6"><a href="#">行政人事部管理手册</a></li>
+                 <li class="park5">20102-12-06</li>
+                 <li class="park6"><a href="#">劳动合同法问题答疑</a></li>
+                 <li class="park5">20102-12-14</li>
+                 <li class="park6"><a href="#">劳动合同范本（六种）</a></li>
+                 <li class="park5">20102-12-27</li>
+                 <li class="park6"><a href="#">员工勤务和异动</a></li>
+                 <li class="park5">20102-12-12</li>
+                 <li class="park6"><a href="#">劳动关系体系</a></li>
+                 <li class="park5">20102-12-23</li>
+             </ul>
+    	</div>
+    </div>
+	<div class="part3-right">
+    	<!--成功案例-->
+        <div class="park-title title1"><span><a href="#"><img src="../../images/park-botton2.png" width="89" height="22" alt="上传成功案例"/></a></span><strong>成功案例</strong><a href="#">更多>></a></div>
+        <div class="park-text park-bg1">
+             <ul>
+                 <li class="park1">标题</li>
+                 <li class="park2">发表时间</li>
+                 <li class="park1">标题</li>
+                 <li class="park2">发表时间</li>
+             </ul>
+    	</div>
+        <div class="park-text">
+             <ul>
+                 <li class="park1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="park2">2010-12-20</li>
+                 <li class="park1"><a href="#">景观规划设计有限公司</a></li>
+                 <li class="park2">2010-12-06</li>
+                 <li class="park1"><a href="#">北京某大型国企监理公司</a></li>
+                 <li class="park2">2010-12-06</li>
+                 <li class="park1"><a href="#">北京某大型房地产公司</a></li>
+                 <li class="park2">2010-12-15</li>
+                 <li class="park1"><a href="#">中国中液集团苏州沿海设计院</a></li>
+                 <li class="park2">2010-12-13</li>
+                 <li class="park1"><a href="#">四川兴鑫建设工程项目</a></li>
+                 <li class="park2">2010-12-12</li>
+                 <li class="park1"><a href="#">北京佳益工程咨询</a></li>
+                 <li class="park2">2010-12-26</li>
+                 <li class="park1"><a href="#">北华泰工程建设监理有限公司</a></li>
+                 <li class="park2">2010-12-03</li>
+                 <li class="park1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="park2">2010-12-17</li>
+                 <li class="park1"><a href="#">中交三公局第三工程公司</a></li>
+                 <li class="park2">2010-12-01</li>
+                 <li class="park1"><a href="#">大太阳建筑猎头平台</a></li>
+                 <li class="park2">2010-12-09</li>
+                 <li class="park1"><a href="#">中国市政工程西北设计</a></li>
+                 <li class="park2">2010-11-24</li>
+                 <li class="park1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="park2">2010-12-22</li>
+                 <li class="park1"><a href="#">佛山市腾瑞电力工程</a></li>
+                 <li class="park2">2010-12-05</li>
+                 <li class="park1"><a href="#">四川兴鑫建设工程项目</a></li>
+                 <li class="park2">2010-12-15</li>
+                 <li class="park1"><a href="#">北京某大型国企监理公司</a></li>
+                 <li class="park2">2010-12-26</li>
+             </ul>
+    	</div>
+        <!--创业经验分享-->
+        <div class="park-title title1"><span><a href="#"><img src="../../images/park-botton4.png" width="66" height="22" alt="经验分享"/></a></span><strong>创业经验分享</strong><a href="#">更多>></a></div>
+        <div class="park-text park-bg2">
+             <ul>
+                 <li class="park1">标题</li>
+                 <li class="park2">发表时间</li>
+                 <li class="park1">标题</li>
+                 <li class="park2">发表时间</li>
+             </ul>
+    	</div>
+        <div class="park-text">
+             <ul>
+                 <li class="park1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="park2">2010-12-20</li>
+                 <li class="park1"><a href="#">景观规划设计有限公司</a></li>
+                 <li class="park2">2010-12-06</li>
+                 <li class="park1"><a href="#">北京某大型国企监理公司</a></li>
+                 <li class="park2">2010-12-06</li>
+                 <li class="park1"><a href="#">北京某大型房地产公司</a></li>
+                 <li class="park2">2010-12-15</li>
+                 <li class="park1"><a href="#">中国中液集团苏州沿海设计院</a></li>
+                 <li class="park2">2010-12-13</li>
+                 <li class="park1"><a href="#">四川兴鑫建设工程项目</a></li>
+                 <li class="park2">2010-12-12</li>
+                 <li class="park1"><a href="#">北京佳益工程咨询</a></li>
+                 <li class="park2">2010-12-26</li>
+                 <li class="park1"><a href="#">北华泰工程建设监理有限公司</a></li>
+                 <li class="park2">2010-12-03</li>
+                 <li class="park1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="park2">2010-12-17</li>
+                 <li class="park1"><a href="#">中交三公局第三工程公司</a></li>
+                 <li class="park2">2010-12-01</li>
+                 <li class="park1"><a href="#">大太阳建筑猎头平台</a></li>
+                 <li class="park2">2010-12-09</li>
+                 <li class="park1"><a href="#">中国市政工程西北设计</a></li>
+                 <li class="park2">2010-11-24</li>
+                 <li class="park1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="park2">2010-12-22</li>
+                 <li class="park1"><a href="#">佛山市腾瑞电力工程</a></li>
+                 <li class="park2">2010-12-05</li>
+                 <li class="park1"><a href="#">四川兴鑫建设工程项目</a></li>
+                 <li class="park2">2010-12-15</li>
+                 <li class="park1"><a href="#">北京某大型国企监理公司</a></li>
+                 <li class="park2">2010-12-26</li>
+             </ul>
+    	</div>
+        <!--创业之路-->
+        <div class="park-title title1"><span><a href="#"><img src="../../images/park-botton5.png" width="64" height="22" alt="点滴记录"/></a></span><strong>创业之路</strong><a href="#">更多>></a></div>
+        <div class="park-text park-bg3">
+             <ul>
+                 <li class="park1">标题</li>
+                 <li class="park2">发表时间</li>
+                 <li class="park1">标题</li>
+                 <li class="park2">发表时间</li>
+             </ul>
+    	</div>
+        <div class="park-text">
+             <ul>
+                 <li class="park1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="park2">2010-12-20</li>
+                 <li class="park1"><a href="#">景观规划设计有限公司</a></li>
+                 <li class="park2">2010-12-06</li>
+                 <li class="park1"><a href="#">北京某大型国企监理公司</a></li>
+                 <li class="park2">2010-12-06</li>
+                 <li class="park1"><a href="#">北京某大型房地产公司</a></li>
+                 <li class="park2">2010-12-15</li>
+                 <li class="park1"><a href="#">中国中液集团苏州沿海设计院</a></li>
+                 <li class="park2">2010-12-13</li>
+                 <li class="park1"><a href="#">四川兴鑫建设工程项目</a></li>
+                 <li class="park2">2010-12-12</li>
+                 <li class="park1"><a href="#">北京佳益工程咨询</a></li>
+                 <li class="park2">2010-12-26</li>
+                 <li class="park1"><a href="#">北华泰工程建设监理有限公司</a></li>
+                 <li class="park2">2010-12-03</li>
+                 <li class="park1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="park2">2010-12-17</li>
+                 <li class="park1"><a href="#">中交三公局第三工程公司</a></li>
+                 <li class="park2">2010-12-01</li>
+                 <li class="park1"><a href="#">大太阳建筑猎头平台</a></li>
+                 <li class="park2">2010-12-09</li>
+                 <li class="park1"><a href="#">中国市政工程西北设计</a></li>
+                 <li class="park2">2010-11-24</li>
+                 <li class="park1"><a href="#">水利与土木工程有哪些职位</a></li>
+                 <li class="park2">2010-12-22</li>
+                 <li class="park1"><a href="#">佛山市腾瑞电力工程</a></li>
+                 <li class="park2">2010-12-05</li>
+                 <li class="park1"><a href="#">四川兴鑫建设工程项目</a></li>
+                 <li class="park2">2010-12-15</li>
+                 <li class="park1"><a href="#">北京某大型国企监理公司</a></li>
+                 <li class="park2">2010-12-26</li>
+             </ul>
+    	</div>
+  </div>
+</div>
+<!--底部分-->
+<div class="add"><a href="#"><img src="../../pic/bottom-add.png" width="980" height="77" /></a></div>
+<div class="bottom">
+	<a href="#">关于我们</a>|
+    <a href="#">免费注册</a>|
+    <a href="#">用户中心</a>|
+    <a href="#">法律声明</a>|
+    <a href="#">意见反馈</a>|
+    <a href="#">设为首页</a><br />
+    深圳大太阳网络科技有限公司&nbsp;&nbsp;&nbsp;&nbsp;粤ICP证号：888888号&nbsp;&nbsp;&nbsp;&nbsp;网络安全证书：4403100920657
+</div>
+<div class="bottom-links"><a href="#"><img src="../../images/bottom-logo1.png" width="108" height="42" alt="公共信息安全网络监察"/></a><a href="#"><img src="../../images/bottom-logo2.png" width="108" height="42"  alt="经营性网站备案信息"/></a><a href="#"><img src="../../images/bottom-logo3.png" width="108" height="42" alt="不良信息举报中心"/></a></div>
+</body>
+</html>

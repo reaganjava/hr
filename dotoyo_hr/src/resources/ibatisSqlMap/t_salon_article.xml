@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="salonArticleDto" type="com.dotoyo.buildjob.innovationSalon.dto.SalonArticleDto"/>
+  	<typeAlias alias="salonSearchVo" type="com.dotoyo.buildjob.innovationSalon.vo.SalonSearchVo"/>
+
+
+
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon article information list for salon home page
+   Date：2011-01-07
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="querySalonArticleList" resultClass="salonArticleDto" parameterClass="java.util.Map">
+ 		select
+ 		       a.id,
+ 		       a.salonId      ,
+ 		       a.subject      ,
+			   a.author       ,
+			   a.content      ,
+			   a.pictureName  ,
+			   a.videoName    ,
+			   a.submitDate   ,
+			   a.articleStatus,
+			   a.isExcellent  ,
+			   a.browseCount  ,
+			   a.isRecomment  ,
+			   a.iscream      ,
+			   u.userName     ,
+			   a.reputationCount,
+			   a.schlussgruppeCount,
+			   a.authorName
+ 		       from T_SALON_ARTICLE a ,T_LOGIN_USER u where a.author = u.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="isExcellent">
+				(a.isExcellent = #isExcellent#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isRecomment">
+				(a.isRecomment = #isRecomment#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="iscream">
+				(a.iscream = #iscream#)
+			</isNotEmpty>
+		   <isNotEmpty prepend="and" property="articleStatus">
+				(a.articleStatus = #articleStatus#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="author">
+				(a.author = #author#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="salonId">
+				(a.salonId = #salonId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="offlineSalonColumn">
+				(a.offlineSalonColumn = #offlineSalonColumn#)
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by browseCount desc,submitDate desc
+ 	</select>
+
+ <!-- **********************************************************************************
+   Module:  Salon
+   Function: add salon article information
+   Date：2011-01-06
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<insert id="addSalonArticleInfo" parameterClass="salonArticleDto">
+ 		     insert into T_SALON_ARTICLE(
+ 		     salonId      ,
+ 		     subject      ,
+			 author       ,
+			 content      ,
+			 pictureName  ,
+			 videoName    ,
+			 submitDate   ,
+			 articleStatus,
+			 isExcellent  ,
+			 browseCount  ,
+			 isRecomment  ,
+			 iscream      ,
+			 reputationCount,
+			 schlussgruppeCount,
+			 offlineSalonColumn,
+			 articleBelongTo,
+			 facePicName,
+			 authorName) values(
+             #salonId#      ,
+ 		     #subject#      ,
+			 #author#       ,
+			 #content#      ,
+			 #pictureName#  ,
+			 #videoName#    ,
+			 #submitDate#   ,
+			 #articleStatus#,
+			 #isExcellent#  ,
+			 #browseCount#  ,
+			 #isRecomment#  ,
+			 #iscream#      ,
+			 #reputationCount#,
+			 #schlussgruppeCount#,
+			 #offlineSalonColumn#,
+			 #articleBelongTo#,
+			 #facePicName#,
+			 #authorName#)
+
+ 	</insert>
+
+ <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon article information by id
+   Date：2011-01-12
+   Author Bill Xu
+  ********************************************************************************** -->
+<select id="getSalonArticleById" parameterClass="java.lang.Long" resultClass="salonArticleDto">
+		select
+ 		       a.id,
+ 		       a.salonId      ,
+ 		       a.subject      ,
+			   a.author       ,
+			   a.content      ,
+			   a.pictureName  ,
+			   a.videoName    ,
+			   a.submitDate   ,
+			   a.articleStatus,
+			   a.isExcellent  ,
+			   a.browseCount  ,
+			   a.isRecomment  ,
+			   a.iscream      ,
+			   u.userName     ,
+			   a.reputationCount,
+			   a.schlussgruppeCount,
+			   a.offlineSalonColumn,
+			   a.articleBelongTo,
+			   a.facePicName,
+			   a.authorName
+ 		       from T_SALON_ARTICLE a ,T_LOGIN_USER u where a.author = u.id
+               and a.id=#id#
+	</select>
+
+<select id="getSalonArticleByUpId" parameterClass="java.util.Map" resultClass="salonArticleDto">
+		select
+ 		       a.id,
+ 		       a.salonId      ,
+ 		       a.subject      ,
+			   a.author       ,
+			   a.content      ,
+			   a.pictureName  ,
+			   a.videoName    ,
+			   a.submitDate   ,
+			   a.articleStatus,
+			   a.isExcellent  ,
+			   a.browseCount  ,
+			   a.isRecomment  ,
+			   a.iscream      ,
+			   a.reputationCount,
+			   a.schlussgruppeCount,
+			   a.offlineSalonColumn,
+			   a.articleBelongTo,
+			   a.facePicName,
+			   a.authorName
+ 		       from T_SALON_ARTICLE a 
+ 		       where  a.id= (SELECT MAX(ts.id) FROM T_SALON_ARTICLE ts  WHERE  ts.articleStatus=1 AND 
+ 		        <![CDATA[ts.salonId=#salonId# and ts.offlineSalonColumn=#salonColumn# and  ts.id<#id# ]]> 
+ 		       ORDER BY ts.id DESC LIMIT 0,1)
+</select>
+<select id="getSalonArticleByDownId" parameterClass="java.util.Map" resultClass="salonArticleDto">
+		select
+ 		       a.id,
+ 		       a.salonId      ,
+ 		       a.subject      ,
+			   a.author       ,
+			   a.content      ,
+			   a.pictureName  ,
+			   a.videoName    ,
+			   a.submitDate   ,
+			   a.articleStatus,
+			   a.isExcellent  ,
+			   a.browseCount  ,
+			   a.isRecomment  ,
+			   a.iscream      ,
+			   a.reputationCount,
+			   a.schlussgruppeCount,
+			   a.offlineSalonColumn,
+			   a.articleBelongTo,
+			   a.facePicName,
+			   a.authorName
+ 		       from T_SALON_ARTICLE a 
+ 		       where  a.id= (SELECT min(ts.id) FROM T_SALON_ARTICLE ts  WHERE ts.articleStatus=1 AND 
+ 		        <![CDATA[ts.salonId=#salonId# and ts.offlineSalonColumn=#salonColumn# and ts.id>#id# ]]> 
+ 		       ORDER BY ts.id DESC LIMIT 0,1)
+</select>
+	
+	<update id="updateArticleForCount" parameterClass="java.util.Map">
+		UPDATE T_SALON_ARTICLE s
+		        SET s.reputationCount=s.reputationCount+#reputationCount#,
+		            s.schlussgruppeCount=s.schlussgruppeCount+#schlussgruppeCount#,
+		            s.browseCount=s.browseCount+#browseCount#
+		 where s.id=#id#
+	</update>
+
+ <!-- **********************************************************************************
+   Module:  Salon
+   Function: get hot article information
+   Date：2011-01-12
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	<select id="queryHotArticleList" resultClass="salonArticleDto" parameterClass="java.util.Map">
+ 	<![CDATA[
+ 	           select
+ 	           a.id,
+ 		       a.salonId      ,
+ 		       a.subject      ,
+			   a.author       ,
+			   a.content      ,
+			   a.pictureName  ,
+			   a.videoName    ,
+			   a.submitDate   ,
+			   a.articleStatus,
+			   a.isExcellent  ,
+			   a.browseCount  ,
+			   a.isRecomment  ,
+			   a.iscream      ,
+			   a.reputationCount,
+			   a.schlussgruppeCount,
+			   a.authorName
+ 		       from T_SALON_ARTICLE a  order by browseCount desc,submitDate desc
+ 	  ]]>
+ 	</select>
+
+
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: get off line salon article information DTO for off line salon detail page
+   Date：2011-01-07
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="querySalonArticleListByColumn" resultClass="salonArticleDto" parameterClass="java.util.Map">
+ 		select
+ 		       a.id,
+ 		       a.salonId      ,
+ 		       a.subject      ,
+			   a.author       ,
+			   a.content      ,
+			   a.pictureName  ,
+			   a.videoName    ,
+			   a.submitDate   ,
+			   a.articleStatus,
+			   a.isExcellent  ,
+			   a.browseCount  ,
+			   a.isRecomment  ,
+			   a.iscream      ,
+			   u.userName     ,
+			   a.reputationCount,
+			   a.schlussgruppeCount,
+			   a.offlineSalonColumn,
+			   a.articleBelongTo,
+			   a.facePicName,
+			   a.authorName
+ 		       from T_SALON_ARTICLE a ,T_LOGIN_USER u where a.author = u.id
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="salonId">
+				(a.salonId = #salonId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="offlineSalonColumn">
+				(a.offlineSalonColumn = #offlineSalonColumn#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="articleStatus">
+				(a.articleStatus = #articleStatus#)
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by browseCount desc,submitDate desc
+ 	</select>
+
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon article information list for search
+   Date：2011-01-19
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="searchSalonArticleList" resultClass="salonArticleDto" parameterClass="salonSearchVo">
+ 		select
+ 		       a.id,
+ 		       a.salonId      ,
+ 		       a.subject      ,
+			   a.author       ,
+			   a.content      ,
+			   a.pictureName  ,
+			   a.videoName    ,
+			   a.submitDate   ,
+			   a.articleStatus,
+			   a.isExcellent  ,
+			   a.browseCount  ,
+			   a.isRecomment  ,
+			   a.iscream      ,
+			   u.userName     ,
+			   a.reputationCount,
+			   a.schlussgruppeCount,
+			   s.subject as salonSubject,
+			   s.location as salonLocation,
+			   s.salonType as salonType,
+			   a.authorName
+ 		       from T_SALON_ARTICLE a ,T_LOGIN_USER u,T_SALON_SALONINFO s where a.salonId =s.id and a.author = u.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="subject">
+				(a.subject  like concat("%",#subject#,"%"))
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="content">
+				(a.content like concat("%",#content#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isExcellent">
+				(a.isExcellent = #isExcellent#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(a.articleStatus = #status#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userName">
+				(u.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(a.author = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="offlineSalonColumn">
+				(a.offlineSalonColumn = #offlineSalonColumn#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="salonId">
+				(a.salonId = #salonId#)
+			</isNotEmpty>
+		   <isNotEmpty prepend="and" property="startDate">
+		         <![CDATA[DATE_FORMAT(a.submitDate,'%Y-%m-%d') >= DATE_FORMAT(#startDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[DATE_FORMAT(a.submitDate,'%Y-%m-%d') <= DATE_FORMAT(#endDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isNew">
+				DATE_FORMAT(a.submitDate,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by browseCount desc,submitDate desc
+ 	</select>
+
+   <select id="searchSalonArticleListCount" resultClass="java.lang.Integer" parameterClass="salonSearchVo">
+ 		select
+ 		       count(*)
+ 		        from T_SALON_ARTICLE a ,T_LOGIN_USER u,T_SALON_SALONINFO s where a.salonId =s.id and a.author = u.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="subject">
+					(a.subject  like concat("%",#subject#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="content">
+				(a.content like concat("%",#content#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isExcellent">
+				(a.isExcellent = #isExcellent#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				(a.articleStatus = #status#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userName">
+				(u.userName like concat("%",#userName#,"%"))
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+				(a.author = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="salonId">
+				(a.salonId = #salonId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="offlineSalonColumn">
+				(a.offlineSalonColumn = #offlineSalonColumn#)
+			</isNotEmpty>
+		   <isNotEmpty prepend="and" property="startDate">
+		         <![CDATA[DATE_FORMAT(a.submitDate,'%Y-%m-%d') >= DATE_FORMAT(#startDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[DATE_FORMAT(a.submitDate,'%Y-%m-%d') <= DATE_FORMAT(#endDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isNew">
+				DATE_FORMAT(a.submitDate,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+
+
+  <!--  **********************************************************************************
+   Module:  personal center
+   Function: get salon article information list by user
+   Date：2011-01-26
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="querySalonArticleListByUserId" resultClass="salonArticleDto" parameterClass="java.util.Map">
+ 		select
+ 		       a.id,
+ 		       a.salonId      ,
+ 		       a.subject      ,
+			   a.author       ,
+			   a.content      ,
+			   a.pictureName  ,
+			   a.videoName    ,
+			   a.submitDate   ,
+			   a.articleStatus,
+			   a.isExcellent  ,
+			   a.browseCount  ,
+			   a.isRecomment  ,
+			   a.iscream      ,
+			   a.reputationCount,
+			   a.schlussgruppeCount,
+			   s.subject as salonSubject,
+			   s.location as salonLocation,
+			   a.authorName
+ 		       from T_SALON_ARTICLE a ,T_SALON_SALONINFO s where a.salonId =s.id
+ 		   <dynamic prepend="and">
+    		<isNotEmpty prepend="and" property="userId">
+				(a.author = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="salonId">
+				(a.salonId = #salonId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="subject">
+				(a.subject  like concat("%",#subject#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by browseCount desc,submitDate desc
+ 	</select>
+
+   <select id="querySalonArticleListByUserIdCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+ 		       count(*)
+ 		         from T_SALON_ARTICLE a ,T_SALON_SALONINFO s where a.salonId =s.id
+ 		    <dynamic prepend="and">
+    		<isNotEmpty prepend="and" property="userId">
+				(a.author = #userId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="salonId">
+				(a.salonId = #salonId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="subject">
+				(a.subject  like concat("%",#subject#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+
+ 	</select>
+
+
+  <!-- **********************************************************************************
+   Module:  personal center
+   Function: delete articles information
+   Date：2011-01-26
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	<delete id="deleteArticle" parameterClass="java.lang.String">
+		DELETE FROM T_SALON_ARTICLE WHERE id in($id$)
+	</delete>
+
+
+  <!-- **********************************************************************************
+   Module:  Salon
+   Function: update article information
+   Date：2011-01-28
+   Author Bill Xu
+  ********************************************************************************** -->
+
+ 	<update id="modifyArticle" parameterClass="salonArticleDto">
+		UPDATE T_SALON_ARTICLE
+		set subject = #subject#,content = #content#,submitDate = #submitDate#,pictureName = #pictureName#,videoName = #videoName#,
+		facePicName=#facePicName#,articleBelongTo=#articleBelongTo#
+		where id = #id#
+	</update>
+
+		<!-- administrator module-->
+  <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: set salon article (Excellent)
+   Date：2011-02-17
+   Author Bill Xu
+  ********************************************************************************** -->
+	<update id="setExcellentSalonArticle" parameterClass="java.util.Map">
+		UPDATE T_SALON_ARTICLE  SET isExcellent=#isExcellent# where id in($ids$)
+	</update>
+
+ <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: set salon article (audition)
+   Date：2011-02-17
+   Author Bill Xu
+  ********************************************************************************** -->
+	<update id="audiSalonArticle" parameterClass="java.util.Map">
+		UPDATE T_SALON_ARTICLE  SET articleStatus=#status# where id in($ids$)
+	</update>
+
+  <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: set salon article (Recommend)
+   Date：2011-02-17
+   Author Bill Xu
+  ********************************************************************************** -->
+	<update id="setRecommendSalonArticle" parameterClass="java.util.Map">
+		UPDATE T_SALON_ARTICLE  SET isRecomment=#isRecommend# where id in($ids$)
+	</update>
+
+	 <!-- **********************************************************************************
+   Module:  Salon(Administrator)
+   Function: set salon article (cream)
+   Date：2011-02-17
+   Author Bill Xu
+  ********************************************************************************** -->
+	<update id="setCreamSalonArticle" parameterClass="java.util.Map">
+		UPDATE T_SALON_ARTICLE  SET iscream=#isCream# where id in($ids$)
+	</update>
+
+<!-- **********************************************************************************
+        模块:    系统管理
+        功能:    当天新增文章数统计
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2011-2-25    tyler.qu
+   Notes:     备注
+********************************************************************************** -->
+	<select id="getNumberOfNewArticlesStatisticalToDay" parameterClass="java.util.Date" resultClass="java.lang.Integer">
+		SELECT COUNT(a.id)
+		  FROM T_SALON_ARTICLE a,
+			   T_LOGIN_USER u,
+			   T_SALON_SALONINFO s
+		 WHERE a.salonId =s.id
+		   AND a.author = u.id
+		   AND DATE_FORMAT(a.submitDate,'%Y-%m-%d') = DATE_FORMAT(#toDay#,'%Y-%m-%d')
+	</select>
+
+ <!-- **********************************************************************************
+   Module:  administration
+   Function: delete salon article information by salon ids
+   Date：2011-03-11
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<delete id="delSalonArticleBySalonIds" parameterClass="java.lang.String">
+		DELETE FROM T_SALON_ARTICLE  where salonId in ($ids$)
+	</delete>
+
+	 <!-- **********************************************************************************
+   Module:  administration
+   Function: 获取没有通过的记录数 by ids
+   Date：2011-03-12
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="getNoPassArticleCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(*) FROM T_SALON_ARTICLE  WHERE (articleStatus=2 or articleStatus=0) and id in($ids$)
+	</select>
+ </sqlMap>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysIncrementAdvertSettingDto" type="com.dotoyo.buildjob.sys.dto.SysIncrementAdvertSettingDto"/>
+	<resultMap class="sysIncrementAdvertSettingDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="serviceCode" column="service_code"/>
+		<result property="serviceName" column="service_name"/>
+		<result property="advertising" column="advertising"/>
+		<result property="operator" column="operator"/>
+		<result property="operatorName" column="userName"/>
+		<result property="submitDate" column="submit_date"/>
+		<result property="lastEditDate" column="last_edit_date"/>
+	</resultMap>
+ <!-- **********************************************************************************
+   Module:  System manager, advertising setting
+   Function: add  advertising setting
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addIncrementAdvertSetting" parameterClass="sysIncrementAdvertSettingDto">
+ 		     insert into T_SYS_INCREMENT_Advert_SETTING(
+   			 service_code,
+   			 advertising,
+   			 operator,
+   			 submit_date,
+             last_edit_date) values(
+             #serviceCode#,
+             #advertising#,
+             #operator#,
+             #submitDate#,
+ 			 #lastEditDate#)
+ 	</insert>
+
+ <!-- **********************************************************************************
+   Module:  System manager, advertising setting
+   Function: get  advertising fields list
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="queryIncrementAdvertList" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+ 			 Advert.id,
+   			 Advert.service_code,
+   			 service.service_name,
+   			 Advert.advertising,
+   			 Advert.operator,
+   			 user.userName,
+   			 Advert.submit_date,
+             Advert.last_edit_date
+ 		  from T_SYS_INCREMENT_Advert_SETTING Advert,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service,T_LOGIN_USER_ADMIN user
+ 		   where Advert.service_code = service.service_code and Advert.operator=user.id
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="serviceName">
+				(service.service_name like concat("%",#serviceName#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by service.service_name asc
+ 	</select>
+ 	<select id="queryIncrementAdvertCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(*)
+ 		  from T_SYS_INCREMENT_Advert_SETTING Advert,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service
+ 		   where Advert.service_code = service.service_code
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="serviceName">
+				(service.service_name like concat("%",#serviceName#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by service.service_name asc
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager, advertising setting
+   Function: get  advertising fields DTO
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="queryIncrementAdvert" resultMap="result_dto" parameterClass="sysIncrementAdvertSettingDto">
+ 		select
+ 			 Advert.id,
+   			 Advert.service_code,
+   			 service.service_name,
+   			 Advert.advertising,
+   			 Advert.operator,
+   			 user.userName,
+   			 Advert.submit_date,
+             Advert.last_edit_date
+ 		  from T_SYS_INCREMENT_Advert_SETTING Advert,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service,T_LOGIN_USER_ADMIN user
+ 		   where Advert.service_code = service.service_code and Advert.operator=user.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="serviceCode">
+				(Advert.service_code = #serviceCode#)
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by Advert.last_edit_date
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager, advertising setting
+   Function: update  advertising fields
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateIncrementAdvertSetting" parameterClass="sysIncrementAdvertSettingDto">
+ 		update T_SYS_INCREMENT_Advert_SETTING
+ 		set
+   		     service_code     = #serviceCode#,
+   			 advertising  = #advertising#,
+   			 operator         = #operator#,
+             last_edit_date   = #lastEditDate#
+ 		where service_code    = #serviceCode#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager, advertising setting
+   Function: remove  advertising fields
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeIncrementAdvertSetting" parameterClass="sysIncrementAdvertSettingDto">
+ 		delete from T_SYS_INCREMENT_Advert_SETTING
+ 		where service_code = #serviceCode#
+ 	</statement>
+ </sqlMap>

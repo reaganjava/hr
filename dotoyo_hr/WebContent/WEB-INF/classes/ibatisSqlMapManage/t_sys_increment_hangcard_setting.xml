@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="sysIncrementHangCardSettingDto" type="com.dotoyo.buildjob.sys.dto.SysIncrementHangCardSettingDto"/>
+	<resultMap class="sysIncrementHangCardSettingDto" id="result_dto">
+		<result property="id" column="id"/>
+		<result property="serviceCode" column="service_code"/>
+		<result property="serviceName" column="service_name"/>
+		<result property="countOfSubmit" column="count_of_submit"/>
+		<result property="operator" column="operator"/>
+		<result property="operatorName" column="userName"/>
+		<result property="submitDate" column="submit_date"/>
+		<result property="lastEditDate" column="last_edit_date"/>
+	</resultMap>
+ <!-- **********************************************************************************
+   Module:  System manager, hang card setting
+   Function: add  hang card setting
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<insert id="addIncrementHangCardSetting" parameterClass="sysIncrementHangCardSettingDto">
+ 		     insert into T_SYS_INCREMENT_HANGCARD_SETTING(
+   			 service_code,
+   			 count_of_submit,
+   			 operator,
+   			 submit_date,
+             last_edit_date) values(
+             #serviceCode#,
+             #countOfSubmit#,
+             #operator#,
+             #submitDate#,
+ 			 #lastEditDate#)
+ 	</insert>
+
+ <!-- **********************************************************************************
+   Module:  System manager, hang card setting
+   Function: get  hang card fields list
+   Date：2011-01-10
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="queryIncrementHangCardList" resultMap="result_dto" parameterClass="java.util.Map">
+ 		select
+ 			 hangcard.id,
+   			 hangcard.service_code,
+   			 service.service_name,
+   			 hangcard.count_of_submit,
+   			 hangcard.operator,
+   			 user.userName,
+   			 hangcard.submit_date,
+             hangcard.last_edit_date
+ 		  from T_SYS_INCREMENT_HANGCARD_SETTING hangcard,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service,T_LOGIN_USER_ADMIN user
+ 		   where hangcard.service_code = service.service_code and hangcard.operator = user.id
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="serviceName">
+				(service.service_name like concat("%",#serviceName#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by service.service_name asc
+ 	</select>
+ 	<select id="queryIncrementHangCardCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 		select
+			count(*)
+ 		  from T_SYS_INCREMENT_HANGCARD_SETTING hangcard,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service
+ 		   where hangcard.service_code = service.service_code
+ 		   <dynamic prepend="and">
+			<isNotEmpty prepend="and" property="serviceName">
+				(service.service_name like concat("%",#serviceName#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by service.service_name asc
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager, hang card setting
+   Function: get  hang card fields DTO
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<select id="queryIncrementHangCard" resultMap="result_dto" parameterClass="sysIncrementHangCardSettingDto">
+ 		select
+ 			 hangcard.id,
+   			 hangcard.service_code,
+   			 service.service_name,
+   			 hangcard.count_of_submit,
+   			 hangcard.operator,
+   			 user.userName,
+   			 hangcard.submit_date,
+             hangcard.last_edit_date
+ 		  from T_SYS_INCREMENT_HANGCARD_SETTING hangcard,T_SYS_INCREMENT_SERVICENAME_MAINTAINANCE service,T_LOGIN_USER_ADMIN user
+ 		   where hangcard.service_code = service.service_code and hangcard.operator = user.id
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="serviceCode">
+				(hangcard.service_code = #serviceCode#)
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by hangcard.last_edit_date
+ 	</select>
+ <!-- **********************************************************************************
+   Module:  System manager, hang card setting
+   Function: update  hang card fields
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="updateIncrementHangCardSetting" parameterClass="sysIncrementHangCardSettingDto">
+ 		update T_SYS_INCREMENT_HANGCARD_SETTING
+ 		set
+   		     service_code     = #serviceCode#,
+   			 count_of_submit  = #countOfSubmit#,
+   			 operator         = #operator#,
+             last_edit_date   = #lastEditDate#
+ 		where service_code    = #serviceCode#
+ 	</statement>
+ <!-- **********************************************************************************
+   Module:  System manager, hang card setting
+   Function: remove  hang card fields
+   Date：2011-01-11
+   Author wisdy.xiao
+  ********************************************************************************** -->
+ 	<statement id="removeIncrementHangCardSetting" parameterClass="sysIncrementHangCardSettingDto">
+ 		delete from T_SYS_INCREMENT_HANGCARD_SETTING
+ 		where service_code = #serviceCode#
+ 	</statement>
+ </sqlMap>

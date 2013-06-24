@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+ <sqlMap>
+ 	<typeAlias alias="salonAttendDto" type="com.dotoyo.buildjob.innovationSalon.dto.SalonAttendDto"/>
+
+
+<!-- **********************************************************************************
+   Module:  Salon
+   Function: add salon attend information
+   Date：2011-01-11
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<insert id="addAttendInfo" parameterClass="salonAttendDto">
+ 		     insert into T_SALON_ATTEND(
+ 		       salonId,
+ 		       userId,
+			   joinDate) values(
+               #salonId#,
+ 		       #userId#,
+			   #joinDate#)
+ 	</insert>
+ <!-- **********************************************************************************
+   Module:  Salon
+   Function: get salon attend count
+   Date：2011-01-11
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="getSalonAttendCount" parameterClass="java.lang.Long" resultClass="java.lang.Long">
+		select count(*)  from T_SALON_ATTEND a where a.salonId =#id#
+	</select>
+
+  <!-- **********************************************************************************
+   Module:  personal center
+   Function: get join salon information list by user
+   Date：2011-01-26
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="queryJoinSalonListByUserId" resultClass="salonInfoDto" parameterClass="salonSearchVo">
+ 		select
+ 		     s.id,
+ 		     s.salonType,
+ 		     s.subject,
+             s.content,
+             s.startDate,
+             s.endDate,
+             s.compere,
+ 			 s.sponsor,
+ 			 s.location,
+ 			 s.isExcellent,
+ 			 s.subjectPic,
+             s.audiFlag,
+             s.browseCount,
+             s.reputationCount,
+			 s.schlussgruppeCount,
+			 (select ui.userName from T_LOGIN_USER ui where ui.id=s.compere) userName
+ 		  from T_SALON_SALONINFO s,T_LOGIN_USER u,T_SALON_ATTEND a where 1=1
+ 		  and s.id = a.salonId and u.id =a.userId
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="userId">
+				(a.userId = #userId#)
+			</isNotEmpty>
+		  	<isNotEmpty prepend="and" property="salonType">
+				(s.salonType = #salonType#)
+			</isNotEmpty>
+ 		  	<isNotEmpty prepend="and" property="subject">
+				(s.subject like concat("%",#subject#,"%"))
+			</isNotEmpty>
+		     <isNotEmpty prepend="and" property="startDate">
+		     <![CDATA[DATE_FORMAT(s.startDate,'%Y-%m-%d') >= DATE_FORMAT(#startDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[DATE_FORMAT(s.endDate,'%Y-%m-%d') <= DATE_FORMAT(#endDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="sponsor">
+				(s.sponsor like concat("%",#sponsor#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 		  order by startDate desc
+ 	</select>
+
+ 	<select id="queryJoinSalonListByUserIdCount" resultClass="java.lang.Integer" parameterClass="salonSearchVo">
+ 		select
+ 		    count(*)
+ 		  from T_SALON_SALONINFO s,T_LOGIN_USER u,T_SALON_ATTEND a where 1=1
+ 		  and s.id = a.salonId and u.id =a.userId
+ 		   <dynamic prepend="and">
+ 		  	<isNotEmpty prepend="and" property="userId">
+				(a.userId = #userId#)
+			</isNotEmpty>
+		  	<isNotEmpty prepend="and" property="salonType">
+				(s.salonType = #salonType#)
+			</isNotEmpty>
+ 		  	<isNotEmpty prepend="and" property="subject">
+				(s.subject like concat("%",#subject#,"%"))
+			</isNotEmpty>
+		     <isNotEmpty prepend="and" property="startDate">
+		     <![CDATA[DATE_FORMAT(s.startDate,'%Y-%m-%d') >= DATE_FORMAT(#startDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[DATE_FORMAT(s.endDate,'%Y-%m-%d') <= DATE_FORMAT(#endDate#,'%Y-%m-%d')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="sponsor">
+				(s.sponsor like concat("%",#sponsor#,"%"))
+			</isNotEmpty>
+		   </dynamic>
+ 	</select>
+
+ <!-- **********************************************************************************
+   Module:  personal center
+   Function: cancel join salon information
+   Date：2011-01-26
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<delete id="deleteSalonAttendInfo" parameterClass="java.util.Map">
+		DELETE FROM T_SALON_ATTEND  where salonId in ($ids$) and userid =#userId#
+	</delete>
+
+  <!-- **********************************************************************************
+   Module:  salon
+   Function: 判断当前用户是否已经存在在参加的队列了
+   Date：2011-03-07
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<select id="existAttend" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(*) FROM T_SALON_ATTEND  WHERE salonId=#salonId# and userid =#userId#
+	</select>
+
+  <!-- **********************************************************************************
+   Module:  administration
+   Function: delete salon attend information by salon ids
+   Date：2011-03-11
+   Author Bill Xu
+  ********************************************************************************** -->
+ 	<delete id="delSalonAttendBySalonIds" parameterClass="java.lang.String">
+		DELETE FROM T_SALON_ATTEND  where salonId in ($ids$)
+	</delete>
+ </sqlMap>

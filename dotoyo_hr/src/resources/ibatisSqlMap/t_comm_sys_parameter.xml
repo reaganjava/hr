@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+ "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+ 	<typeAlias alias="sysParameterDto" type="com.dotoyo.buildjob.systemManage.dto.SysParameterDto"/>
+<!-- ********************************************************************************** 
+        模块:    系统管理，系统参数
+        功能:    加载系统参数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-6    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<select id="querySysParameterForList" resultClass="sysParameterDto">
+		SELECT id,CODE,NAME,sysValue,notes FROM t_comm_sys_parameter
+	</select>
+	
+<!-- ********************************************************************************** 
+        模块:    系统管理，系统参数
+        功能:    修改系统参数
+   Revisions:
+   Version    Date       Author      Description
+   *********  *********  *********   *********
+   v.?        2010-12-6    tyler.qu      
+   Notes:     备注
+********************************************************************************** -->
+	<update id="updateSysParameter" parameterClass="sysParameterDto" >
+		UPDATE t_comm_sys_parameter SET NAME=#name#,sysValue=#sysValue#,notes=#notes# where id=#id#
+	</update>	
+
+ <!-- ********************************************************************************** 
+        模块:    系统管理，系统参数
+        功能:    获取摸个系统参数
+   2010-02-22 Bill xu      
+   Notes:     
+********************************************************************************** -->	
+	
+	<select id="getSysParameterDtoBycode" parameterClass="java.lang.String" resultClass="sysParameterDto">
+		SELECT id,CODE,NAME,sysValue,notes FROM t_comm_sys_parameter WHERE code=#code# 
+	</select>
+ <!-- ********************************************************************************** 
+        模块:    系统管理，系统参数
+        功能:    修改系统参数
+   2010-02-22 Bill xu      
+   Notes:     
+********************************************************************************** -->	
+	
+	<update id="setSysParameterValue" parameterClass="java.util.Map">
+			UPDATE t_comm_sys_parameter set sysValue=#sysValue# where code=#code#
+	</update>
+</sqlMap>

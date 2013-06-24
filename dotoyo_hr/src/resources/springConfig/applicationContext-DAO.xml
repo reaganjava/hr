@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/tx
+                    http://www.springframework.org/schema/tx/spring-tx.xsd
+                    http://www.springframework.org/schema/aop
+                    http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="certificateDao" class="com.dotoyo.buildjob.certificateCenter.dao.impl.CertificateDaoImpl">
+    	<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+    </bean>
+    <bean id="shortMessageDao" class="com.dotoyo.buildjob.common.dao.impl.ShortMessageDaoImpl">
+    	<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+    </bean>
+    <bean id="certificateUtil" class="com.dotoyo.buildjob.certificateCenter.util.CertificateUtil">
+    	<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+    </bean>
+    <bean id="userDao" class="com.dotoyo.buildjob.common.user.dao.impl.UserDaoImpl">
+    	<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+    </bean>
+    <bean id="filterWordsDao" class="com.dotoyo.buildjob.systemManage.dao.impl.FilterWordsDaoImpl">
+    	<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+    </bean>
+    <bean id="applyJobDao" class="com.dotoyo.buildjob.applyJobCenter.dao.impl.ApplyJobDaoImpl">
+    	<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+    </bean>
+	<bean id="classMasterDao" class="com.dotoyo.buildjob.systemManage.dao.impl.ClassMasterDaoImpl">
+    	<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+    </bean>
+    <bean id="sysParameterDao" class="com.dotoyo.buildjob.systemManage.dao.impl.SysParameterDaoImpl">
+    	<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+    </bean>
+    <bean id="backGroupMusicDao" class="com.dotoyo.buildjob.systemManage.dao.impl.BackgroupMusicDaoImpl">
+    	<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+    </bean>
+	<bean id="jobInfoDao" class="com.dotoyo.buildjob.headhunterCenter.dao.impl.JobInfoDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<bean id="essentialDataUtil" class="com.dotoyo.buildjob.common.util.EssentialDataUtil">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<bean id="cacheManager" class="com.dotoyo.buildjob.common.util.CacheManager">
+		<property name="memcachedClient" ref="memcachedClient"/>
+	</bean>
+	
+	<bean id="ibatisBatchOperation" class="com.dotoyo.buildjob.common.util.IbatisBatchOperation">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<bean id="regionDataUtil" class="com.dotoyo.buildjob.common.util.RegionDataUtil">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<!--Salon module Begin  -->
+    <bean id="salonDao" class="com.dotoyo.buildjob.innovationSalon.dao.impl.SalonDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	 <bean id="salonSearchDao" class="com.dotoyo.buildjob.innovationSalon.dao.impl.SalonSearchDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	 <bean id="salonManageDao" class="com.dotoyo.buildjob.innovationSalon.dao.impl.SalonManageDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<!--Salon module End  -->
+	<!--System manager increment service  -->
+	<bean id="pagingDataListUtil" class="com.dotoyo.buildjob.common.util.PagingDataListUtil">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	<!-- System manager increment service End  -->
+	<!-- PeopleExcavate deploy start -->
+	<bean id="peopleExcavateDao" class="com.dotoyo.buildjob.peopleExcavate.dao.impl.PeopleExcavateDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<!-- PeopleExcavate deploy end -->
+
+
+	<!--######################个人用户后台开始  ###########################-->
+	<bean id="filterCompanyDao" class="com.dotoyo.buildjob.personalCenter.dao.impl.FilterCompanyDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<bean id="certAccessHistoryDao" class="com.dotoyo.buildjob.certificateCenter.dao.impl.CertAccessHistoryDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<bean id="certNeedsAccessHistoryDao" class="com.dotoyo.buildjob.certificateCenter.dao.impl.CertNeedsAccessHistoryDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<!--######################个人用户后台结束  ###########################-->
+	<!--######################系统日志  ###########################-->
+	<bean id="sysLogDao" class="com.dotoyo.buildjob.systemManage.dao.impl.SysLogDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	<bean id="offlineSearchResultDao" class="com.dotoyo.buildjob.common.dao.impl.OfflineSearchResultDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+	
+	
+	<!-- #################### 完善博站资料，仅供测试使用 ########################## -->
+	<bean id="blogUserDao" class="com.dotoyo.buildjob.blogUser.dao.impl.BlogUserDaoImpl">
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+	</bean>
+</beans>
