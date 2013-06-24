@@ -8,7 +8,7 @@
 	</head>
 <body>
 <script type="text/javascript">
-	window.location.href = "<%=path%>/";
+	window.location.href = "<%=path%>/homePage/homePageAction!init.action";
 </script>
 </body>
 </html>

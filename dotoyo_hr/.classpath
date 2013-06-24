@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry excluding="com/dotoyo/resources/|resources/" kind="src" path="src"/>
 	<classpathentry kind="src" path="src/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_17">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
@@ -57,5 +57,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xwork-core-2.2.1.jar" sourcepath="C:/Users/hdc/.m2/repository/org/apache/struts/xwork/xwork-core/2.2.1/xwork-core-2.2.1-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-security-core-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cas-client-core-3.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/tomcat2/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
